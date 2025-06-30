@@ -1,0 +1,112 @@
+<view class="container">
+  <view class="section-title">个人信息</view>
+  <form bindsubmit="submitPersonalInfo">
+    <view class="form-section card">
+      <view class="form-item flex-align-center">
+        <text class="label">头像</text>
+        <image class="upload-avatar" src="{{personalInfo.avatar || '/images/default_avatar.png'}}" mode="aspectFill" bindtap="chooseImageUpload" data-section="personal" data-field="avatar"></image>
+        <text class="arrow">></text>
+      </view>
+      <view class="form-item">
+        <text class="label">姓名</text>
+        <input name="name" value="{{personalInfo.name}}" placeholder="您的姓名" class="input" bindinput="onInput" data-section="personal" data-field="name"/>
+      </view>
+      <view class="form-item">
+        <text class="label">联系电话</text>
+        <input name="phone" value="{{personalInfo.phone}}" placeholder="您的联系电话" class="input" type="number" bindinput="onInput" data-section="personal" data-field="phone"/>
+      </view>
+    </view>
+    <button form-type="submit" class="secondary-button">保存个人信息</button>
+  </form>
+
+  <view class="section-title">店铺信息</view>
+  <form bindsubmit="submitShopInfo">
+    <view class="form-section card">
+      <view class="form-item flex-align-center">
+        <text class="label">店铺Logo</text>
+        <image class="upload-avatar shop-logo-upload" src="{{shopInfo.logo || '/images/default_shop_logo.png'}}" mode="aspectFill" bindtap="chooseImageUpload" data-section="shop" data-field="logo"></image>
+        <text class="arrow">></text>
+      </view>
+      <view class="form-item">
+        <text class="label">店铺名称</text>
+        <input name="shopName" value="{{shopInfo.shopName}}" placeholder="您的店铺名称" class="input" bindinput="onInput" data-section="shop" data-field="shopName"/>
+      </view>
+      <view class="form-item textarea-item">
+        <text class="label">店铺简介</text>
+        <textarea name="description" value="{{shopInfo.description}}" placeholder="介绍您的店铺特色、服务优势等" class="textarea" bindinput="onInput" data-section="shop" data-field="description"></textarea>
+      </view>
+      <view class="form-item">
+        <text class="label">地址</text>
+        <input name="address" value="{{shopInfo.address}}" placeholder="详细地址" class="input" bindinput="onInput" data-section="shop" data-field="address"/>
+        <image src="/images/icon_location.png" class="location-icon" bindtap="chooseLocation"></image>
+      </view>
+      <view class="form-item">
+        <text class="label">营业时间</text>
+        <input name="openingHours" value="{{shopInfo.openingHours}}" placeholder="例如：9:00 - 18:00" class="input" bindinput="onInput" data-section="shop" data-field="openingHours"/>
+      </view>
+      <view class="form-item">
+        <text class="label">身份认证状态</text>
+        <text class="input" wx:if="{{shopInfo.isApproved}}">已认证</text>
+        <text class="input" wx:else style="color: red;">待审核/未认证</text>
+      </view>
+
+      <view class="form-item textarea-item">
+        <text class="label">营业执照</text>
+        <view class="media-upload-area">
+          <block wx:if="{{shopInfo.businessLicenseUrl}}">
+            <view class="uploaded-media-item">
+              <image src="{{shopInfo.businessLicenseUrl}}" mode="aspectFill" class="media-preview" bindtap="previewImage" data-src="{{shopInfo.businessLicenseUrl}}" data-section="shop" data-field="businessLicenseUrl"></image>
+              <text class="delete-media" bindtap="deleteMedia" data-section="shop" data-field="businessLicenseUrl" data-index="single">x</text>
+            </view>
+          </block>
+          <view wx:else class="upload-btn" bindtap="chooseImageUpload" data-section="shop" data-field="businessLicenseUrl">
+            <image src="/images/icon_add.png" class="add-icon"></image>
+          </view>
+        </view>
+        <text class="hint-text">请上传清晰的营业执照照片</text>
+      </view>
+
+      <view class="form-item textarea-item">
+        <text class="label">店内环境图片</text>
+        <view class="media-upload-area">
+          <block wx:for="{{shopInfo.environmentImages}}" wx:key="index">
+            <view class="uploaded-media-item">
+              <image src="{{item}}" mode="aspectFill" class="media-preview" bindtap="previewImage" data-src="{{item}}" data-section="shop" data-field="environmentImages" data-index="{{index}}"></image>
+              <text class="delete-media" bindtap="deleteMedia" data-section="shop" data-field="environmentImages" data-index="{{index}}">x</text>
+            </view>
+          </block>
+          <view wx:if="{{shopInfo.environmentImages.length < 9}}" class="upload-btn" bindtap="chooseMultiImageUpload" data-section="shop" data-field="environmentImages">
+            <image src="/images/icon_add.png" class="add-icon"></image>
+          </view>
+        </view>
+        <text class="hint-text">最多上传9张店内环境图片</text>
+      </view>
+
+    </view>
+    <button form-type="submit" class="secondary-button">保存店铺信息</button>
+  </form>
+
+  <view class="section-title">资质认证</view>
+  <form bindsubmit="submitQualifications">
+    <view class="form-section card">
+      <view class="form-item textarea-item">
+        <text class="label">宠物相关资质证书</text>
+        <view class="media-upload-area">
+          <block wx:for="{{qualifications.certificateImages}}" wx:key="index">
+            <view class="uploaded-media-item">
+              <image src="{{item}}" mode="aspectFill" class="media-preview" bindtap="previewImage" data-src="{{item}}" data-section="qualifications" data-field="certificateImages" data-index="{{index}}"></image>
+              <text class="delete-media" bindtap="deleteMedia" data-section="qualifications" data-field="certificateImages" data-index="{{index}}">x</text>
+            </view>
+          </block>
+          <view wx:if="{{qualifications.certificateImages.length < 5}}" class="upload-btn" bindtap="chooseMultiImageUpload" data-section="qualifications" data-field="certificateImages">
+            <image src="/images/icon_add.png" class="add-icon"></image>
+          </view>
+        </view>
+        <text class="hint-text">最多上传5张资质证书图片</text>
+      </view>
+    </view>
+    <button form-type="submit" class="secondary-button">保存资质认证</button>
+  </form>
+
+  
+</view>

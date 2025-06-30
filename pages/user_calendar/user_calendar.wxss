@@ -1,0 +1,157 @@
+/* pages/user_calendar/user_calendar.wxss */
+@import "/app.wxss";
+
+.calendar-header {
+  padding: 30rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: var(--text-color-dark);
+  background-color: var(--card-bg-color);
+  margin-bottom: 20rpx;
+  border-radius: 15rpx;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.nav-arrow {
+  width: 40rpx;
+  height: 40rpx;
+  padding: 10rpx; 
+}
+
+.current-month {
+  flex: 1;
+  text-align: center;
+}
+
+.week-days {
+  display: flex;
+  justify-content: space-around;
+  padding: 20rpx 0;
+  background-color: var(--card-bg-color);
+  border-radius: 15rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.day-name {
+  width: 14%;
+  text-align: center;
+  font-size: 28rpx;
+  color: var(--text-color-normal);
+  font-weight: bold;
+}
+
+.calendar-grid {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: var(--card-bg-color);
+  border-radius: 15rpx;
+  padding-bottom: 20rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.date-item {
+  width: 14.28%; 
+  height: 90rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 32rpx;
+  color: var(--text-color-dark);
+  position: relative;
+  /* 添加过渡效果，让选中动画更流畅 */
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.date-item.other-month {
+  color: var(--text-color-light);
+}
+
+.date-item.has-event {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+/* 选中日期的样式 */
+.date-item.selected-date {
+    background-color: #FFC107; /* 黄色背景 */
+    color: #fff; /* 文字颜色变为白色 */
+    border-radius: 50%; /* 变为圆形 */
+    width: 70rpx; /* 调整宽度，使其成为一个正圆 */
+    height: 70rpx; /* 调整高度 */
+    margin: 10rpx auto; /* 居中 */
+    display: flex; /* 重新设置为flex，确保内部文本居中 */
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.2); /* 增加一点阴影 */
+    /* 确保选中的日期不会被其他日期的 margin 或 padding 影响 */
+    flex-shrink: 0;
+}
+/* 选中日期内，如果是本月且有事件，事件点颜色 */
+.date-item.selected-date .event-dot {
+    background-color: #fff; /* 选中日期事件点变白 */
+}
+/* 选中日期内，非本月的文字颜色也应变白 */
+.date-item.selected-date.other-month {
+    color: #fff;
+}
+
+
+.event-dot {
+  width: 10rpx;
+  height: 10rpx;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  position: absolute;
+  bottom: 10rpx;
+}
+
+.section-title {
+  margin-left: 30rpx;
+}
+
+.event-list {
+  padding: 0 30rpx;
+  margin-bottom: 30rpx; /* 增加底部间距，为按钮留出空间 */
+}
+
+.event-item {
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid var(--border-color);
+  display: flex;
+  align-items: center;
+}
+
+.event-item:last-child {
+  border-bottom: none;
+}
+
+.event-time {
+  font-size: 28rpx;
+  color: var(--primary-color);
+  font-weight: bold;
+  margin-right: 30rpx;
+  flex-shrink: 0;
+}
+
+.event-desc {
+  font-size: 30rpx;
+  color: var(--text-color-dark);
+  flex: 1;
+}
+
+.no-data-hint {
+  text-align: center;
+  color: var(--text-color-light);
+  padding: 30rpx;
+  font-size: 28rpx;
+}
+
+/* 底部全宽度按钮的样式，与 action-button-yellow 配合 */
+.full-width-button {
+  width: auto; 
+  margin: 30rpx; 
+  margin-bottom: calc(30rpx + env(safe-area-inset-bottom)); 
+}

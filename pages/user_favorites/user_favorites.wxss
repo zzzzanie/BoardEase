@@ -1,0 +1,63 @@
+@import "/app.wxss";
+
+.favorite-list {
+  padding-top: 20rpx;
+}
+
+.favorite-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.service-cover {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 10rpx;
+  margin-right: 30rpx;
+  flex-shrink: 0;
+}
+
+.service-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; 
+}
+
+.service-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--text-color-dark);
+  margin-bottom: 10rpx;
+}
+
+.service-price {
+  font-size: 30rpx;
+  color: var(--primary-color);
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.shop-name {
+  font-size: 26rpx;
+  color: var(--text-color-normal);
+}
+
+.remove-btn {
+  font-size: 28rpx;
+  color: #999;
+  border: 1rpx solid #ddd;
+  border-radius: 10rpx;
+  padding: 10rpx 20rpx;
+  margin-left: 30rpx;
+  flex-shrink: 0;
+}
+
+.no-data-hint {
+  text-align: center;
+  color: var(--text-color-light);
+  padding: 50rpx;
+  font-size: 28rpx;
+}

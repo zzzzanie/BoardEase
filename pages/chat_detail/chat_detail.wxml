@@ -1,0 +1,18 @@
+<view class="container">
+  <view class="chat-messages">
+    <block wx:if="{{messages.length > 0}}">
+      <view wx:for="{{messages}}" wx:key="id" class="message-item {{item.isMyMessage ? 'my-message' : 'other-message'}}">
+        <image wx:if="{{!item.isMyMessage}}" class="avatar" src="{{otherUserAvatar}}" mode="aspectFill"></image>
+        
+        <view class="message-bubble">{{item.content}}</view>
+        
+        <image wx:if="{{item.isMyMessage}}" class="avatar" src="{{myAvatar}}" mode="aspectFill"></image>
+      </view>
+    </block>
+    <view wx:else class="no-messages-hint">暂无消息</view>
+  </view>
+  <view class="input-area">
+    <input class="message-input" placeholder="请输入消息" value="{{inputContent}}" bindinput="onInputContent"/>
+    <button class="send-button" bindtap="sendMessage">发送</button>
+  </view>
+</view>

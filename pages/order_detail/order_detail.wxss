@@ -1,0 +1,128 @@
+@import "/app.wxss";
+
+.order-status-card {
+  text-align: center;
+  padding: 40rpx;
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.status-label {
+  font-size: 32rpx;
+  color: var(--text-color-dark);
+  font-weight: bold;
+  margin-right: 20rpx;
+}
+
+.status-text {
+  font-size: 36rpx;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.section-title {
+  margin-left: 30rpx;
+}
+
+.service-info-card {
+  display: flex;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.service-cover {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 10rpx;
+  margin-right: 30rpx;
+  flex-shrink: 0;
+}
+
+.service-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.service-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: var(--text-color-dark);
+  margin-bottom: 10rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.service-shop-name {
+  font-size: 28rpx;
+  color: var(--text-color-normal);
+  margin-bottom: 10rpx;
+}
+
+.service-price, .service-duration {
+  font-size: 28rpx;
+  color: var(--text-color-dark);
+  margin-bottom: 5rpx;
+}
+
+.detail-list {
+  padding: 0 30rpx;
+  margin-bottom: 40rpx;
+}
+
+.detail-item {
+  display: flex;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid var(--border-color);
+  font-size: 30rpx;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  width: 200rpx;
+  color: var(--text-color-normal);
+  flex-shrink: 0;
+}
+
+.value {
+  flex: 1;
+  color: var(--text-color-dark);
+  text-align: right; 
+}
+
+.total-price-item {
+  border-top: 1rpx dashed var(--border-color); 
+  margin-top: 20rpx;
+  padding-top: 30rpx;
+  font-weight: bold;
+}
+.total-price-label {
+  font-size: 34rpx;
+  color: var(--text-color-dark);
+}
+.total-price-value {
+  font-size: 38rpx;
+  color: var(--primary-color);
+}
+
+.order-action-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 30rpx 30rpx env(safe-area-inset-bottom);
+}
+
+.action-button {
+  margin-left: 20rpx;
+  padding: 15rpx 40rpx;
+  font-size: 30rpx;
+  border-radius: 10rpx;
+  border: none;
+  line-height: 1;
+}

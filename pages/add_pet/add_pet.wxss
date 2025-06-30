@@ -1,0 +1,116 @@
+/* pages/add_pet/add_pet.wxss */
+@import "/app.wxss";
+
+.form-section {
+  margin-top: 20rpx;
+  padding: 0 30rpx;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  width: 180rpx;
+  font-size: 30rpx;
+  color: var(--text-color-dark);
+  flex-shrink: 0;
+}
+
+.input {
+  flex: 1;
+  font-size: 30rpx;
+  color: var(--text-color-dark);
+  margin-left: 20rpx;
+  text-align: right; 
+}
+
+.radio-group {
+  display: flex;
+  flex: 1;
+  margin-left: 20rpx;
+  justify-content: flex-end; 
+}
+
+.radio-label {
+  margin-left: 40rpx; 
+  font-size: 30rpx;
+  color: var(--text-color-dark);
+}
+
+.switch {
+  margin-left: auto; 
+}
+
+.textarea-item {
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 20rpx;
+}
+
+.textarea-item .label {
+  margin-bottom: 15rpx;
+}
+
+.textarea {
+  width: 100%;
+  height: 150rpx;
+  border: 1rpx solid var(--border-color);
+  border-radius: 10rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  color: var(--text-color-dark);
+}
+
+.upload-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  margin-left: auto;
+  border: 1rpx dashed var(--border-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.arrow {
+  color: var(--text-color-light);
+  margin-left: 20rpx;
+}
+
+/* 移除之前的 .submit-button 样式，因为现在使用全局的 .action-button-yellow */
+/* .submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #FFC107; 
+  color: #fff;
+  border-radius: 10rpx;
+  font-size: 32rpx;
+  padding: 20rpx 0;
+  margin: 50rpx 30rpx; 
+  border: none;
+  line-height: 1;
+}
+
+.button-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 15rpx;
+}
+*/
+
+/* 确保底部按钮的宽度和边距，可以复用 calendar 页面的 full-width-button */
+.full-width-button {
+  width: auto; /* 重置宽度，让 margin 控制 */
+  margin: 50rpx 30rpx; /* 上方与内容间距，左右边距 */
+  margin-bottom: calc(50rpx + env(safe-area-inset-bottom)); /* 适配底部安全区 */
+}

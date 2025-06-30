@@ -1,0 +1,113 @@
+@import "/app.wxss";
+
+.selected-date-info {
+  text-align: center;
+  padding: 30rpx;
+  margin-top: 20rpx;
+}
+
+.date-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--text-color-dark);
+}
+
+.section-title {
+  margin-left: 30rpx;
+}
+
+.schedule-list {
+  padding: 0 30rpx;
+}
+
+.schedule-item {
+  display: flex;
+  align-items: center;
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.schedule-item:last-child {
+  border-bottom: none;
+}
+
+.schedule-time {
+  font-size: 28rpx;
+  color: var(--primary-color);
+  font-weight: bold;
+  margin-right: 30rpx;
+  flex-shrink: 0;
+}
+
+.schedule-desc {
+  flex: 1;
+  font-size: 30rpx;
+  color: var(--text-color-dark);
+}
+
+.delete-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-left: 20rpx;
+  flex-shrink: 0;
+}
+
+.no-data-hint {
+  text-align: center;
+  color: var(--text-color-light);
+  padding: 30rpx;
+  font-size: 28rpx;
+}
+
+.add-schedule-form {
+  padding: 30rpx;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.form-item:last-child {
+  border-bottom: none;
+}
+
+.label {
+  width: 150rpx;
+  font-size: 30rpx;
+  color: var(--text-color-dark);
+  flex-shrink: 0;
+}
+
+.picker-value, .input {
+  flex: 1;
+  font-size: 30rpx;
+  color: var(--text-color-dark);
+  text-align: right;
+}
+
+.textarea-item {
+  flex-direction: column;
+  align-items: flex-start;
+  padding-bottom: 20rpx;
+}
+
+.textarea-item .label {
+  margin-bottom: 15rpx;
+}
+
+textarea {
+  width: 100%;
+  height: 120rpx;
+  border: 1rpx solid var(--border-color);
+  border-radius: 10rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+}
+
+.primary-button {
+  margin-top: 40rpx;
+}

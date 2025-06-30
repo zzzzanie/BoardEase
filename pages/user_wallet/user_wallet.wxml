@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="balance-section card">
+    <text class="balance-label">账户余额</text>
+    <text class="balance-amount">¥ {{balance}}</text>
+    <view class="wallet-buttons flex-space-between">
+      <button class="wallet-btn secondary-button" bindtap="goToRecharge">提现</button>
+      <button class="wallet-btn action-button-yellow" bindtap="goToWithdraw">充值</button>
+    </view>
+  </view>
+
+  <view class="section-title">交易明细</view>
+  <view class="transaction-list card">
+    <block wx:if="{{transactions.length > 0}}">
+      <view wx:for="{{transactions}}" wx:key="id" class="transaction-item">
+        <view class="flex-space-between">
+          <text class="transaction-desc">{{item.description}}</text>
+          <text class="transaction-amount {{item.type === 'income' ? 'income' : 'expense'}}">{{item.type === 'income' ? '+' : '-'}}{{item.amount}}</text>
+        </view>
+        <text class="transaction-time">{{item.time}}</text>
+      </view>
+    </block>
+    <view wx:else class="no-data-hint">暂无交易记录</view>
+  </view>
+</view>

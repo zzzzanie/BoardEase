@@ -1,0 +1,21 @@
+<view class="container">
+  <view class="earnings-summary card">
+    <text class="label">可提现金额</text>
+    <text class="amount">¥ {{withdrawableAmount}}</text>
+    <button class=action-button-yellow" bindtap="goToWithdraw">立即提现</button>
+  </view>
+
+  <view class="section-title">收益明细</view>
+  <view class="detail-list card">
+    <block wx:if="{{earningsDetails.length > 0}}">
+      <view wx:for="{{earningsDetails}}" wx:key="id" class="detail-item">
+        <view class="flex-space-between">
+          <text class="detail-desc">{{item.description}}</text>
+          <text class="detail-amount {{item.type === 'income' ? 'income' : 'expense'}}">{{item.type === 'income' ? '+' : '-'}}{{item.amount}}</text>
+        </view>
+        <text class="detail-time">{{item.time}}</text>
+      </view>
+    </block>
+    <view wx:else class="no-data-hint">暂无收益记录</view>
+  </view>
+</view>

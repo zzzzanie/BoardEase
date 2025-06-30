@@ -1,0 +1,30 @@
+<view class="container">
+  <view class="chat-list">
+    <block wx:if="{{chats.length > 0}}">
+      <view wx:for="{{chats}}" wx:key="id" 
+            class="chat-item" 
+            bindtap="goToChatDetail" 
+            data-id="{{item.id}}" 
+            data-type="{{item.type}}" 
+            data-pet-name="{{item.petName}}" 
+            data-order-id="{{item.orderId}}"> 
+        <image class="chat-avatar" src="{{item.avatar || '/images/default_avatar.png'}}" mode="aspectFill"></image>
+        <view class="chat-info">
+          <view class="chat-header">
+            <text class="chat-name text-overflow-single">{{item.name}}</text>
+            <text class="pet-name">[{{item.petName}}]</text>
+            <text class="order-status {{item.status === '寄养中' ? 'status-active' : 'status-pending'}}">{{item.status}}</text>
+          </view>
+          <text class="last-message text-overflow-single">{{item.lastMessage}}</text>
+        </view>
+        <view class="chat-right">
+          <text class="chat-time">{{item.time}}</text>
+          <view wx:if="{{item.unreadCount > 0}}" class="unread-badge">{{item.unreadCount}}</view>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="no-data-hint">
+      <text>暂无与宠物主人的聊天记录</text>
+    </view>
+  </view>
+</view>

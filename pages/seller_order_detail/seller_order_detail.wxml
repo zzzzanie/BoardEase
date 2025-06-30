@@ -1,0 +1,4 @@
+<view class="container flex-center">
+  <text class="section-title">卖家订单详情页面</text>
+  <text class="hint-text">这里将展示卖家视角的订单详情</text>
+</view>

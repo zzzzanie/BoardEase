@@ -1,0 +1,147 @@
+@import "/app.wxss";
+
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  background-color: var(--card-bg-color);
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.tab-item {
+  font-size: 30rpx;
+  color: var(--text-color-normal);
+  padding: 10rpx 20rpx;
+  position: relative;
+}
+
+.tab-item.active {
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+.tab-item.active::after {
+  content: '';
+  position: absolute;
+  bottom: -10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60rpx;
+  height: 6rpx;
+  background-color: var(--primary-color);
+  border-radius: 3rpx;
+}
+
+.order-list {
+  padding: 20rpx 30rpx;
+}
+
+.order-item {
+  margin-bottom: 30rpx;
+  padding: 30rpx;
+}
+
+.order-header {
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid var(--border-color);
+  margin-bottom: 20rpx;
+}
+
+.shop-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: var(--text-color-dark);
+}
+
+.order-status {
+  font-size: 28rpx;
+  color: var(--primary-color); 
+  font-weight: bold;
+}
+
+.order-content {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.service-image {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 10rpx;
+  margin-right: 30rpx;
+}
+
+.service-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; 
+}
+
+.service-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--text-color-dark);
+  margin-bottom: 10rpx;
+}
+
+.service-duration {
+  font-size: 28rpx;
+  color: var(--text-color-normal);
+  margin-bottom: 10rpx;
+}
+
+.order-total-price {
+  font-size: 30rpx;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* 订单底部按钮区域样式 */
+.order-footer {
+  display: flex;
+  justify-content: flex-end; /* 确保所有按钮组都靠右对齐 */
+  padding-top: 20rpx;
+  border-top: 1rpx solid var(--border-color);
+}
+
+.order-btn {
+  margin-left: 20rpx; /* 按钮之间间隔 */
+  padding: 10rpx 30rpx;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+  border: none;
+  line-height: 1; 
+  flex-shrink: 0; /* 防止按钮被压缩 */
+}
+
+.primary-button-small {
+  background-color: var(--primary-color); /* 主题色（珊瑚色） */
+  color: #fff;
+}
+
+.secondary-button-small {
+  background-color: #f0f0f0; /* 浅灰色背景 */
+  color: var(--text-color-dark); /* 深色文字 */
+  border: 1rpx solid #ddd; /* 增加边框，更清晰 */
+}
+
+/* 评价订单按钮的黄色样式 */
+.rate-order-button {
+  background-color: #FFC107; /* 黄色 */
+  color: #333; /* 黑色或深色文字 */
+  /* 由于它是 order-btn，也会继承 padding, font-size 等通用样式 */
+}
+
+.no-data-hint {
+  text-align: center;
+  color: var(--text-color-light);
+  padding: 50rpx;
+  font-size: 28rpx;
+}
+
+/* 新增：用于将按钮推到右侧特定位置 */
+.auto-margin-left {
+  margin-left: auto !important; /* 强制覆盖 order-btn 的 margin-left */
+}

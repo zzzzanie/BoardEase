@@ -1,0 +1,47 @@
+<view class="container">
+  <view class="pet-detail-card card">
+    <image class="pet-detail-avatar" src="{{pet.avatar || '/images/default_pet_avatar.png'}}" mode="aspectFill"></image>
+    <view class="pet-basic-info-centered">
+      <view class="pet-name-gender flex-align-center">
+        <text class="pet-name">{{pet.name}}</text>
+        <image wx:if="{{pet.gender === 'male'}}" src="/images/icon_male.png" class="gender-icon"></image>
+        <image wx:if="{{pet.gender === 'female'}}" src="/images/icon_female.png" class="gender-icon"></image>
+      </view>
+      <view class="pet-tags flex-row">
+        <text class="tag age-tag">{{pet.age}}以内</text>
+        <text class="tag neutered-tag">{{pet.isNeutered ? '已绝育' : '未绝育'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section-card card">
+    <text class="section-title-text">基本信息</text>
+    <view class="info-item">
+      <text class="label">种类:</text> <text class="value">{{pet.species}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">生日:</text> <text class="value">{{pet.birthdate}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">性格:</text> <text class="value">{{pet.character}}</text>
+    </view>
+    <view class="info-item">
+      <text class="label">健康状况:</text> <text class="value">{{pet.healthStatus}}</text>
+    </view>
+  </view>
+
+  <view class="section-card card">
+    <text class="section-title-text">寄养记录</text>
+    <block wx:if="{{fosterRecords.length > 0}}">
+      <view wx:for="{{fosterRecords}}" wx:key="id" class="record-item">
+        <text>{{item.startDate}} - {{item.endDate}} ({{item.sellerName}})</text>
+      </view>
+    </block>
+    <view wx:else class="no-data-hint">暂无寄养记录</view>
+  </view>
+
+  <button class="yellow-edit-button" bindtap="goToEditPet">
+    <image src="/images/icon_edit_dark.png" class="button-icon"></image>
+    <text>编辑</text>
+  </button>
+</view>

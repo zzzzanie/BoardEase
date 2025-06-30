@@ -1,0 +1,93 @@
+@import "/app.wxss";
+
+.balance-section {
+  text-align: center;
+  padding: 50rpx;
+  margin-top: 20rpx;
+}
+
+.balance-label {
+  font-size: 30rpx;
+  color: var(--text-color-normal);
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.balance-amount {
+  font-size: 68rpx;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 50rpx;
+  display: block;
+}
+
+.wallet-buttons {
+  width: 100%;
+}
+
+.wallet-btn {
+  width: 48%; /* 确保两个按钮能并排 */
+  padding: 15rpx 0;
+  font-size: 30rpx;
+  border-radius: 10rpx;
+  border: none;
+  line-height: 1; /* 修正button默认行高 */
+  /* background-color 和 color 将由 .primary-button / .secondary-button / .action-button-yellow 提供 */
+}
+
+/* 针对充值按钮 (第一个按钮)，确保其为灰色 */
+.wallet-btn:first-child { 
+  background-color: #f0f0f0 !important; /* 强制浅灰色背景 */
+  color: var(--text-color-dark) !important; /* 强制深色文字 */
+  border: 1rpx solid #ddd !important; /* 强制边框 */
+}
+
+.section-title {
+  margin-left: 30rpx; 
+}
+
+.transaction-list {
+  margin-bottom: 30rpx;
+  padding: 0 30rpx;
+}
+
+.transaction-item {
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.transaction-item:last-child {
+  border-bottom: none;
+}
+
+.transaction-desc {
+  font-size: 30rpx;
+  color: var(--text-color-dark);
+}
+
+.transaction-amount {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.expense {
+  color: #E74C3C; 
+}
+
+.income {
+  color: #2ECC71; 
+}
+
+.transaction-time {
+  font-size: 24rpx;
+  color: var(--text-color-light);
+  margin-top: 10rpx;
+  display: block;
+}
+
+.no-data-hint {
+  text-align: center;
+  color: var(--text-color-light);
+  padding: 30rpx;
+  font-size: 28rpx;
+}
