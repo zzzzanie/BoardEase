@@ -49,119 +49,58 @@ App({
   globalData: {
     userInfo: null,      // 存储用户基本信息
     userToken: null,     // 存储用户登录凭证
-    userRole: 'owner',   // **关键：存储用户角色。初始可以设置为 'owner' 或 null，
-                         //  实际项目中通过后端登录接口获取并设置。
-                         //  可选值：'owner' (宠物主人), 'seller' (卖家)**
-    systemInfo: null,    // 存储系统信息
-    tabBarConfig: {      // 存储不同角色的tabBar配置
-      owner: {
-        color: "#999999",
-        selectedColor: "#FF7F50",
-        list: [
-          {
-            pagePath: "pages/index/index",
-            text: "首页",
-            iconPath: "/images/tab_home_normal.png",
-            selectedIconPath: "/images/tab_home_selected.png"
-          },
-          {
-            pagePath: "pages/foster/foster",
-            text: "寄养",
-            iconPath: "/images/tab_foster_normal.png",
-            selectedIconPath: "/images/tab_foster_selected.png"
-          },
-          {
-            pagePath: "pages/mine/mine",
-            text: "我的",
-            iconPath: "/images/tab_mine_normal.png",
-            selectedIconPath: "/images/tab_mine_selected.png"
-          }
-        ]
-      },
-      seller: {
-        color: "#999999",
-        selectedColor: "#FF7F50",
-        list: [
-          {
-            pagePath: "pages/seller_orders/seller_orders",
-            text: "订单管理",
-            iconPath: "/images/tab_order_normal.png",
-            selectedIconPath: "/images/tab_order_selected.png"
-          },
-          {
-            pagePath: "pages/service_management/service_management",
-            text: "服务管理",
-            iconPath: "/images/tab_service_normal.png",
-            selectedIconPath: "/images/tab_service_selected.png"
-          },
-          {
-            pagePath: "pages/mine/mine",
-            text: "我的",
-            iconPath: "/images/tab_mine_normal.png",
-            selectedIconPath: "/images/tab_mine_selected.png"
-          }
-        ]
-      }
-    }
+    userRole: 'owner',   // 存储用户角色：'owner' (宠物主人) 或 'seller' (商家)
+    systemInfo: null     // 存储系统信息
   },
 
   // 模拟登录和设置用户角色（实际项目中请替换为真实后端交互）
   checkLoginAndSetRole: function() {
-    // 假设从本地存储或通过API获取到用户的角色
-    // 这里我们简单模拟，实际请根据您的业务逻辑判断
-    // 示例：
-    // let storedRole = wx.getStorageSync('currentUserRole');
-    // if (storedRole) {
-    //   this.globalData.userRole = storedRole;
-    // } else {
-    //   // 如果没有存储角色，默认是宠物主人
-    //   this.globalData.userRole = 'owner'; 
-    //   // 或者引导用户登录选择身份
-    // }
+    // 从本地存储获取用户角色
+    const storedRole = wx.getStorageSync('currentUserRole');
+    if (storedRole) {
+      this.globalData.userRole = storedRole;
+    } else {
+      // 如果没有存储角色，默认是宠物主人
+      this.globalData.userRole = 'owner';
+      wx.setStorageSync('currentUserRole', 'owner');
+    }
     
-    // 为了演示方便，这里直接设置一个默认角色
-    // 您可以在登录成功后，根据后端返回的用户信息，设置 'owner' 或 'seller'
-    // this.globalData.userRole = 'owner'; // 默认设置为宠物主人
-    // this.globalData.userRole = 'seller'; // 调试时可以切换为卖家
     console.log('当前用户角色：', this.globalData.userRole);
-    // 设置对应角色的tabBar
-    this.setTabBar(this.globalData.userRole);
+    
+    // 更新自定义tabBar的显示
+    this.updateCustomTabBar();
   },
 
-  // 设置tabBar的方法
-  setTabBar: function(role) {
-    if (!role || !this.globalData.tabBarConfig[role]) return;
-    
-    const tabConfig = this.globalData.tabBarConfig[role];
-    
-    // 设置tabBar的样式
-    wx.setTabBarStyle({
-      color: tabConfig.color,
-      selectedColor: tabConfig.selectedColor,
-      backgroundColor: "#ffffff",
-      borderStyle: "black"
-    });
-
-    // 设置每个tab的内容
-    tabConfig.list.forEach((item, index) => {
-      wx.setTabBarItem({
-        index: index,
-        text: item.text,
-        iconPath: item.iconPath,
-        selectedIconPath: item.selectedIconPath
-      });
-    });
+  // 更新自定义tabBar
+  updateCustomTabBar: function() {
+    const pages = getCurrentPages();
+    if (pages.length > 0) {
+      const currentPage = pages[pages.length - 1];
+      if (currentPage && currentPage.getTabBar) {
+        const tabBar = currentPage.getTabBar();
+        if (tabBar) {
+          tabBar.setData({
+            userRole: this.globalData.userRole
+          });
+        }
+      }
+    }
   },
 
   // 切换用户角色的方法
   switchRole: function(newRole) {
-    if (newRole && this.globalData.tabBarConfig[newRole]) {
+    if (newRole && (newRole === 'owner' || newRole === 'seller')) {
+      // 保存新角色
       this.globalData.userRole = newRole;
-      this.setTabBar(newRole);
+      wx.setStorageSync('currentUserRole', newRole);
+      
+      // 更新tabBar
+      this.updateCustomTabBar();
+      
       // 切换到对应角色的首页
-      const firstPage = this.globalData.tabBarConfig[newRole].list[0].pagePath;
+      const firstPage = newRole === 'owner' ? '/pages/index/index' : '/pages/seller_orders/seller_orders';
       wx.switchTab({
-        url: '/' + firstPage
+        url: firstPage
       });
     }
   },

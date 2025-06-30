@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {},
+  "navigationBarTitleText": "服务管理",
+  "enablePullDownRefresh": true,
+  "custom-tab-bar": true
 }

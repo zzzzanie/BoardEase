@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {},
+  "navigationBarTitleText": "寄养",
+  "enablePullDownRefresh": true,
+  "custom-tab-bar": true
 }
