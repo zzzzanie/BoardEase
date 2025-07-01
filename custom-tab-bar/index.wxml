@@ -3,12 +3,16 @@
   <cover-view 
     wx:for="{{userRole === 'owner' ? ownerList : sellerList}}" 
     wx:key="index" 
-    class="tab-bar-item" 
+    class="tab-bar-item {{selected === index ? 'selected' : ''}}" 
     data-path="{{item.pagePath}}" 
     data-index="{{index}}" 
     bindtap="switchTab"
   >
-    <cover-image class="tab-bar-icon" src="{{selected === index ? item.selectedIconPath : item.iconPath}}"></cover-image>
-    <cover-view class="tab-bar-text" style="color: {{selected === index ? '#FF7F50' : '#999999'}}">{{item.text}}</cover-view>
+    <cover-image 
+      class="tab-bar-icon"
+      src="{{selected === index ? item.selectedIconPath : item.iconPath}}"
+      mode="aspectFit"
+    ></cover-image>
+    <cover-view class="tab-bar-text">{{item.text}}</cover-view>
   </cover-view>
 </cover-view> 

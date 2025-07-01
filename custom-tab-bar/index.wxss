@@ -6,6 +6,7 @@
   height: 96rpx;
   background: white;
   display: flex;
+  z-index: 999;
   padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -28,6 +29,18 @@
   position: relative;
 }
 
+.tab-bar-item.selected::after {
+  content: '';
+  position: absolute;
+  bottom: 10rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 4rpx;
+  background: #FF7F50;
+  border-radius: 2rpx;
+}
+
 .tab-bar-icon {
   width: 54rpx;
   height: 54rpx;
@@ -36,5 +49,11 @@
 
 .tab-bar-text {
   font-size: 24rpx;
-  line-height: 1;
+  color: #999999;
+  transition: color 0.3s ease;
+}
+
+.selected .tab-bar-text {
+  color: #FF7F50;
+  font-weight: 500;
 } 

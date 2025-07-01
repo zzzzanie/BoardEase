@@ -4,6 +4,8 @@
     "pages/index/index",          
     "pages/foster/foster",        
     "pages/mine/mine",            
+    "pages/seller_orders/seller_orders",         
+    "pages/service_management/service_management",
     
     "pages/pet_archive/pet_archive",    
     "pages/add_pet/add_pet",            
@@ -13,8 +15,6 @@
     "pages/user_orders/user_orders",    
     "pages/user_calendar/user_calendar",
 
-    "pages/seller_management/seller_management", 
-    "pages/seller_orders/seller_orders",         
     "pages/seller_mine_detail/seller_mine_detail", 
     "pages/seller_service_add/seller_service_add", 
     "pages/seller_earnings/seller_earnings", 
@@ -22,13 +22,13 @@
     "pages/seller_order_detail/seller_order_detail",
     "pages/employee_management/employee_management",     
     "pages/account_switch/account_switch",         
+    "pages/seller_management/seller_management",
 
     "pages/chat_detail/chat_detail",
     "pages/order_detail/order_detail",
     "pages/rate_order/rate_order",
     "pages/daily_schedule/daily_schedule",
-    "pages/wallet_recharge/wallet_recharge",
-    "pages/service_management/service_management"
+    "pages/wallet_recharge/wallet_recharge"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -46,43 +46,23 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页",
-        "iconPath": "images/tab_home_normal.png",
-        "selectedIconPath": "images/tab_home_selected.png"
+        "text": "首页"
       },
       {
         "pagePath": "pages/foster/foster",
-        "text": "寄养",
-        "iconPath": "images/tab_foster_normal.png",
-        "selectedIconPath": "images/tab_foster_selected.png"
+        "text": "寄养"
       },
       {
         "pagePath": "pages/mine/mine",
-        "text": "我的",
-        "iconPath": "images/tab_mine_normal.png",
-        "selectedIconPath": "images/tab_mine_selected.png"
-      }
-    ]
-  },
-  "customTabBar": {
-    "list": [
+        "text": "我的"
+      },
       {
         "pagePath": "pages/seller_orders/seller_orders",
-        "text": "订单管理",
-        "iconPath": "images/tab_order_normal.png",
-        "selectedIconPath": "images/tab_order_selected.png"
+        "text": "订单管理"
       },
       {
         "pagePath": "pages/service_management/service_management",
-        "text": "服务管理",
-        "iconPath": "images/tab_service_normal.png",
-        "selectedIconPath": "images/tab_service_selected.png"
-      },
-      {
-        "pagePath": "pages/seller_management/seller_management",
-        "text": "我的",
-        "iconPath": "images/tab_mine_normal.png",
-        "selectedIconPath": "images/tab_mine_selected.png"
+        "text": "服务管理"
       }
     ]
   },
