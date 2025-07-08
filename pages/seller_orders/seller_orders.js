@@ -1,99 +1,127 @@
-// pages/seller_orders/seller_orders.js
+// pages/merchant/orders.js
 Page({
   data: {
-    currentTab: 'all', // all, new, confirmed, completed
-    orders: []
+    activeTab: 'processing', // 当前激活的tab：'processing' | 'completed'
+    orders: [], // 订单数据将从数据库获取
+    processingOrders: [],
+    completedOrders: []
   },
 
   onLoad: function (options) {
-    if (options.type) {
-      this.setData({
-        currentTab: options.type
-      });
-    }
-    this.loadOrders(this.data.currentTab);
+    this.fetchOrders();
+    console.log('商户订单管理页面加载');
+    const orderId = options.id;
+    // 根据orderId获取订单详情
   },
 
-  changeTab: function (e) {
-    const tab = e.currentTarget.dataset.tab;
-    if (this.data.currentTab === tab) return;
-    this.setData({
-      currentTab: tab,
-      orders: [] // 清空现有订单，重新加载
+  onShow: function () {
+    this.fetchOrders();
+  },
+
+  // 从云数据库获取订单
+  fetchOrders: function () {
+    const that = this;
+    wx.cloud = wx.cloud || {};
+    if (!wx.cloud.database) {
+      wx.showToast({ title: '请在小程序后台开启云开发', icon: 'none' });
+      return;
+    }
+    const db = wx.cloud.database();
+    // TODO: 如有 seller 身份，可用 provider_id 过滤
+    db.collection('orders').get({
+      success: function(res) {
+        const orders = res.data;
+        that.setData({ orders }, that.updateOrderLists);
+      },
+      fail: function(err) {
+        wx.showToast({ title: '订单加载失败', icon: 'none' });
+        console.error('订单获取失败', err);
+      }
     });
-    this.loadOrders(tab);
   },
 
-  loadOrders: function (status) {
-    // 实际开发中：调用后端API获取对应状态的卖家订单列表
-    console.log('加载卖家订单，状态:', status);
-    wx.showLoading({ title: '加载中...' });
-
-    // 模拟数据
-    let mockOrders = [];
-    if (status === 'all') {
-      mockOrders = [
-        { id: 'so1', userName: '小王', status: 'completed', statusText: '已完成', serviceTitle: '专业家庭寄养服务', serviceCover: '/images/example_service_1.png', duration: 7, totalPrice: '560.00' },
-        { id: 'so2', userName: '李小姐', status: 'confirmed', statusText: '待服务', serviceTitle: '猫咪专属豪华寄宿', serviceCover: '/images/example_service_2.png', duration: 3, totalPrice: '360.00' },
-        { id: 'so3', userName: '张先生', status: 'new', statusText: '新订单', serviceTitle: '狗狗短期托管', serviceCover: '/images/example_service_3.png', duration: 1, totalPrice: '100.00' }
-      ];
-    } else if (status === 'new') {
-      mockOrders = [{ id: 'so3', userName: '张先生', status: 'new', statusText: '新订单', serviceTitle: '狗狗短期托管', serviceCover: '/images/example_service_3.png', duration: 1, totalPrice: '100.00' }];
-    } else if (status === 'confirmed') {
-      mockOrders = [{ id: 'so2', userName: '李小姐', status: 'confirmed', statusText: '待服务', serviceTitle: '猫咪专属豪华寄宿', serviceCover: '/images/example_service_2.png', duration: 3, totalPrice: '360.00' }];
-    } else if (status === 'completed') {
-      mockOrders = [{ id: 'so1', userName: '小王', status: 'completed', statusText: '已完成', serviceTitle: '专业家庭寄养服务', serviceCover: '/images/example_service_1.png', duration: 7, totalPrice: '560.00' }];
-    }
-
-    setTimeout(() => {
-      this.setData({ orders: mockOrders });
-      wx.hideLoading();
-    }, 500);
-  },
-
-  goToOrderDetail: function (e) {
+  // 新增：跳转到订单详情页
+  navigateToDetail: function(e) {
     const orderId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: `/pages/seller_order_detail/seller_order_detail?id=${orderId}` // 假设有卖家订单详情页
+      url: `/pages/seller_order_detail/seller_order_detail?id=${orderId}`
+    });
+  },
+  // Tab切换事件
+  onTabChange: function (e) {
+    const tab = e.currentTarget.dataset.tab;
+    this.setData({
+      activeTab: tab
+    }, this.updateOrderLists);
+  },
+
+  // 接单事件
+  onAcceptOrder: function (e) {
+    const orderId = e.currentTarget.dataset.id;
+    const orders = this.data.orders.map(order => {
+      if (order.id === orderId) {
+        return { ...order, status: 'processing' };
+      }
+      return order;
+    });
+    this.setData({ orders }, this.updateOrderLists);
+    wx.showToast({
+      title: '接单成功',
+      icon: 'success',
+      duration: 2000
     });
   },
 
-  confirmOrder: function (e) {
+  // 拒单事件
+  onRejectOrder: function (e) {
     const orderId = e.currentTarget.dataset.id;
     wx.showModal({
-      title: '确认订单',
-      content: '确定要确认此订单并开始服务吗？',
+      title: '确认拒单',
+      content: '确定要拒绝这个订单吗？',
       success: (res) => {
         if (res.confirm) {
-          // 实际开发中：调用后端API确认订单
-          console.log('确认订单ID:', orderId);
-          wx.showToast({ title: '订单已确认', icon: 'success' });
-          this.loadOrders(this.data.currentTab); // 刷新当前tab的订单
+          const orders = this.data.orders.filter(order => order.id !== orderId);
+          this.setData({ orders }, this.updateOrderLists);
+          wx.showToast({
+            title: '已拒绝订单',
+            icon: 'success',
+            duration: 2000
+          });
         }
       }
     });
   },
 
-  rejectOrder: function (e) {
+  // 完成订单事件
+  onCompleteOrder: function (e) {
     const orderId = e.currentTarget.dataset.id;
-    wx.showModal({
-      title: '拒绝订单',
-      content: '确定要拒绝此订单吗？',
-      success: (res) => {
-        if (res.confirm) {
-          // 实际开发中：调用后端API拒绝订单
-          console.log('拒绝订单ID:', orderId);
-          wx.showToast({ title: '订单已拒绝', icon: 'none' });
-          this.loadOrders(this.data.currentTab); // 刷新当前tab的订单
-        }
+    const orders = this.data.orders.map(order => {
+      if (order.id === orderId) {
+        return { ...order, status: 'completed' };
       }
+      return order;
+    });
+    this.setData({ orders }, this.updateOrderLists);
+    wx.showToast({
+      title: '订单已完成',
+      icon: 'success',
+      duration: 2000
     });
   },
 
-  contactUser: function (e) {
-    const orderId = e.currentTarget.dataset.id;
-    // 实际开发中：获取用户ID，跳转到聊天页
-    wx.showToast({ title: '跳转到与买家聊天', icon: 'none' });
-    // wx.navigateTo({ url: `/pages/chat_detail/chat_detail?userId=${userId}` });
+  // 查看详情事件
+  onViewDetail: function (e) {
+    this.navigateToDetail(e);
+  },
+
+  // 更新processingOrders和completedOrders
+  updateOrderLists: function () {
+    const processingOrders = this.data.orders.filter(
+      o => o.status === 'pending' || o.status === 'processing'
+    );
+    const completedOrders = this.data.orders.filter(
+      o => o.status === 'completed'
+    );
+    this.setData({ processingOrders, completedOrders });
   }
-});
+}); 

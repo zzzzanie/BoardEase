@@ -1,2 +1,117 @@
-<!--pages/index/index.wxml-->
-<text>pages/index/index.wxml</text>
+<!-- 宠物寄养小程序首页 -->
+<view class="container">
+  <!-- 顶部区域 -->
+  <view class="header">
+    <view class="header-bg"></view>
+    <view class="header-content">
+      <!-- 右上角功能按钮 -->
+      <view class="header-actions">
+        <view class="action-btn" bindtap="onNotificationTap">
+          <icon type="notification" size="20" color="#333"></icon>
+        </view>
+      </view>
+      
+      <!-- 居中头像 -->
+      <view class="avatar-container">
+        <image class="avatar" src="/images/cat-avatar.png" mode="aspectFill"></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 主要内容区域 -->
+  <view class="main-content">
+    <!-- 模块一：宠物 -->
+    <view class="module">
+      <view class="module-header">
+        <view class="module-title">
+          <icon type="success" size="18" color="#FFA200"></icon>
+          <text class="title-text">您的家人</text>
+        </view>
+        <view class="more-btn" bindtap="onMoreTap" data-type="宠物">
+          <text class="more-text">更多</text>
+          <icon type="arrow" size="12" color="#666"></icon>
+        </view>
+      </view>
+      
+      <view class="pet-list">
+        <view class="pet-card" wx:for="{{petList}}" wx:key="id" bindtap="onPetCardTap" data-id="{{item.id}}">
+          <image class="pet-image" src="{{item.image}}" mode="aspectFill"></image>
+          <view class="pet-info">
+            <view class="pet-name-row">
+              <text class="pet-name">{{item.name}}</text>
+              <icon type="{{item.gender === 'male' ? 'success' : 'warn'}}" size="14" color="{{item.gender === 'male' ? '#007AFF' : '#FF6B6B'}}"></icon>
+            </view>
+            <text class="pet-breed">{{item.breed}}</text>
+            <text class="pet-age">{{item.age}}岁</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 模块二：寄养师 -->
+    <view class="module">
+      <view class="module-header">
+        <view class="module-title">
+          <icon type="success" size="18" color="#FFA200"></icon>
+          <text class="title-text">明星寄养师</text>
+        </view>
+        <view class="more-btn" bindtap="onMoreTap" data-type="寄养师">
+          <text class="more-text">更多</text>
+          <icon type="arrow" size="12" color="#666"></icon>
+        </view>
+      </view>
+      
+      <view class="sitter-list">
+        <view class="sitter-card" wx:for="{{topSitters}}" wx:key="id" bindtap="onSitterCardTap" data-id="{{item.id}}">
+          <view class="sitter-avatar-container">
+            <image class="sitter-avatar" src="{{item.avatar || '/images/default_avatar.png'}}" mode="aspectFill"></image>
+            <view class="certification-badge">
+              <icon type="success" size="12" color="#FFA200"></icon>
+            </view>
+          </view>
+          <text class="sitter-name">{{item.name}}</text>
+          <view class="sitter-rating">
+            <view class="stars">
+              <icon type="success" size="10" color="#FF6600" wx:for="{{5}}" wx:key="*this"></icon>
+            </view>
+            <text class="rating-score">{{item.avgRating || 0}}</text>
+          </view>
+          <text class="sitter-orders">接单{{item.orderCount || 0}}次</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 模块三：严选商家 -->
+    <view class="module">
+      <view class="module-header">
+        <view class="module-title">
+          <icon type="success" size="18" color="#FFA200"></icon>
+          <text class="title-text">严选商家</text>
+        </view>
+        <view class="more-btn" bindtap="onMoreTap" data-type="推荐卖家">
+          <text class="more-text">更多</text>
+          <icon type="arrow" size="12" color="#666"></icon>
+        </view>
+      </view>
+      
+      <view class="store-list">
+        <view class="store-card" wx:for="{{topStores}}" wx:key="id" bindtap="onStoreCardTap" data-id="{{item.id}}">
+          <image class="store-image" src="{{item.logo || '/images/default_shop_logo.png'}}" mode="aspectFill"></image>
+          <view class="store-info">
+            <text class="store-name">{{item.shopName}}</text>
+            <view class="store-rating">
+              <view class="stars">
+                <icon type="success" size="12" color="#FF6600" wx:for="{{5}}" wx:key="*this"></icon>
+              </view>
+              <text class="rating-score">{{item.avgRating || 0}}</text>
+            </view>
+            <view class="store-tags">
+              <text class="popularity-tag">接单{{item.orderCount || 0}}次</text>
+              <text class="distance">{{item.address || '未知地址'}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view> 

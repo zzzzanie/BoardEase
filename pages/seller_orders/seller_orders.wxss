@@ -1,140 +1,265 @@
-@import "/app.wxss";
+/* pages/merchant/orders.wxss */
 
-.tabs {
-    display: flex;
-    justify-content: space-around;
-    background-color: var(--card-bg-color);
-    padding: 25rpx 0;
-    border-bottom: 1rpx solid var(--border-color);
+/* 容器 */
+.container {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  padding-bottom: 40rpx;
+}
+
+/* 标题栏 */
+.header {
+  background: linear-gradient(135deg, #FFB300 0%, #FFA200 100%);
+  padding: 40rpx 30rpx;
+  text-align: center;
+}
+
+.title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Tab切换栏 */
+.tab-bar {
+  display: flex;
+  background: #fff;
+  border-bottom: 1rpx solid #f0f0f0;
+  margin-bottom: 20rpx;
 }
 
 .tab-item {
-    font-size: 30rpx;
-    color: var(--text-color-normal);
-    padding: 10rpx 20rpx;
-    position: relative;
+  flex: 1;
+  padding: 30rpx 0;
+  text-align: center;
+  position: relative;
 }
 
-.tab-item.active {
-    color: var(--primary-color);
-    font-weight: bold;
+.tab-text {
+  font-size: 28rpx;
+  color: #666;
+  transition: color 0.3s;
+}
+
+.tab-item.active .tab-text {
+  color: #FFB300;
+  font-weight: 600;
 }
 
 .tab-item.active::after {
-    content: '';
-    position: absolute;
-    bottom: -10rpx;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60rpx;
-    height: 6rpx;
-    background-color: var(--primary-color);
-    border-radius: 3rpx;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60rpx;
+  height: 4rpx;
+  background: #FFB300;
+  border-radius: 2rpx;
 }
 
+/* 订单列表 */
 .order-list {
-    padding: 20rpx 30rpx;
+  padding: 0 30rpx;
 }
 
-.order-item {
-    margin-bottom: 30rpx;
-    padding: 30rpx;
+/* 订单卡片 */
+.order-card {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s;
 }
 
-.order-header {
-    padding-bottom: 20rpx;
-    border-bottom: 1rpx solid var(--border-color);
-    margin-bottom: 20rpx;
+.order-card.completed {
+  background: #f9f9f9;
+  opacity: 0.8;
 }
 
-.user-name {
-    font-size: 30rpx;
-    font-weight: bold;
-    color: var(--text-color-dark);
+/* 用户信息区 */
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 25rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
 }
 
-.order-status {
-    font-size: 28rpx;
-    color: var(--text-color-normal); /* 默认灰色 */
-    font-weight: bold;
+.user-avatar {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  margin-right: 15rpx;
 }
 
-.order-status.status-new {
-    color: #FF5722; /* 新订单使用橙色或红色突出 */
+.user-nickname {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
 }
 
-.order-content {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20rpx;
+/* 宠物信息区 */
+.pet-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
 }
 
-.service-image {
-    width: 160rpx;
-    height: 160rpx;
-    border-radius: 10rpx;
-    margin-right: 30rpx;
+.pet-image {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 12rpx;
+  margin-right: 20rpx;
 }
 
-.service-details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* **添加这一行以确保文本截断生效** */
+.pet-details {
+  flex: 1;
 }
 
-.service-title {
-    font-size: 32rpx;
-    font-weight: bold;
-    color: var(--text-color-dark);
-    margin-bottom: 10rpx;
-    /* **移除 .text-overflow-single(); ** */
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+.pet-name {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
 }
 
-.service-duration {
-    font-size: 28rpx;
-    color: var(--text-color-normal);
-    margin-bottom: 10rpx;
+.service-type {
+  font-size: 24rpx;
+  color: #FFB300;
+  background: rgba(255, 179, 0, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  display: inline-block;
 }
 
-.order-total-price {
-    font-size: 30rpx;
-    color: var(--primary-color);
-    font-weight: bold;
+/* 服务信息区 */
+.service-info {
+  margin-bottom: 25rpx;
+  padding: 20rpx;
+  background: #f8f8f8;
+  border-radius: 12rpx;
 }
 
-.order-footer {
-    display: flex;
-    justify-content: flex-end;
-    padding-top: 20rpx;
-    border-top: 1rpx solid var(--border-color);
+.service-time {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.5;
 }
 
-.order-btn {
-    margin-left: 20rpx;
-    padding: 10rpx 30rpx;
-    font-size: 28rpx;
-    border-radius: 8rpx;
-    border: none;
+/* 操作按钮 */
+.action-buttons {
+  display: flex;
+  gap: 20rpx;
+  justify-content: flex-end;
 }
 
-.primary-button-small {
-    background-color: #FFC107;
-    color: var(--text-color-dark);
+.btn {
+  min-width: 120rpx;
+  height: 60rpx;
+  border-radius: 30rpx;
+  font-size: 26rpx;
+  font-weight: 500;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
 }
 
-.secondary-button-small {
-    background-color: #f0f0f0;
-    color: var(--text-color-dark);
-    border: 1rpx solid #ddd;
+.btn-accept {
+  background: #FFB300;
+  color: #fff;
 }
 
-.no-data-hint {
-    text-align: center;
-    color: var(--text-color-light);
-    padding: 50rpx;
-    font-size: 28rpx;
+.btn-accept:active {
+  background: #e6a200;
+  transform: scale(0.95);
 }
+
+.btn-reject {
+  background: #f5f5f5;
+  color: #666;
+  border: 1rpx solid #ddd;
+}
+
+.btn-reject:active {
+  background: #e8e8e8;
+  transform: scale(0.95);
+}
+
+.btn-complete {
+  background: #52c41a;
+  color: #fff;
+}
+
+.btn-complete:active {
+  background: #389e0d;
+  transform: scale(0.95);
+}
+
+.btn-detail {
+  background: #f5f5f5;
+  color: #666;
+  border: 1rpx solid #ddd;
+}
+
+.btn-detail:active {
+  background: #e8e8e8;
+  transform: scale(0.95);
+}
+
+/* 空状态 */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+}
+
+.empty-image {
+  width: 200rpx;
+  height: 200rpx;
+  margin-bottom: 30rpx;
+  opacity: 0.6;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  text-align: center;
+}
+
+/* 响应式适配 */
+@media screen and (max-width: 375px) {
+  .order-list {
+    padding: 0 20rpx;
+  }
+  
+  .order-card {
+    padding: 25rpx;
+  }
+  
+  .action-buttons {
+    gap: 15rpx;
+  }
+  
+  .btn {
+    min-width: 100rpx;
+    height: 50rpx;
+    font-size: 24rpx;
+  }
+}
+
+/* 按钮点击效果 */
+.btn:active {
+  transform: scale(0.95);
+}
+
+/* 滚动条隐藏 */
+::-webkit-scrollbar {
+  display: none;
+} 
