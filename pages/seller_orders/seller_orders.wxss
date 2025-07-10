@@ -4,7 +4,7 @@
 .container {
   min-height: 100vh;
   background-color: #f8f8f8;
-  padding-bottom: 40rpx;
+  padding-bottom: 170rpx;
 }
 
 /* 标题栏 */
@@ -21,7 +21,7 @@
 }
 
 /* Tab切换栏 */
-.tab-bar {
+.order-tab-bar {
   display: flex;
   background: #fff;
   border-bottom: 1rpx solid #f0f0f0;
@@ -85,6 +85,7 @@
   margin-bottom: 25rpx;
   padding-bottom: 20rpx;
   border-bottom: 1rpx solid #f0f0f0;
+  justify-content: flex-end;
 }
 
 .user-avatar {
@@ -137,16 +138,24 @@
 
 /* 服务信息区 */
 .service-info {
-  margin-bottom: 25rpx;
   padding: 20rpx;
   background: #f8f8f8;
   border-radius: 12rpx;
+  margin: 15rpx 0;
+}
+
+.service-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
 }
 
 .service-time {
-  font-size: 26rpx;
+  font-size: 24rpx;
   color: #666;
-  line-height: 1.5;
+  display: block;
 }
 
 /* 操作按钮 */

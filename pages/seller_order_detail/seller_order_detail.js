@@ -67,19 +67,75 @@ Page({
     this.fetchOrderDetail(orderId);
   },
 
-  // 从云数据库获取订单详情
   fetchOrderDetail(orderId) {
     const that = this;
-    wx.cloud = wx.cloud || {};
-    if (!wx.cloud.database) {
+    const app = getApp();
+    if (!app.globalData.db) {
       wx.showToast({ title: '请在小程序后台开启云开发', icon: 'none' });
       return;
     }
-    const db = wx.cloud.database();
+    const db = app.globalData.db;
     db.collection('orders').doc(orderId).get({
       success: function(res) {
         if (res.data) {
-          that.setData(res.data);
+          const order = res.data;
+          // 查服务
+          db.collection('services').where({ serviceId: order.serviceId }).get({
+            success: function(serviceRes) {
+              const service = serviceRes.data[0] || {};
+              // 查宠物
+              db.collection('pet').where({ petId: order.petId }).get({
+                success: function(petRes) {
+                  const pet = petRes.data[0] || {};
+                  const userWechatId = pet.wechatId;
+                  if (userWechatId) {
+                    db.collection('users').where({ wechatId: userWechatId }).get({
+                      success: function(userRes) {
+                        const user = userRes.data[0] || {};
+                        that.setData({
+                          serviceName: service.name || '未知服务',
+                          servicePrice: service.basePrice || '',
+                          serviceDays: order.orderTime || '',
+                          serviceType: service.petType || '',
+                          serviceDateRange: `${that.formatDate(order.startDateTime)} - ${that.formatDate(order.endDateTime)}`,
+                          petName: pet.nickname || '',
+                          petImage: pet.avatar || '',
+                          contactName: user.name || order.contactName || '',
+                          contactPhone: user.phone || order.contactPhone || '',
+                          userAvatar: user.avatar || '',
+                          userEmail: user.emailAddress || '',
+                          userWechatId: user.wechatId || '',
+                          totalPrice: order.totalPrice,
+                          payment: order.payment,
+                          orderNote: order.orderNote || '',
+                          discount: order.discount,
+                          subTotal: order.subTotal,
+                          status: order.status,
+                          orderNo: order._id,
+                          orderTime: that.formatDate(order.startDateTime)
+                        });
+                      },
+                      fail: function() {
+                        that.setData({
+                          serviceName: service.name || '未知服务',
+                          contactName: order.contactName || '',
+                          contactPhone: order.contactPhone || ''
+                        });
+                      }
+                    });
+                  } else {
+                    that.setData({
+                      serviceName: service.name || '未知服务',
+                      contactName: order.contactName || '',
+                      contactPhone: order.contactPhone || ''
+                    });
+                  }
+                },
+                fail: function() { that.setData({ serviceName: service.name || '未知服务' }); }
+              });
+            },
+            fail: function() { that.setData({ serviceName: '未知服务' }); }
+          });
         } else {
           wx.showToast({ title: '未找到订单', icon: 'none' });
         }
@@ -89,5 +145,60 @@ Page({
         console.error('订单详情获取失败', err);
       }
     });
-  }
+  },
+
+  formatDate: function(dateObj) {
+    if (!dateObj) return '';
+    try {
+      const d = new Date(dateObj.$date || dateObj);
+      return `${d.getFullYear()}-${(d.getMonth()+1).toString().padStart(2,'0')}-${d.getDate().toString().padStart(2,'0')}`;
+    } catch(e) { return ''; }
+  },
+
+  // 接单
+  onAcceptOrder: function() {
+    const orderId = this.data.orderNo;
+    const app = getApp();
+    const db = app.globalData.db;
+    db.collection('orders').doc(orderId).update({
+      data: { status: 'processing' },
+      success: () => {
+        wx.showToast({ title: '接单成功', icon: 'success', duration: 2000 });
+        this.fetchOrderDetail(orderId);
+      }
+    });
+  },
+  // 拒单
+  onRejectOrder: function() {
+    const orderId = this.data.orderNo;
+    const app = getApp();
+    const db = app.globalData.db;
+    wx.showModal({
+      title: '确认拒单',
+      content: '确定要拒绝这个订单吗？',
+      success: (res) => {
+        if (res.confirm) {
+          db.collection('orders').doc(orderId).remove({
+            success: () => {
+              wx.showToast({ title: '已拒绝订单', icon: 'success', duration: 2000 });
+              wx.navigateBack();
+            }
+          });
+        }
+      }
+    });
+  },
+  // 完成订单
+  onCompleteOrder: function() {
+    const orderId = this.data.orderNo;
+    const app = getApp();
+    const db = app.globalData.db;
+    db.collection('orders').doc(orderId).update({
+      data: { status: 'completed' },
+      success: () => {
+        wx.showToast({ title: '订单已完成', icon: 'success', duration: 2000 });
+        this.fetchOrderDetail(orderId);
+      }
+    });
+  },
 });

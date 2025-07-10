@@ -5,8 +5,13 @@
     <text class="title">订单管理</text>
   </view>
 
-  <!-- Tab切换栏 -->
-  <view class="tab-bar">
+  <!-- OrderTab切换栏 -->
+  <view class="order-tab-bar">
+    <view class="tab-item {{activeTab === 'unprocessed' ? 'active' : ''}}" 
+          bindtap="onTabChange" 
+          data-tab="unprocessed">
+      <text class="tab-text">待处理</text>
+    </view>
     <view class="tab-item {{activeTab === 'processing' ? 'active' : ''}}" 
           bindtap="onTabChange" 
           data-tab="processing">
@@ -21,14 +26,14 @@
 
   <!-- 订单列表区域 -->
   <view class="order-list">
-    <!-- 进行中订单 -->
-    <block wx:if="{{activeTab === 'processing'}}">
-      <view wx:for="{{processingOrders}}" wx:key="id" class="order-card {{item.status === 'completed' ? 'completed' : ''}}" 
+    <!-- 待处理订单 -->
+    <block wx:if="{{activeTab === 'unprocessed'}}">
+      <view wx:for="{{unprocessedOrders}}" wx:key="id" class="order-card"
       bindtap="navigateToDetail" 
       data-id="{{item.id}}">
         <!-- 用户信息区 -->
         <view class="user-info">
-          <image class="user-avatar" src="{{item.userInfo.avatar}}" mode="aspectFill"></image>
+          <!-- <image class="user-avatar" src="{{item.userInfo.avatar}}" mode="aspectFill"></image> -->
           <text class="user-nickname">{{item.userInfo.nickname}}</text>
         </view>
         <!-- 宠物信息区 -->
@@ -41,23 +46,46 @@
         </view>
         <!-- 服务信息区 -->
         <view class="service-info">
+          <text class="service-name">{{item.serviceName || '未知服务'}}</text>
           <text class="service-time">{{item.serviceInfo.time}}</text>
         </view>
         <!-- 操作按钮 -->
         <view class="action-buttons">
-          <block wx:if="{{item.status === 'pending'}}">
-            <button class="btn btn-accept" 
-                    bindtap="onAcceptOrder" 
-                    data-id="{{item.id}}">接单</button>
-            <button class="btn btn-reject" 
-                    bindtap="onRejectOrder" 
-                    data-id="{{item.id}}">拒单</button>
-          </block>
-          <block wx:elif="{{item.status === 'processing'}}">
-            <button class="btn btn-complete" 
-                    bindtap="onCompleteOrder" 
-                    data-id="{{item.id}}">完成订单</button>
-          </block>
+          <button class="btn btn-accept" bindtap="onAcceptOrder" data-id="{{item.id}}">接单</button>
+          <button class="btn btn-reject" bindtap="onRejectOrder" data-id="{{item.id}}">拒单</button>
+        </view>
+      </view>
+      <view wx:if="{{unprocessedOrders.length === 0}}" class="empty-state">
+        <image class="empty-image" src="/images/empty.png" mode="aspectFit"></image>
+        <text class="empty-text">暂无待处理订单</text>
+      </view>
+    </block>
+    <!-- 进行中订单 -->
+    <block wx:elif="{{activeTab === 'processing'}}">
+      <view wx:for="{{processingOrders}}" wx:key="id" class="order-card {{item.status === 'completed' ? 'completed' : ''}}" 
+      bindtap="navigateToDetail" 
+      data-id="{{item.id}}">
+        <!-- 用户信息区 -->
+        <view class="user-info">
+          <!-- <image class="user-avatar" src="{{item.userInfo.avatar}}" mode="aspectFill"></image> -->
+          <text class="user-nickname">{{item.userInfo.nickname}}</text>
+        </view>
+        <!-- 宠物信息区 -->
+        <view class="pet-info">
+          <image class="pet-image" src="{{item.petInfo.image}}" mode="aspectFill"></image>
+          <view class="pet-details">
+            <text class="pet-name">{{item.petInfo.name}}</text>
+            <text class="service-type">{{item.serviceInfo.type}}</text>
+          </view>
+        </view>
+        <!-- 服务信息区 -->
+        <view class="service-info">
+          <text class="service-name">{{item.serviceName || '未知服务'}}</text>
+          <text class="service-time">{{item.serviceInfo.time}}</text>
+        </view>
+        <!-- 操作按钮 -->
+        <view class="action-buttons">
+          <button class="btn btn-complete" bindtap="onCompleteOrder" data-id="{{item.id}}">完成订单</button>
         </view>
       </view>
       <view wx:if="{{processingOrders.length === 0}}" class="empty-state">
@@ -65,7 +93,6 @@
         <text class="empty-text">暂无进行中订单</text>
       </view>
     </block>
-
     <!-- 已完成订单 -->
     <block wx:elif="{{activeTab === 'completed'}}">
       <view wx:for="{{completedOrders}}" wx:key="id" class="order-card completed" 
@@ -73,7 +100,7 @@
       data-id="{{item.id}}">
         <!-- 用户信息区 -->
         <view class="user-info">
-          <image class="user-avatar" src="{{item.userInfo.avatar}}" mode="aspectFill"></image>
+          <!-- <image class="user-avatar" src="{{item.userInfo.avatar}}" mode="aspectFill"></image> -->
           <text class="user-nickname">{{item.userInfo.nickname}}</text>
         </view>
         <!-- 宠物信息区 -->
@@ -86,13 +113,12 @@
         </view>
         <!-- 服务信息区 -->
         <view class="service-info">
+          <text class="service-name">{{item.serviceName || '未知服务'}}</text>
           <text class="service-time">{{item.serviceInfo.time}}</text>
         </view>
         <!-- 操作按钮 -->
         <view class="action-buttons">
-          <button class="btn btn-detail" 
-                  bindtap="onViewDetail" 
-                  data-id="{{item.id}}">查看详情</button>
+          <button class="btn btn-detail" bindtap="onViewDetail" data-id="{{item.id}}">查看详情</button>
         </view>
       </view>
       <view wx:if="{{completedOrders.length === 0}}" class="empty-state">

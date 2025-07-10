@@ -2,25 +2,8 @@
 Page({
   data: {
     // 宠物列表数据
-    petList: [
-      {
-        id: 1,
-        name: '小白',
-        gender: 'male',
-        breed: '英短',
-        age: 2,
-        image: '/images/pet1.jpg'
-      },
-      {
-        id: 2,
-        name: '咪咪',
-        gender: 'female',
-        breed: '美短',
-        age: 1,
-        image: '/images/pet2.jpg'
-      }
-    ],
-    
+    petList: [], // 宠物列表数据
+    petListEmptyMsg: '', // 宠物列表为空时的提示
     // 寄养师和商家数据将从providers集合获取
     topSitters: [], // 前5名寄养师
     topStores: []   // 前5名商家
@@ -29,116 +12,163 @@ Page({
   onLoad: function(options) {
     // 页面加载时的初始化逻辑
     console.log('首页加载完成');
+    this.loadPetList();
     this.loadTopProviders();
   },
 
   onShow: function() {
     // 页面显示时的逻辑
+    this.loadPetList();
     this.loadTopProviders();
   },
 
-  // 从providers集合加载寄养师和商家数据
+  // 加载当前用户的宠物列表
+  loadPetList: function() {
+    const that = this;
+    const app = getApp();
+    let wechatId = '';
+    if (app.globalData.userInfo && app.globalData.userInfo.wechatId) {
+      wechatId = app.globalData.userInfo.wechatId;
+    } else {
+      // 未登录
+      this.setData({
+        petList: [],
+        petListEmptyMsg: '请先登录'
+      });
+      return;
+    }
+    if (!app.globalData.db) {
+      // 数据库未初始化
+      this.setData({
+        petList: [],
+        petListEmptyMsg: '数据加载失败，请稍后重试'
+      });
+      return;
+    }
+    const db = app.globalData.db;
+    db.collection('pet').where({ wechatId }).get({
+      success: function(res) {
+        if (res.data && res.data.length > 0) {
+          // 映射字段到页面展示结构
+          const petList = res.data.map(pet => ({
+            id: pet.petId || pet._id,
+            name: pet.nickname,
+            gender: pet.gender,
+            breed: pet.type,
+            age: that.calcPetAge(pet.birthDate),
+            image: pet.avatar
+          }));
+          that.setData({
+            petList,
+            petListEmptyMsg: ''
+          });
+        } else {
+          that.setData({
+            petList: [],
+            petListEmptyMsg: '您还没有添加宠物，请前往添加~'
+          });
+        }
+      },
+      fail: function(err) {
+        that.setData({
+          petList: [],
+          petListEmptyMsg: '宠物数据加载失败'
+        });
+      }
+    });
+  },
+
+  // 计算宠物年龄（简单年数）
+  calcPetAge: function(birthDate) {
+    if (!birthDate) return '';
+    try {
+      const birth = new Date(birthDate.$date || birthDate);
+      const now = new Date();
+      let age = now.getFullYear() - birth.getFullYear();
+      if (now.getMonth() < birth.getMonth() || (now.getMonth() === birth.getMonth() && now.getDate() < birth.getDate())) {
+        age--;
+      }
+      return age < 1 ? '1岁以内' : age + '岁';
+    } catch (e) {
+      return '';
+    }
+  },
+
+  // 从providers集合加载寄养师和商家数据（只按已完成订单量排序）
   loadTopProviders: function() {
     const that = this;
     const app = getApp();
-    
     if (!app.globalData.db) {
-      console.log('数据库未初始化，使用模拟数据');
       this.loadMockData();
       return;
     }
-
     const db = app.globalData.db;
-    
-    // 获取寄养师数据 (isHomeBased = true)
-    db.collection('providers')
-      .where({
-        isHomeBased: true
-      })
-      .get({
-        success: function(res) {
-          const sitters = that.calculateProviderStats(res.data);
-          that.setData({
-            topSitters: sitters.slice(0, 5) // 取前5名
-          });
-        },
-        fail: function(err) {
-          console.error('获取寄养师数据失败:', err);
-          that.loadMockData();
-        }
-      });
-
-    // 获取商家数据 (isHomeBased = false)
-    db.collection('providers')
-      .where({
-        isHomeBased: false
-      })
-      .get({
-        success: function(res) {
-          const stores = that.calculateProviderStats(res.data);
-          that.setData({
-            topStores: stores.slice(0, 5) // 取前5名
-          });
-        },
-        fail: function(err) {
-          console.error('获取商家数据失败:', err);
-          that.loadMockData();
-        }
-      });
+    // 获取寄养师
+    db.collection('providers').where({ isHomeBased: true }).get({
+      success: function(res) {
+        that.countCompletedOrdersForProviders(res.data, 'topSitters');
+      },
+      fail: function() { that.loadMockData(); }
+    });
+    // 获取商家
+    db.collection('providers').where({ isHomeBased: false }).get({
+      success: function(res) {
+        that.countCompletedOrdersForProviders(res.data, 'topStores');
+      },
+      fail: function() { that.loadMockData(); }
+    });
   },
 
-  // 计算提供商统计信息（评分和接单量）
-  calculateProviderStats: function(providers) {
+  // 统计每个provider已完成订单量并排序
+  countCompletedOrdersForProviders: function(providers, setKey) {
     const that = this;
     const app = getApp();
     const db = app.globalData.db;
-    
-    // 为每个provider计算平均评分和接单量
-    const providersWithStats = providers.map(provider => {
-      // 获取该provider的订单数量
-      db.collection('orders')
-        .where({
-          provider_id: provider._id
-        })
-        .count({
-          success: function(res) {
-            provider.orderCount = res.total;
-          },
-          fail: function(err) {
-            console.error('获取订单数量失败:', err);
-            provider.orderCount = 0;
-          }
-        });
-
-      // 获取该provider的评论平均分
-      db.collection('reviews')
-        .where({
-          provider_id: provider._id
-        })
-        .get({
-          success: function(res) {
-            if (res.data.length > 0) {
-              const totalRating = res.data.reduce((sum, review) => sum + review.rating, 0);
-              provider.avgRating = (totalRating / res.data.length).toFixed(1);
-            } else {
-              provider.avgRating = 0;
+    if (!providers || providers.length === 0) {
+      that.setData({ [setKey]: [] });
+      return;
+    }
+    let finished = 0;
+    providers.forEach((provider, idx) => {
+      db.collection('orders').where({
+        serviceId: db.command.exists(true),
+        status: 'completed',
+        // 关联服务表查providerId
+      }).get({
+        success: function(orderRes) {
+          // 只统计该provider的订单
+          // 需要先查services表，找到该provider的所有serviceId
+          db.collection('services').where({ providerId: provider.providerId }).get({
+            success: function(serviceRes) {
+              const serviceIds = serviceRes.data.map(s => s.serviceId || s._id);
+              const completedOrders = orderRes.data.filter(o => serviceIds.includes(o.serviceId));
+              provider.orderCount = completedOrders.length;
+              finished++;
+              if (finished === providers.length) {
+                // 全部统计完毕，排序
+                const sorted = providers.sort((a, b) => (b.orderCount || 0) - (a.orderCount || 0));
+                that.setData({ [setKey]: sorted.slice(0, 5) });
+              }
+            },
+            fail: function() {
+              provider.orderCount = 0;
+              finished++;
+              if (finished === providers.length) {
+                const sorted = providers.sort((a, b) => (b.orderCount || 0) - (a.orderCount || 0));
+                that.setData({ [setKey]: sorted.slice(0, 5) });
+              }
             }
-          },
-          fail: function(err) {
-            console.error('获取评分失败:', err);
-            provider.avgRating = 0;
+          });
+        },
+        fail: function() {
+          provider.orderCount = 0;
+          finished++;
+          if (finished === providers.length) {
+            const sorted = providers.sort((a, b) => (b.orderCount || 0) - (a.orderCount || 0));
+            that.setData({ [setKey]: sorted.slice(0, 5) });
           }
-        });
-
-      return provider;
-    });
-
-    // 排序：评分降序 > 接单量降序
-    return providersWithStats.sort((a, b) => {
-      if (a.avgRating !== b.avgRating) {
-        return b.avgRating - a.avgRating;
-      }
-      return b.orderCount - a.orderCount;
+        }
+      });
     });
   },
 
@@ -230,7 +260,7 @@ Page({
   // 通知按钮点击事件
   onNotificationTap: function() {
     wx.navigateTo({
-      url: '/pages/chat_detail/chat_detail'
+      url: '/pages/user_chat/user_chat'
     });
   },
 
@@ -244,17 +274,17 @@ Page({
 
   // 寄养师卡片点击事件
   onSitterCardTap: function(e) {
-    const sitterId = e.currentTarget.dataset.id;
+    const providerId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: `/pages/foster/foster?id=${sitterId}` // 后续可替换为寄养师详情页
+      url: `/pages/foster/foster?id=${providerId}`
     });
   },
 
   // 店铺卡片点击事件
   onStoreCardTap: function(e) {
-    const storeId = e.currentTarget.dataset.id;
+    const providerId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: `/pages/foster/foster?id=${storeId}` // 后续可替换为店铺详情页
+      url: `/pages/foster/foster?id=${providerId}`
     });
   },
 
@@ -264,25 +294,11 @@ Page({
       url: '/pages/foster/foster'
     });
   },
-
-  // 自定义导航点击事件
-  onTabTap: function(e) {
-    const page = e.currentTarget.dataset.page;
-    
-    switch(page) {
-      case 'home':
-        // 已经在首页，不需要跳转
-        break;
-      case 'boarding':
-        wx.navigateTo({
-          url: '/pages/user/boarding/boarding'
-        });
-        break;
-      case 'profile':
-        wx.navigateTo({
-          url: '/pages/user/profile/profile'
-        });
-        break;
+  
+    // 添加按钮点击事件
+    onAddTap: function(e) {
+      wx.navigateTo({
+        url: '/pages/add_pet/add_pet'
+      });
     }
-  }
 }); 

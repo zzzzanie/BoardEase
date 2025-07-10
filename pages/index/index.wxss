@@ -34,24 +34,10 @@
   height: 100%;
 }
 
-/* 定位组件 */
-.location {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40rpx;
-}
-
-.location-text {
-  font-size: 28rpx;
-  color: #333;
-  margin: 0 10rpx;
-  font-weight: 500;
-}
-
 /* 右上角功能按钮 */
 .header-actions {
   position: absolute;
-  top: 60rpx;
+  top: 40rpx;
   right: 40rpx;
   display: flex;
   gap: 20rpx;
@@ -163,7 +149,7 @@
 }
 
 .pet-name {
-  font-size: 28rpx;
+  font-size: 34rpx;
   font-weight: 600;
   color: #333;
 }
@@ -178,6 +164,11 @@
 .pet-age {
   font-size: 22rpx;
   color: #999;
+}
+
+.gender-icon {
+  font-size: 16px;
+  margin-left: 8rpx;
 }
 
 /* 寄养师列表 */
@@ -385,4 +376,12 @@
 
 .tab-item.active .tab-text {
   color: #FFA200;
+} 
+
+.pet-empty-msg {
+  width: 100%;
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+  padding: 40rpx 0;
 } 

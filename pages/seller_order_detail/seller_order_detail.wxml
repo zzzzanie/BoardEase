@@ -1,7 +1,15 @@
 <view class="container">
   <view class="order-status">
     <text>订单状态：</text>
-    <text class="status-text">服务进行中</text>
+    <text class="status-text">{{status}}</text>
+  </view>
+  <!-- 操作按钮区 -->
+  <view class="order-actions" wx:if="{{status === 'unprocessed'}}">
+    <button class="btn btn-accept" bindtap="onAcceptOrder">接单</button>
+    <button class="btn btn-reject" bindtap="onRejectOrder">拒单</button>
+  </view>
+  <view class="order-actions" wx:if="{{status === 'processing'}}">
+    <button class="btn btn-complete" bindtap="onCompleteOrder">完成订单</button>
   </view>
 
   <view class="service-info">
