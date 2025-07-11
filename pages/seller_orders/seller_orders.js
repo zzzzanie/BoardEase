@@ -203,7 +203,7 @@ Page({
       o => o.status === 'pending' || o.status === 'processing'
     );
     const completedOrders = this.data.orders.filter(
-      o => o.status === 'completed'
+      o => o.status === 'completed' || o.status === 'rejected'
     );
     this.setData({ unprocessedOrders, processingOrders, completedOrders });
   },
@@ -222,7 +222,7 @@ Page({
     });
   },
 
-  // 拒单事件（unprocessed->rejected 或直接删除）
+  // 拒单事件（unprocessed->rejected）
   onRejectOrder: function (e) {
     const orderId = e.currentTarget.dataset.id;
     const app = getApp();
@@ -232,8 +232,8 @@ Page({
       content: '确定要拒绝这个订单吗？',
       success: (res) => {
         if (res.confirm) {
-          // 这里选择直接删除订单
-          db.collection('orders').doc(orderId).remove({
+          db.collection('orders').doc(orderId).update({
+            data: { status: 'rejected' },
             success: () => {
               wx.showToast({ title: '已拒绝订单', icon: 'success', duration: 2000 });
               this.fetchOrders();

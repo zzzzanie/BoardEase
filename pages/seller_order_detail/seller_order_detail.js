@@ -79,6 +79,14 @@ Page({
       success: function(res) {
         if (res.data) {
           const order = res.data;
+          // 状态映射
+          const statusMap = {
+            unprocessed: '未处理',
+            processing: '处理中',
+            completed: '已完成',
+            rejected: '已拒绝',
+            pending: '待处理'
+          };
           // 查服务
           db.collection('services').where({ serviceId: order.serviceId }).get({
             success: function(serviceRes) {
@@ -111,6 +119,7 @@ Page({
                           discount: order.discount,
                           subTotal: order.subTotal,
                           status: order.status,
+                          statusText: statusMap[order.status] || order.status,
                           orderNo: order._id,
                           orderTime: that.formatDate(order.startDateTime)
                         });

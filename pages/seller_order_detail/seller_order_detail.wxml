@@ -1,7 +1,7 @@
 <view class="container">
   <view class="order-status">
     <text>订单状态：</text>
-    <text class="status-text">{{status}}</text>
+    <text class="status-text">{{statusText}}</text>
   </view>
   <!-- 操作按钮区 -->
   <view class="order-actions" wx:if="{{status === 'unprocessed'}}">
