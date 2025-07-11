@@ -1,36 +1,130 @@
+<!--pages/merchant/orders.wxml-->
 <view class="container">
-  <view class="tabs">
-    <view class="tab-item {{currentTab === 'all' ? 'active' : ''}}" bindtap="changeTab" data-tab="all">全部</view>
-    <view class="tab-item {{currentTab === 'new' ? 'active' : ''}}" bindtap="changeTab" data-tab="new">新订单</view>
-    <view class="tab-item {{currentTab === 'confirmed' ? 'active' : ''}}" bindtap="changeTab" data-tab="confirmed">待服务</view>
-    <view class="tab-item {{currentTab === 'completed' ? 'active' : ''}}" bindtap="changeTab" data-tab="completed">已完成</view>
+  <!-- 标题栏 -->
+  <view class="header">
+    <text class="title">订单管理</text>
   </view>
 
-  <view class="order-list">
-    <block wx:if="{{orders.length > 0}}">
-      <view wx:for="{{orders}}" wx:key="id" class="order-item card" bindtap="goToOrderDetail" data-id="{{item.id}}">
-        <view class="order-header flex-space-between">
-          <text class="user-name">{{item.userName}}的订单</text>
-          <text class="order-status {{item.status === 'new' ? 'status-new' : ''}}">{{item.statusText}}</text>
-        </view>
-        <view class="order-content">
-          <image class="service-image" src="{{item.serviceCover || '/images/default_service_cover.png'}}" mode="aspectFill"></image>
-          <view class="service-details">
-            <text class="service-title">{{item.serviceTitle}}</text>
-            <text class="service-duration">{{item.duration}}天</text>
-            <text class="order-total-price">总价: ¥{{item.totalPrice}}</text>
-          </view>
-        </view>
-        <view class="order-footer">
-          <button wx:if="{{item.status === 'new'}}" class="order-btn primary-button-small" bindtap="confirmOrder" data-id="{{item.id}}" catchtap="true">确认订单</button>
-          <button wx:if="{{item.status === 'confirmed'}}" class="order-btn secondary-button-small" bindtap="contactUser" data-id="{{item.id}}" catchtap="true">联系买家</button>
-          <button wx:if="{{item.status === 'new'}}" class="order-btn secondary-button-small" bindtap="rejectOrder" data-id="{{item.id}}" catchtap="true">拒绝订单</button>
-          <button class="order-btn secondary-button-small" bindtap="goToOrderDetail" data-id="{{item.id}}" catchtap="true">查看详情</button>
-        </view>
-      </view>
-    </block>
-    <view wx:else class="no-data-hint">
-      <text>当前状态下没有订单</text>
+  <!-- OrderTab切换栏 -->
+  <view class="order-tab-bar">
+    <view class="tab-item {{activeTab === 'unprocessed' ? 'active' : ''}}" 
+          bindtap="onTabChange" 
+          data-tab="unprocessed">
+      <text class="tab-text">待处理</text>
+    </view>
+    <view class="tab-item {{activeTab === 'processing' ? 'active' : ''}}" 
+          bindtap="onTabChange" 
+          data-tab="processing">
+      <text class="tab-text">进行中</text>
+    </view>
+    <view class="tab-item {{activeTab === 'completed' ? 'active' : ''}}" 
+          bindtap="onTabChange" 
+          data-tab="completed">
+      <text class="tab-text">已完成</text>
     </view>
   </view>
-</view>
+
+  <!-- 订单列表区域 -->
+  <view class="order-list">
+    <!-- 待处理订单 -->
+    <block wx:if="{{activeTab === 'unprocessed'}}">
+      <view wx:for="{{unprocessedOrders}}" wx:key="id" class="order-card"
+      bindtap="navigateToDetail" 
+      data-id="{{item.id}}">
+        <!-- 用户信息区 -->
+        <view class="user-info">
+          <!-- <image class="user-avatar" src="{{item.userInfo.avatar}}" mode="aspectFill"></image> -->
+          <text class="user-nickname">{{item.userInfo.nickname}}</text>
+        </view>
+        <!-- 宠物信息区 -->
+        <view class="pet-info">
+          <image class="pet-image" src="{{item.petInfo.image}}" mode="aspectFill"></image>
+          <view class="pet-details">
+            <text class="pet-name">{{item.petInfo.name}}</text>
+            <text class="service-type">{{item.serviceInfo.type}}</text>
+          </view>
+        </view>
+        <!-- 服务信息区 -->
+        <view class="service-info">
+          <text class="service-name">{{item.serviceName || '未知服务'}}</text>
+          <text class="service-time">{{item.serviceInfo.time}}</text>
+        </view>
+        <!-- 操作按钮 -->
+        <view class="action-buttons">
+          <button class="btn btn-accept" bindtap="onAcceptOrder" data-id="{{item.id}}">接单</button>
+          <button class="btn btn-reject" bindtap="onRejectOrder" data-id="{{item.id}}">拒单</button>
+        </view>
+      </view>
+      <view wx:if="{{unprocessedOrders.length === 0}}" class="empty-state">
+        <image class="empty-image" src="/images/empty.png" mode="aspectFit"></image>
+        <text class="empty-text">暂无待处理订单</text>
+      </view>
+    </block>
+    <!-- 进行中订单 -->
+    <block wx:elif="{{activeTab === 'processing'}}">
+      <view wx:for="{{processingOrders}}" wx:key="id" class="order-card {{item.status === 'completed' ? 'completed' : ''}}" 
+      bindtap="navigateToDetail" 
+      data-id="{{item.id}}">
+        <!-- 用户信息区 -->
+        <view class="user-info">
+          <!-- <image class="user-avatar" src="{{item.userInfo.avatar}}" mode="aspectFill"></image> -->
+          <text class="user-nickname">{{item.userInfo.nickname}}</text>
+        </view>
+        <!-- 宠物信息区 -->
+        <view class="pet-info">
+          <image class="pet-image" src="{{item.petInfo.image}}" mode="aspectFill"></image>
+          <view class="pet-details">
+            <text class="pet-name">{{item.petInfo.name}}</text>
+            <text class="service-type">{{item.serviceInfo.type}}</text>
+          </view>
+        </view>
+        <!-- 服务信息区 -->
+        <view class="service-info">
+          <text class="service-name">{{item.serviceName || '未知服务'}}</text>
+          <text class="service-time">{{item.serviceInfo.time}}</text>
+        </view>
+        <!-- 操作按钮 -->
+        <view class="action-buttons">
+          <button class="btn btn-complete" bindtap="onCompleteOrder" data-id="{{item.id}}">完成订单</button>
+        </view>
+      </view>
+      <view wx:if="{{processingOrders.length === 0}}" class="empty-state">
+        <image class="empty-image" src="/images/empty.png" mode="aspectFit"></image>
+        <text class="empty-text">暂无进行中订单</text>
+      </view>
+    </block>
+    <!-- 已完成订单 -->
+    <block wx:elif="{{activeTab === 'completed'}}">
+      <view wx:for="{{completedOrders}}" wx:key="id" class="order-card completed" 
+      bindtap="navigateToDetail" 
+      data-id="{{item.id}}">
+        <!-- 用户信息区 -->
+        <view class="user-info">
+          <!-- <image class="user-avatar" src="{{item.userInfo.avatar}}" mode="aspectFill"></image> -->
+          <text class="user-nickname">{{item.userInfo.nickname}}</text>
+        </view>
+        <!-- 宠物信息区 -->
+        <view class="pet-info">
+          <image class="pet-image" src="{{item.petInfo.image}}" mode="aspectFill"></image>
+          <view class="pet-details">
+            <text class="pet-name">{{item.petInfo.name}}</text>
+            <text class="service-type">{{item.serviceInfo.type}}</text>
+          </view>
+        </view>
+        <!-- 服务信息区 -->
+        <view class="service-info">
+          <text class="service-name">{{item.serviceName || '未知服务'}}</text>
+          <text class="service-time">{{item.serviceInfo.time}}</text>
+        </view>
+        <!-- 操作按钮 -->
+        <view class="action-buttons">
+          <button class="btn btn-detail" bindtap="onViewDetail" data-id="{{item.id}}">查看详情</button>
+        </view>
+      </view>
+      <view wx:if="{{completedOrders.length === 0}}" class="empty-state">
+        <image class="empty-image" src="/images/empty.png" mode="aspectFit"></image>
+        <text class="empty-text">暂无已完成订单</text>
+      </view>
+    </block>
+  </view>
+</view> 

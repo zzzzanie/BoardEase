@@ -1,1 +1,387 @@
-/* pages/index/index.wxss */
+/* 宠物寄养小程序首页样式 */
+
+/* 容器 */
+.container {
+  width: 750rpx;
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  position: relative;
+  padding-bottom: 100rpx;
+}
+
+/* 顶部区域 */
+.header {
+  position: relative;
+  height: 400rpx;
+  overflow: hidden;
+}
+
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 300rpx;
+  background: linear-gradient(135deg, #FFA200 0%, #FFB84D 100%);
+  border-radius: 0 0 50% 50%;
+  z-index: 1;
+}
+
+.header-content {
+  position: relative;
+  z-index: 2;
+  padding: 60rpx 40rpx 0;
+  height: 100%;
+}
+
+/* 右上角功能按钮 */
+.header-actions {
+  position: absolute;
+  top: 40rpx;
+  right: 40rpx;
+  display: flex;
+  gap: 20rpx;
+}
+
+.action-btn {
+  width: 60rpx;
+  height: 60rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10rpx);
+}
+
+/* 头像容器 */
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20rpx;
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  border: 6rpx solid #fff;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
+}
+
+/* 主要内容区域 */
+.main-content {
+  padding: 40rpx;
+  margin-top: -50rpx;
+  position: relative;
+  z-index: 3;
+}
+
+/* 模块通用样式 */
+.module {
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.05);
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+}
+
+.module-title {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+}
+
+.title-text {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.more-btn {
+  display: flex;
+  align-items: center;
+  gap: 5rpx;
+}
+
+.more-text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 宠物列表 */
+.pet-list {
+  display: flex;
+  gap: 20rpx;
+  overflow-x: auto;
+}
+
+.pet-card {
+  flex-shrink: 0;
+  width: 200rpx;
+  background: #fafafa;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.08);
+}
+
+.pet-image {
+  width: 100%;
+  height: 150rpx;
+}
+
+.pet-info {
+  padding: 20rpx;
+}
+
+.pet-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8rpx;
+}
+
+.pet-name {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.pet-breed {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 4rpx;
+  display: block;
+}
+
+.pet-age {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.gender-icon {
+  font-size: 16px;
+  margin-left: 8rpx;
+}
+
+/* 寄养师列表 */
+.sitter-list {
+  display: flex;
+  gap: 20rpx;
+  overflow-x: auto;
+}
+
+.sitter-card {
+  flex-shrink: 0;
+  width: 150rpx;
+  text-align: center;
+}
+
+.sitter-avatar-container {
+  position: relative;
+  margin-bottom: 15rpx;
+}
+
+.sitter-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: #f0f0f0;
+}
+
+.certification-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 32rpx;
+  height: 32rpx;
+  background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.sitter-name {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8rpx;
+  display: block;
+}
+
+.sitter-rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5rpx;
+  margin-bottom: 5rpx;
+}
+
+.stars {
+  display: flex;
+  gap: 1rpx;
+}
+
+.rating-score {
+  font-size: 20rpx;
+  color: #FF6600;
+  font-weight: 600;
+}
+
+.sitter-orders {
+  font-size: 20rpx;
+  color: #666;
+}
+
+/* 推荐卖家列表 */
+.store-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+
+.store-card {
+  display: flex;
+  background: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+}
+
+.store-image {
+  width: 160rpx;
+  height: 120rpx;
+  flex-shrink: 0;
+}
+
+.store-info {
+  flex: 1;
+  padding: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.store-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.store-rating {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  margin-bottom: 10rpx;
+}
+
+.stars {
+  display: flex;
+  gap: 2rpx;
+}
+
+.rating-score {
+  font-size: 24rpx;
+  color: #FF6600;
+  font-weight: 600;
+}
+
+.store-tags {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popularity-tag {
+  font-size: 22rpx;
+  color: #FF6600;
+  background: rgba(255, 102, 0, 0.1);
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+}
+
+.distance {
+  font-size: 22rpx;
+  color: #999;
+}
+
+/* 响应式适配 */
+@media screen and (max-width: 375px) {
+  .main-content {
+    padding: 30rpx 20rpx;
+  }
+  
+  .module {
+    padding: 20rpx;
+  }
+  
+  .pet-card {
+    width: 180rpx;
+  }
+  
+  .sitter-card {
+    width: 130rpx;
+  }
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* 自定义底部导航 */
+.custom-tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100rpx;
+  background: #ffffff;
+  border-top: 1rpx solid #e5e5e5;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 1000;
+}
+
+.tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+}
+
+.tab-icon {
+  width: 48rpx;
+  height: 48rpx;
+  margin-bottom: 8rpx;
+}
+
+.tab-text {
+  font-size: 20rpx;
+  color: #666666;
+}
+
+.tab-item.active .tab-text {
+  color: #FFA200;
+} 
+
+.pet-empty-msg {
+  width: 100%;
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+  padding: 40rpx 0;
+} 

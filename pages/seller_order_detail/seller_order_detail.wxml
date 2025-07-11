@@ -1,4 +1,58 @@
-<view class="container flex-center">
-  <text class="section-title">卖家订单详情页面</text>
-  <text class="hint-text">这里将展示卖家视角的订单详情</text>
+<view class="container">
+  <view class="order-status">
+    <text>订单状态：</text>
+    <text class="status-text">{{statusText}}</text>
+  </view>
+  <!-- 操作按钮区 -->
+  <view class="order-actions" wx:if="{{status === 'unprocessed'}}">
+    <button class="btn btn-accept" bindtap="onAcceptOrder">接单</button>
+    <button class="btn btn-reject" bindtap="onRejectOrder">拒单</button>
+  </view>
+  <view class="order-actions" wx:if="{{status === 'processing'}}">
+    <button class="btn btn-complete" bindtap="onCompleteOrder">完成订单</button>
+  </view>
+
+  <view class="service-info">
+    <text class="title">服务信息</text>
+    <view class="service-item">
+      <image class="service-img" src="/images/service.png"></image>
+      <view class="service-desc">
+        <text class="service-name">专业家庭寄养服务（小型犬）</text>
+        <text class="service-shop">阳光宠物之家</text>
+        <text class="service-price">¥{{servicePrice}}/天 共{{serviceDays}}天</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="order-details">
+    <text class="title">订单详情</text>
+    <view class="detail-item">
+      <text class="label">订单编号：</text>
+      <text>{{orderNo}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="label">下单时间：</text>
+      <text>{{orderTime}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="label">服务日期：</text>
+      <text>{{serviceDateRange}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="label">寄养宠物：</text>
+      <text>{{petName}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="label">联系人：</text>
+      <text>{{contactName}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="label">联系电话：</text>
+      <text>{{contactPhone}}</text>
+    </view>
+    <view class="detail-item total-price">
+      <text class="label">总价：</text>
+      <text class="price">¥{{totalPrice}}</text>
+    </view>
+  </view>
 </view>

@@ -1,8 +1,16 @@
 // app.js
 App({
-  onLaunch: function () {
-    this.checkLoginAndSetRole();
-
+  onLaunch() {
+    // 初始化云开发
+    if (wx.cloud) {
+      wx.cloud.init({
+        env: 'cloudbase-5gkjpend4a9022ba', // 在云开发控制台获取
+        traceUser: true,
+      })
+      console.log('云开发初始化成功')
+      // 初始化后再赋值
+      this.globalData.db = wx.cloud.database()
+    }
     // 检查小程序版本更新
     if (wx.canIUse('getUpdateManager')) {
       const updateManager = wx.getUpdateManager();
@@ -44,10 +52,7 @@ App({
   },
 
   globalData: {
-    userInfo: null,
-    userToken: null,
-    userRole: 'owner',
-    systemInfo: null,
+    db: null, // 初始化为null，onLaunch后赋值
     userRoleCallbacks: []
   },
 
@@ -96,3 +101,4 @@ App({
     }
   }
 });
+

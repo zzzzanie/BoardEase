@@ -1,1 +1,76 @@
-@import "/app.wxss"; .container { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;}
+.container {
+  padding: 16px;
+  background-color: #fff;
+}
+
+.order-status {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.status-text {
+  color: #ff6600;
+  font-weight: bold;
+}
+
+.service-info .title,
+.order-details .title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  border-left: 4px solid #ff6600;
+  padding-left: 8px;
+}
+
+.service-item {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+
+.service-img {
+  width: 80px;
+  height: 80px;
+  margin-right: 12px;
+  border-radius: 4px;
+}
+
+.service-desc .service-name {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.service-desc .service-shop {
+  font-size: 14px;
+  color: #999;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.service-desc .service-price {
+  font-size: 14px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size:18px;
+}
+
+.label {
+  color: #666;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.total-price .price {
+  font-size: 30px;
+
+  font-weight: bold;
+}
