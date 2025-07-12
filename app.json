@@ -23,6 +23,7 @@
     "pages/employee_management/employee_management",     
     "pages/account_switch/account_switch",         
     "pages/seller_management/seller_management",
+    "pages/service_calendar/service_calendar",
 
     "pages/chat_detail/chat_detail",
     "pages/order_detail/order_detail",

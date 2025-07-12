@@ -31,5 +31,6 @@
   },
   "appid": "wxea52e0ce56261cb4",
   "editorSetting": {},
-  "libVersion": "3.8.9"
+  "libVersion": "3.8.9",
+  "cloudfunctionRoot": "cloudfunctions/"
 }

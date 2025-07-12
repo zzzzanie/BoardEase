@@ -1,137 +1,242 @@
-// pages/seller_service_add/seller_service_add.js
 Page({
   data: {
     isEditMode: false,
     serviceId: null,
     formData: {
-      title: '',
+      name: '',
+      petType: '',
+      petSize: '',
       description: '',
-      price: '',
-      petTypeIndex: 0, // 默认选中第一个
-      coverImg: '',
-      mediaFiles: [] // 存储图片/视频的临时路径或URL
+      basePrice: '',
+      baseCapacity: '',
+      tags: [],
+      // coverImg: '',
+      // mediaFiles: [] // 存储图片/视频的临时路径或URL
     },
+    tagsInput: '',
+    petTypeIndex: 0, // 默认选中第一个
+    petSizeIndex: 0, // 默认选中第一个
     petTypes: [
-      { id: 'all', name: '所有类型宠物' },
-      { id: 'dog', name: '犬类' },
-      { id: 'cat', name: '猫咪' },
-      { id: 'other', name: '其他小型宠物' }
-    ]
+      { id: '1', name: '狗狗' },
+      { id: '2', name: '猫咪' },
+      { id: '3', name: '水族' },
+      { id: '4', name: '小宠' },
+    ],
+    petSizes: [
+      { id: '1', name: '小型' },
+      { id: '2', name: '中型' },
+      { id: '3', name: '大型' },
+    ],
   },
 
   onLoad: function (options) {
-    if (options.id) {
+    if (options.serviceId) {
       this.setData({
         isEditMode: true,
-        serviceId: options.id
+        serviceId: options.serviceId
       });
-      this.loadServiceData(options.id); // 编辑模式加载服务数据
+      this.loadServiceData(options.serviceId); // 编辑模式加载服务数据
     }
   },
 
-  loadServiceData: function (id) {
-    // 实际开发中：根据ID调用后端API获取服务详情填充表单
-    console.log('加载服务数据进行编辑，ID:', id);
-    // 模拟数据
-    setTimeout(() => {
-      this.setData({
-        formData: {
-          title: '专业家庭寄养服务 (小型犬)',
-          description: '提供舒适的家庭环境，专业照护，每日遛弯，拍照记录。',
-          price: '80',
-          petTypeIndex: 1, // 假设犬类是索引1
-          coverImg: '/images/example_service_1.png',
-          mediaFiles: [
-            '/images/example_service_1.png',
-            '/images/example_pet_gallery_1.png',
-            '/images/example_pet_gallery_2.png'
-          ]
+  loadServiceData: async function (serviceId) {
+    wx.showLoading({ title: '加载中...' });
+
+    try {
+      const res = await wx.cloud.callFunction({
+        name: 'services',
+        data: {
+          type: 'getService',
+          data: {
+            serviceId: serviceId
+          }
         }
       });
-    }, 500);
+  
+      const data = res.result.data; 
+      if (!data) {
+        throw new Error('服务数据不存在');
+      }
+  
+      const petTypeIndex = this.data.petTypes.findIndex(item => item.name === data.petType);
+      const petSizeIndex = this.data.petSizes.findIndex(item => item.name === data.petSize);
+
+      const tagsString = this.arrayToString(data.tags); 
+  
+      this.setData({
+        'formData.name': data.name,
+        'formData.petType': data.petType,
+        'formData.petSize': data.petSize,
+        'formData.description': data.description,
+        'formData.basePrice': data.basePrice.toString(),
+        'formData.baseCapacity': data.baseCapacity.toString(),
+        'formData.tags': data.tags || [],
+        'petTypeIndex': petTypeIndex >= 0 ? petTypeIndex : 0,
+        'petSizeIndex': petSizeIndex >= 0 ? petSizeIndex : 0,
+        'tagsInput': tagsString
+      });
+
+    } catch (err) {
+        console.error('加载失败:', err);
+        wx.showToast({ title: '加载失败', icon: 'none' });
+    } finally {
+        wx.hideLoading();
+    }
   },
 
   bindPetTypeChange: function (e) {
     this.setData({
-      'formData.petTypeIndex': e.detail.value
+      'petTypeIndex': e.detail.value,
+      'formData.petType': this.data.petTypes[e.detail.value].name,
+      'petSizeIndex': 0,
+      'formData.petSize': ''
     });
   },
 
-  chooseCoverImage: function () {
-    wx.chooseMedia({
-      count: 1, mediaType: ['image'], sourceType: ['album', 'camera'],
-      success: (res) => {
-        const tempFilePath = res.tempFiles[0].tempFilePath;
-        this.setData({ 'formData.coverImg': tempFilePath });
-        // 实际：上传图片到服务器，获取URL
-      }
+  bindPetSizeChange: function(e) {
+    this.setData({
+      'petSizeIndex': e.detail.value,
+      'formData.petSize': this.data.petSizes[e.detail.value].name
     });
   },
 
-  chooseMedia: function () {
-    const currentCount = this.data.formData.mediaFiles.length;
-    if (currentCount >= 9) {
-      wx.showToast({ title: '最多只能上传9张图片/视频', icon: 'none' });
-      return;
+  handleTagsInput: function(e) {
+    this.setData({
+      tagsInput: e.detail.value
+    });
+  },
+
+  arrayToString: function(tagsArray) {
+    return tagsArray.join(' ');
+  },
+
+  stringToArray: function(tagsString) {
+    return [...new Set(
+      tagsString.trim().split(/\s+/).filter(tag => tag.length > 0)
+    )];
+  },
+
+  // chooseCoverImage: function () {
+  //   wx.chooseMedia({
+  //     count: 1, mediaType: ['image'], sourceType: ['album', 'camera'],
+  //     success: (res) => {
+  //       const tempFilePath = res.tempFiles[0].tempFilePath;
+  //       this.setData({ 'formData.coverImg': tempFilePath });
+  //       // 实际：上传图片到服务器，获取URL
+  //     }
+  //   });
+  // },
+
+  // chooseMedia: function () {
+  //   const currentCount = this.data.formData.mediaFiles.length;
+  //   if (currentCount >= 9) {
+  //     wx.showToast({ title: '最多只能上传9张图片/视频', icon: 'none' });
+  //     return;
+  //   }
+  //   wx.chooseMedia({
+  //     count: 9 - currentCount, // 可选数量
+  //     mediaType: ['image', 'video'],
+  //     sourceType: ['album', 'camera'],
+  //     success: (res) => {
+  //       const newMediaFiles = res.tempFiles.map(file => file.tempFilePath);
+  //       this.setData({
+  //         'formData.mediaFiles': this.data.formData.mediaFiles.concat(newMediaFiles)
+  //       });
+  //       // 实际：批量上传图片/视频到服务器
+  //     }
+  //   });
+  // },
+
+  // previewMedia: function (e) {
+  //   const src = e.currentTarget.dataset.src;
+  //   // 判断是图片还是视频，分别预览
+  //   if (src.endsWith('.mp4') || src.endsWith('.mov')) {
+  //     wx.navigateTo({
+  //       url: `/pages/video_player/video_player?src=${src}` // 假设有视频播放页
+  //     });
+  //   } else {
+  //     wx.previewImage({
+  //       current: src,
+  //       urls: this.data.formData.mediaFiles.filter(item => !(item.endsWith('.mp4') || item.endsWith('.mov'))) // 过滤出图片
+  //     });
+  //   }
+  // },
+
+  // deleteMedia: function (e) {
+  //   const index = e.currentTarget.dataset.index;
+  //   const mediaFiles = this.data.formData.mediaFiles;
+  //   mediaFiles.splice(index, 1);
+  //   this.setData({ 'formData.mediaFiles': mediaFiles });
+  // },
+
+  refreshPrevPage() {
+    const pages = getCurrentPages();
+    if (pages.length < 2) return;
+
+    const prevPage = pages[pages.length - 2];
+    if (prevPage && typeof prevPage.loadServices === 'function') {
+      prevPage.loadServices();
     }
-    wx.chooseMedia({
-      count: 9 - currentCount, // 可选数量
-      mediaType: ['image', 'video'],
-      sourceType: ['album', 'camera'],
-      success: (res) => {
-        const newMediaFiles = res.tempFiles.map(file => file.tempFilePath);
-        this.setData({
-          'formData.mediaFiles': this.data.formData.mediaFiles.concat(newMediaFiles)
-        });
-        // 实际：批量上传图片/视频到服务器
-      }
-    });
   },
 
-  previewMedia: function (e) {
-    const src = e.currentTarget.dataset.src;
-    // 判断是图片还是视频，分别预览
-    if (src.endsWith('.mp4') || src.endsWith('.mov')) {
-      wx.navigateTo({
-        url: `/pages/video_player/video_player?src=${src}` // 假设有视频播放页
+  submitService: async function(e) {
+    if (!this.validateForm(e.detail.value)) return;
+    const tagsArray = this.stringToArray(this.data.tagsInput);
+  
+    const formData = {
+      name: e.detail.value.name.trim(),
+      petType: this.data.formData.petType,
+      petSize: this.data.formData.petSize,
+      description: e.detail.value.description.trim(),
+      basePrice: parseFloat(e.detail.value.basePrice),
+      baseCapacity: parseInt(e.detail.value.baseCapacity),
+      tags: tagsArray || [],
+    };
+  
+    wx.showLoading({ title: '提交中...', mask: true });
+  
+    try {
+      const res = await wx.cloud.callFunction({
+        name: 'services',
+        data: {
+          type: this.data.isEditMode ? 'updateService' : 'createService',
+          data: this.data.isEditMode ? {
+            serviceId: this.data.serviceId,
+            formData: formData
+          } : {
+            formData: formData
+          }
+        }
       });
-    } else {
-      wx.previewImage({
-        current: src,
-        urls: this.data.formData.mediaFiles.filter(item => !(item.endsWith('.mp4') || item.endsWith('.mov'))) // 过滤出图片
+  
+      wx.showToast({ title: this.data.isEditMode ? '更新成功' : '创建成功' });
+      this.refreshPrevPage();
+      setTimeout(() => wx.navigateBack(), 1500);
+    } catch (err) {
+      console.error('提交失败:', err);
+      wx.showToast({
+        title: `提交失败: ${err.message || '未知错误'}`,
+        icon: 'none'
       });
+    } finally {
+      wx.hideLoading();
     }
   },
 
-  deleteMedia: function (e) {
-    const index = e.currentTarget.dataset.index;
-    const mediaFiles = this.data.formData.mediaFiles;
-    mediaFiles.splice(index, 1);
-    this.setData({ 'formData.mediaFiles': mediaFiles });
-  },
-
-  submitService: function (e) {
-    const data = e.detail.value;
-    data.coverImg = this.data.formData.coverImg;
-    data.mediaFiles = this.data.formData.mediaFiles;
-    data.petType = this.data.petTypes[this.data.formData.petTypeIndex].id; // 存储选中类型ID
-
-    console.log('提交的服务数据:', data);
-
-    // 实际开发中：
-    if (this.data.isEditMode) {
-      // 调用后端API更新服务 (PUT/POST)
-      console.log('更新服务，ID:', this.data.serviceId, '数据:', data);
-      wx.showToast({ title: '服务更新成功', icon: 'success' });
-    } else {
-      // 调用后端API发布新服务 (POST)
-      console.log('发布新服务，数据:', data);
-      wx.showToast({ title: '服务发布成功', icon: 'success' });
+  // 表单验证
+  validateForm: function (data) {
+    if (!data.name) {
+      wx.showToast({ title: '请填写服务名称', icon: 'none' });
+      return false;
     }
-
-    // 成功后返回服务管理页
-    setTimeout(() => {
-      wx.navigateBack();
-    }, 1500);
+    if (!data.basePrice || isNaN(data.basePrice)) {
+      wx.showToast({ title: '请输入有效价格', icon: 'none' });
+      return false;
+    }
+    if (!data.baseCapacity || isNaN(data.baseCapacity)) {
+      wx.showToast({ title: '请输入有效容量', icon: 'none' });
+      return false;
+    }
+    return true;
   }
 });
