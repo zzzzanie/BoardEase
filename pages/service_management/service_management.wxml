@@ -1,2 +1,72 @@
-<!--pages/service_management/service_management.wxml-->
-<text>pages/service_management/service_management.wxml</text>
+<view class="container">
+  
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+  
+  <!-- 服务列表 -->
+  <view wx:else class="service-list">
+    <block wx:for="{{services}}" wx:key="serviceId">
+      <view class="service-card">
+        <view class="service-header">
+          <text class="service-name">{{item.name}}</text>
+          <view class="service-status {{item.status == 'published' ? 'published' : 'unpublished'}}">
+            <text>{{ serviceStatusText[item.status] || '/' }}</text>
+          </view>
+        </view>
+        
+        <view class="service-info">
+          <text>宠物类型：{{item.petType}}</text>
+          <text>宠物体型：{{item.petSize || '无限制'}}</text>
+          <text>基础价格：{{item.basePrice}} 元/只/晚</text>
+          <text>每日容量：{{item.baseCapacity}} 只</text>
+        </view>
+        
+        <view class="service-tags">
+          <block wx:for="{{item.tags}}" wx:key="*this">
+            <text class="tag">{{item}}</text>
+          </block>
+        </view>
+        
+        <view class="service-actions">
+          <!-- <view class="action-btn" bindtap="updateServiceStatus" data-id="{{item._id}}" data-status="{{item.status === '1' ? 'published' : 'unpublished'}}">
+            {{item.status == '1' ? '下架' : '上架'}}
+          </view> -->
+          <view class="action-btn" bindtap="navigateToCal" data-id="{{item.serviceId}}">服务日历</view>
+          <view class="action-btn" bindtap="navigateToEdit" data-id="{{item.serviceId}}">编辑</view>
+          <view class="action-btn delete" bindtap="handleDelete" data-id="{{item.serviceId}}">删除</view>
+        </view>
+      </view>
+    </block>
+  </view>
+  
+  <!-- 分页控制 -->
+  <view class="pagination" wx:if="{{!loading && total > 0}}">
+    <view 
+      class="page-btn {{currentPage === 1 ? 'disabled' : ''}}" 
+      bindtap="handlePageChange" 
+      data-type="prev"
+    >
+      上一页
+    </view>
+    <text class="page-info">{{currentPage}}/{{totalPages}}</text>
+    <view 
+      class="page-btn {{currentPage >= totalPages ? 'disabled' : ''}}" 
+      bindtap="handlePageChange" 
+      data-type="next"
+    >
+      下一页
+    </view>
+  </view>
+  
+  <!-- 空状态 -->
+  <view wx:if="{{!loading && services.length === 0}}" class="empty">
+    <text>暂无服务数据</text>
+  </view>
+  
+  <!-- 新增按钮 -->
+  <view class="add-btn" bindtap="navigateToAdd">
+    <text>+ 新增服务</text>
+  </view>
+</view>
