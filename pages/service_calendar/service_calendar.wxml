@@ -1,0 +1,86 @@
+<view class="container">
+  <view class="calendar-header flex-space-between">
+    <image src="/images/icon_arrow_left.png" class="nav-arrow" bindtap="prevMonth"></image>
+    <text class="current-month">{{currentYear}}年{{currentMonth}}月</text>
+    <image src="/images/icon_arrow_right.png" class="nav-arrow" bindtap="nextMonth"></image>
+  </view>
+
+  <view class="week-days flex-row">
+    <view class="day-name">日</view>
+    <view class="day-name">一</view>
+    <view class="day-name">二</view>
+    <view class="day-name">三</view>
+    <view class="day-name">四</view>
+    <view class="day-name">五</view>
+    <view class="day-name">六</view>
+  </view>
+
+  <view class="calendar-grid">
+    <view 
+      wx:for="{{dates}}" 
+      wx:key="date" 
+      class="date-item {{item.isCurrentMonth ? '' : 'other-month'}} {{item.hasSlot ? 'has-event' : ''}} {{item.date === selectedDate ? 'selected-date' : ''}}" 
+      bindtap="selectDate" 
+      data-date="{{item.date}}"
+    >
+      <text>{{item.day}}</text>
+      <view wx:if="{{item.hasSlot}}" class="event-dot"></view>
+    </view>
+  </view>
+
+  <view class="section-title">预约情况 ({{selectedDate}})</view>
+  <view class="event-list card">
+    <view wx:if="{{hasSlot}}" class="event-item">
+      <text class="event-desc">已预约：{{slotData.bookedCount}} / <text style="color: {{ slotData.capacity > serviceInfo.baseCapacity ? 'red' : slotData.capacity < serviceInfo.baseCapacity ? 'green' : '' }}">{{slotData.capacity}}</text> 只</text>
+      <text class="event-desc">价格：<text style="color: {{ slotData.price > serviceInfo.basePrice ? 'red' : slotData.price < serviceInfo.basePrice ? 'green' : '' }}">{{slotData.price}}</text> 元</text>
+      <text class="event-desc">状态：{{ slotStatusText[slotData.status] || '/' }}</text>
+    </view>
+    <view wx:else class="event-item">
+      <text class="event-desc">未开放预约</text>
+    </view>
+  </view>
+
+  <!-- 服务设置区域 -->
+  <view wx:if="{{!isPastDate}}">
+    <view class="section-title">预约管理</view>
+    <view class="form-section">
+      <!-- 容量 -->
+      <view class="form-item">
+        <text>容量：</text>
+        <input 
+          value="{{formData.capacity}}"
+          bindinput="handleCapacityChange"
+          type="number"
+        />
+      </view>
+      
+      <!-- 价格 -->
+      <view class="form-item">
+        <text>价格：</text>
+        <input 
+          value="{{formData.price}}"
+          bindinput="handlePriceChange"
+          type="number"
+        />
+      </view>
+      
+      <!-- 状态 -->
+      <view class="form-item">
+        <text>状态：</text>
+        <view class="radio-group horizontal">
+          <radio-group bindchange="handleStatusChange">
+            <label class="radio-label" wx:for="{{statusOptions}}" wx:key="value">
+              <radio value="{{item.value}}" checked="{{formData.status === item.value}}"/>
+              <text>{{item.label}}</text>
+            </label>
+          </radio-group>
+        </view>
+      </view>
+
+      <!-- 提交按钮 -->
+      <button bindtap="submitSlot" class="action-button-yellow full-width-button" >
+          <text>保存设置</text>
+      </button>
+    </view>
+  </view>
+</view>
