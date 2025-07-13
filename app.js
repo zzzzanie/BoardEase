@@ -11,6 +11,7 @@ App({
       // 初始化后再赋值
       this.globalData.db = wx.cloud.database()
     }
+
     // 检查小程序版本更新
     if (wx.canIUse('getUpdateManager')) {
       const updateManager = wx.getUpdateManager();

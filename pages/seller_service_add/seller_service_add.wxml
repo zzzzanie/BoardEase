@@ -1,26 +1,49 @@
 <view class="container">
   <form bindsubmit="submitService">
     <view class="form-section card">
+
       <view class="form-item flex-align-center">
-        <text class="label">服务标题</text>
-        <input name="title" value="{{formData.title}}" placeholder="例如：专业家庭寄养服务（小型犬）" class="input" />
+        <text class="label required">服务名称</text>
+        <input name="name" value="{{formData.name}}" placeholder="例如：专业家庭寄养服务（小型犬）" class="input" />
       </view>
+
+      <view class="form-item">
+        <text class="label">适用宠物类型</text>
+        <picker bindchange="bindPetTypeChange" value="{{petTypeIndex}}" range="{{petTypes}}" range-key="name" class="input picker">
+          <view>{{formData.petType || '请选择宠物类型'}}</view>
+        </picker>
+        <text class="arrow">></text>
+      </view>
+
+      <view class="form-item" wx:if="{{(petTypeIndex == 0 || petTypeIndex == 1) && formData.petType}}">
+        <text class="label">适用宠物体型</text>
+        <picker bindchange="bindPetSizeChange" value="{{petSizeIndex}}" range="{{petSizes}}" range-key="name" class="input picker">
+          <view>{{formData.petSize || '请选择宠物体型'}}</view>
+        </picker>
+        <text class="arrow">></text>
+      </view>
+
+      <view class="form-item">
+        <text class="label required">基础价格</text>
+        <input name="basePrice" value="{{formData.basePrice}}" placeholder="请输入价格 (元/只/天)" class="input" type="digit"/>
+      </view>
+
+      <view class="form-item">
+        <text class="label required">每日容量</text>
+        <input name="baseCapacity" value="{{formData.baseCapacity}}" placeholder="请输入容量 （只）" class="input" type="number"/>
+      </view>
+
+      <view class="form-item">
+        <text class="label">标签</text>
+        <input name="tags" value="{{tagsInput}}" placeholder="请输入标签，用空格分开" class="input" bindinput="handleTagsInput" />
+      </view>
+
       <view class="form-item textarea-item">
         <text class="label">服务描述</text>
         <textarea name="description" value="{{formData.description}}" placeholder="详细描述您的服务内容、特点、注意事项等" class="textarea"></textarea>
       </view>
-      <view class="form-item">
-        <text class="label">价格 (元/天)</text>
-        <input name="price" value="{{formData.price}}" placeholder="请输入每日价格" class="input" type="digit"/>
-      </view>
-      <view class="form-item">
-        <text class="label">适用宠物类型</text>
-        <picker bindchange="bindPetTypeChange" value="{{formData.petTypeIndex}}" range="{{petTypes}}" range-key="name" class="input picker">
-          <view>{{petTypes[formData.petTypeIndex].name}}</view>
-        </picker>
-        <text class="arrow">></text>
-      </view>
-      <view class="form-item">
+
+      <!-- <view class="form-item">
         <text class="label">服务封面图</text>
         <image class="upload-cover" src="{{formData.coverImg || '/images/upload_placeholder.png'}}" mode="aspectFill" bindtap="chooseCoverImage"></image>
         <text class="arrow">></text>
@@ -39,7 +62,8 @@
           </view>
         </view>
         <text class="hint-text">最多上传9张图片或视频</text>
-      </view>
+      </view> -->
+
     </view>
     <button form-type="submit" class="action-button-yellow">保存并提交</button>
   </form>

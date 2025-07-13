@@ -1,0 +1,6 @@
+{
+  "usingComponents": {},
+  "navigationBarTitleText": "服务日历",
+  "enablePullDownRefresh": true,
+  "custom-tab-bar": true
+}
