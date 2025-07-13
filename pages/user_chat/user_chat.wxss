@@ -1,0 +1,84 @@
+@import "/app.wxss";
+
+.chat-list {
+  padding-top: 20rpx;
+}
+
+.chat-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  background-color: var(--card-bg-color);
+  border-bottom: 1rpx solid var(--border-color);
+  position: relative;
+}
+
+.chat-item:first-child {
+    border-top-left-radius: 15rpx;
+    border-top-right-radius: 15rpx;
+}
+.chat-item:last-child {
+    border-bottom-left-radius: 15rpx;
+    border-bottom-right-radius: 15rpx;
+    border-bottom: none;
+}
+.chat-item:only-child {
+    border-radius: 15rpx;
+}
+
+.chat-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  margin-right: 30rpx;
+  flex-shrink: 0;
+}
+
+.chat-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; 
+}
+
+.chat-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--text-color-dark);
+  margin-bottom: 10rpx;
+}
+
+.last-message {
+  font-size: 28rpx;
+  color: var(--text-color-normal);
+}
+
+.chat-time {
+  font-size: 24rpx;
+  color: var(--text-color-light);
+  margin-left: 20rpx;
+  align-self: flex-start; /* 靠上对齐 */
+}
+
+.unread-badge {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  background-color: red;
+  color: #fff;
+  font-size: 20rpx;
+  border-radius: 50%;
+  min-width: 40rpx;
+  height: 40rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5rpx;
+}
+
+.no-data-hint {
+  text-align: center;
+  color: var(--text-color-light);
+  padding: 50rpx;
+  font-size: 28rpx;
+}

@@ -1,0 +1,76 @@
+@import "/app.wxss";
+
+.earnings-summary {
+  text-align: center;
+  padding: 50rpx;
+  margin-top: 20rpx;
+}
+
+.label {
+  font-size: 30rpx;
+  color: var(--text-color-normal);
+  margin-bottom: 20rpx;
+  display: block;
+}
+
+.amount {
+  font-size: 68rpx;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 50rpx;
+  display: block;
+}
+
+.primary-button {
+  width: 80%; /* 按钮宽度 */
+  margin: 0 auto; /* 居中 */
+}
+
+.section-title {
+  margin-left: 30rpx;
+}
+
+.detail-list {
+  padding: 0 30rpx;
+}
+
+.detail-item {
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-desc {
+  font-size: 30rpx;
+  color: var(--text-color-dark);
+}
+
+.detail-amount {
+  font-size: 30rpx;
+  font-weight: bold;
+}
+
+.expense {
+  color: #E74C3C;
+}
+
+.income {
+  color: #2ECC71;
+}
+
+.detail-time {
+  font-size: 24rpx;
+  color: var(--text-color-light);
+  margin-top: 10rpx;
+  display: block;
+}
+
+.no-data-hint {
+  text-align: center;
+  color: var(--text-color-light);
+  padding: 30rpx;
+  font-size: 28rpx;
+}

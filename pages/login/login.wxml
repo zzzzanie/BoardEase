@@ -1,0 +1,14 @@
+<view class="container flex-center">
+  <text class="section-title">欢迎登录</text>
+  <text class="hint-text">请选择您的登录身份</text>
+
+  <view class="login-buttons-container">
+    <button class="login-button action-button-yellow" bindtap="ownerLogin">
+      宠物主人登录
+    </button>
+
+    <button class="login-button secondary-button" bindtap="sellerLogin">
+      卖家登录
+    </button>
+  </view>
+</view>

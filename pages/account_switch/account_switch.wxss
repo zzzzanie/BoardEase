@@ -1,0 +1,29 @@
+@import "/app.wxss";
+
+.container {
+  min-height: 100vh;
+  background-color: var(--bg-color-grey);
+}
+
+.account-options {
+  width: 90%;
+  padding: 0; /* 内部菜单项自己控制padding */
+}
+
+.option-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  font-size: 30rpx;
+  color: var(--text-color-dark);
+  border-bottom: 1rpx solid var(--border-color);
+}
+
+.option-item:last-child {
+  border-bottom: none;
+}
+
+.arrow {
+  color: var(--text-color-light);
+}

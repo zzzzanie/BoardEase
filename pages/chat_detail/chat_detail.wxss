@@ -1,0 +1,107 @@
+@import "/app.wxss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  box-sizing: border-box;
+  background-color: var(--bg-color-grey);
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 30rpx;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+
+.message-item {
+  display: flex;
+  margin-bottom: 20rpx;
+  align-items: flex-start;
+}
+
+/* 我方消息：右对齐，我方头像在右 */
+.my-message {
+  justify-content: flex-end; 
+}
+
+/* 对方消息：左对齐，对方头像在左 */
+.other-message {
+  justify-content: flex-start; 
+}
+
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* 我方消息时，头像在消息气泡右侧，所以头像左边距 */
+.my-message .avatar {
+  margin-left: 20rpx;
+  margin-right: 0; /* 确保没有其他多余边距 */
+}
+
+/* 对方消息时，头像在消息气泡左侧，所以头像右边距 */
+.other-message .avatar {
+  margin-right: 20rpx;
+  margin-left: 0; /* 确保没有其他多余边距 */
+}
+
+.message-bubble {
+  max-width: 60%;
+  padding: 25rpx;
+  border-radius: 20rpx;
+  font-size: 30rpx;
+  line-height: 1.4;
+  word-break: break-all;
+}
+
+.my-message .message-bubble {
+  background-color: #DCF8C6; /* 我的消息气泡颜色 */
+  color: var(--text-color-dark);
+}
+
+.other-message .message-bubble {
+  background-color: #FFFFFF; /* 对方消息气泡颜色 */
+  color: var(--text-color-dark);
+}
+
+.no-messages-hint {
+  text-align: center;
+  color: var(--text-color-light);
+  padding: 50rpx;
+  font-size: 28rpx;
+}
+
+.input-area {
+  display: flex;
+  padding: 20rpx 30rpx;
+  background-color: #fff;
+  border-top: 1rpx solid var(--border-color);
+  align-items: center;
+  padding-bottom: calc(20rpx + env(safe-area-inset-bottom)); 
+}
+
+.message-input {
+  flex: 1;
+  height: 80rpx;
+  background-color: var(--bg-color-grey);
+  border-radius: 40rpx;
+  padding: 0 30rpx;
+  font-size: 30rpx;
+  margin-right: 20rpx;
+}
+
+.send-button {
+  background-color: var(--primary-color);
+  color: 000000;
+  font-size: 30rpx;
+  padding: 15rpx 30rpx;
+  border-radius: 40rpx;
+  line-height: 1;
+  min-width: 150rpx; 
+}

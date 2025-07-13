@@ -1,0 +1,140 @@
+@import "/app.wxss";
+
+.tabs {
+    display: flex;
+    justify-content: space-around;
+    background-color: var(--card-bg-color);
+    padding: 25rpx 0;
+    border-bottom: 1rpx solid var(--border-color);
+}
+
+.tab-item {
+    font-size: 30rpx;
+    color: var(--text-color-normal);
+    padding: 10rpx 20rpx;
+    position: relative;
+}
+
+.tab-item.active {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.tab-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -10rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60rpx;
+    height: 6rpx;
+    background-color: var(--primary-color);
+    border-radius: 3rpx;
+}
+
+.order-list {
+    padding: 20rpx 30rpx;
+}
+
+.order-item {
+    margin-bottom: 30rpx;
+    padding: 30rpx;
+}
+
+.order-header {
+    padding-bottom: 20rpx;
+    border-bottom: 1rpx solid var(--border-color);
+    margin-bottom: 20rpx;
+}
+
+.user-name {
+    font-size: 30rpx;
+    font-weight: bold;
+    color: var(--text-color-dark);
+}
+
+.order-status {
+    font-size: 28rpx;
+    color: var(--text-color-normal); /* 默认灰色 */
+    font-weight: bold;
+}
+
+.order-status.status-new {
+    color: #FF5722; /* 新订单使用橙色或红色突出 */
+}
+
+.order-content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20rpx;
+}
+
+.service-image {
+    width: 160rpx;
+    height: 160rpx;
+    border-radius: 10rpx;
+    margin-right: 30rpx;
+}
+
+.service-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* **添加这一行以确保文本截断生效** */
+}
+
+.service-title {
+    font-size: 32rpx;
+    font-weight: bold;
+    color: var(--text-color-dark);
+    margin-bottom: 10rpx;
+    /* **移除 .text-overflow-single(); ** */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.service-duration {
+    font-size: 28rpx;
+    color: var(--text-color-normal);
+    margin-bottom: 10rpx;
+}
+
+.order-total-price {
+    font-size: 30rpx;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.order-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20rpx;
+    border-top: 1rpx solid var(--border-color);
+}
+
+.order-btn {
+    margin-left: 20rpx;
+    padding: 10rpx 30rpx;
+    font-size: 28rpx;
+    border-radius: 8rpx;
+    border: none;
+}
+
+.primary-button-small {
+    background-color: #FFC107;
+    color: var(--text-color-dark);
+}
+
+.secondary-button-small {
+    background-color: #f0f0f0;
+    color: var(--text-color-dark);
+    border: 1rpx solid #ddd;
+}
+
+.no-data-hint {
+    text-align: center;
+    color: var(--text-color-light);
+    padding: 50rpx;
+    font-size: 28rpx;
+}

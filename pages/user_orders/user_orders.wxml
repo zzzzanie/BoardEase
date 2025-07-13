@@ -1,0 +1,54 @@
+<view class="container">
+  <view class="tabs">
+    <view class="tab-item {{currentTab === 'all' ? 'active' : ''}}" bindtap="changeTab" data-tab="all">全部</view>
+    <view class="tab-item {{currentTab === 'pending' ? 'active' : ''}}" bindtap="changeTab" data-tab="pending">待确认</view>
+    <view class="tab-item {{currentTab === 'active' ? 'active' : ''}}" bindtap="changeTab" data-tab="active">进行中</view>
+    <view class="tab-item {{currentTab === 'completed' ? 'active' : ''}}" bindtap="changeTab" data-tab="completed">已完成</view>
+  </view>
+
+  <view class="order-list">
+    <block wx:if="{{orders.length > 0}}">
+      <view wx:for="{{orders}}" wx:key="id" class="order-item card">
+        <view class="order-header flex-space-between">
+          <text class="shop-name">{{item.shopName}}</text>
+          <text class="order-status">{{item.statusText}}</text>
+        </view>
+        <view class="order-content" bindtap="goToOrderDetail" data-id="{{item.id}}">
+          <image class="service-image" src="{{item.serviceCover || '/images/default_service_cover.png'}}" mode="aspectFill"></image>
+          <view class="service-details">
+            <text class="service-title text-overflow-single">{{item.serviceTitle}}</text>
+            <text class="service-duration">{{item.duration}}天</text>
+            <text class="order-total-price">总价: ¥{{item.totalPrice}}</text>
+          </view>
+        </view>
+        
+        <view class="order-footer">
+          
+          <block wx:if="{{item.status === 'pending'}}">
+            <button class="order-btn secondary-button-small" bindtap="cancelOrder" data-id="{{item.id}}" bindtap:stop="true">取消订单</button>
+            <button class="order-btn secondary-button-small" bindtap="contactSeller" data-id="{{item.id}}" bindtap:stop="true">联系卖家</button>
+            <button class="order-btn secondary-button-small" bindtap="goToOrderDetail" data-id="{{item.id}}" bindtap:stop="true">查看详情</button>
+          </block>
+
+          <block wx:elif="{{item.status === 'active'}}">
+            <button class="order-btn secondary-button-small auto-margin-left" bindtap="contactSeller" data-id="{{item.id}}" bindtap:stop="true">联系卖家</button>
+            <button class="order-btn secondary-button-small" bindtap="goToOrderDetail" data-id="{{item.id}}" bindtap:stop="true">查看详情</button>
+          </block>
+
+          <block wx:elif="{{item.status === 'completed'}}">
+            <button class="order-btn rate-order-button" bindtap="goToRateOrder" data-id="{{item.id}}" bindtap:stop="true">去评价</button>
+            <button class="order-btn secondary-button-small" bindtap="contactSeller" data-id="{{item.id}}" bindtap:stop="true">联系卖家</button>
+            <button class="order-btn secondary-button-small" bindtap="goToOrderDetail" data-id="{{item.id}}" bindtap:stop="true">查看详情</button>
+          </block>
+          
+          <block wx:else>
+            <button class="order-btn secondary-button-small auto-margin-left" bindtap="goToOrderDetail" data-id="{{item.id}}" bindtap:stop="true">查看详情</button>
+          </block>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="no-data-hint">
+      <text>当前状态下没有订单</text>
+    </view>
+  </view>
+</view>

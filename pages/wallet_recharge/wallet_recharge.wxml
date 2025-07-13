@@ -1,0 +1,4 @@
+<view class="container flex-center">
+  <text class="section-title">钱包充值页面</text>
+  <text class="hint-text">这里将用于用户进行充值操作</text>
+</view>

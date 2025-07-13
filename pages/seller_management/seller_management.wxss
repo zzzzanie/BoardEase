@@ -1,0 +1,123 @@
+@import "/app.wxss";
+
+.service-list {
+  padding-top: 20rpx;
+}
+
+.service-item {
+  display: flex;
+  flex-wrap: wrap; /* 允许换行 */
+  align-items: center;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.service-cover {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 10rpx;
+  margin-right: 30rpx;
+  flex-shrink: 0;
+}
+
+.service-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-right: 20rpx;
+  overflow: hidden; /* 确保内容超出隐藏 */
+}
+
+.service-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: var(--text-color-dark);
+  margin-bottom: 10rpx;
+  /* 移除 .text-overflow-single() */
+  overflow: hidden;           /* 直接添加溢出处理属性 */
+  white-space: nowrap;      /* 不换行 */
+  text-overflow: ellipsis;  /* 显示省略号 */
+}
+
+.service-price {
+  font-size: 30rpx;
+  color: var(--primary-color);
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.service-status {
+  font-size: 26rpx;
+  padding: 8rpx 15rpx;
+  border-radius: 8rpx;
+  align-self: flex-start;
+}
+
+.status-active {
+  background-color: #e6f7ea;
+  color: #28a745;
+}
+
+.status-inactive {
+  background-color: #f8f8f8;
+  color: #999;
+  border: 1rpx solid #ddd;
+}
+
+.service-actions {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%; /* 占满一行 */
+  margin-top: 20rpx; /* 与上方内容隔开 */
+  border-top: 1rpx solid var(--border-color);
+  padding-top: 20rpx;
+}
+
+.action-btn {
+  margin-left: 20rpx;
+  padding: 10rpx 25rpx;
+  font-size: 28rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid #ddd;
+  background-color: #fff;
+  color: var(--text-color-normal);
+  line-height: 1;
+}
+
+.action-btn.edit-btn {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.action-btn.delete-btn {
+  color: #E74C3C;
+  border-color: #E74C3C;
+}
+
+.action-buttons {
+  margin-top: 50rpx;
+  display: flex;
+  gap: 20rpx;
+}
+
+.primary-button {
+  flex: 1;
+}
+
+.settings-button {
+  flex: 1;
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 25rpx;
+  border-radius: 12rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.no-data-hint {
+  text-align: center;
+  color: var(--text-color-light);
+  padding: 50rpx;
+  font-size: 28rpx;
+}

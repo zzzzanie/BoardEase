@@ -1,0 +1,74 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",          
+    "pages/foster/foster",        
+    "pages/mine/mine",            
+    
+    "pages/pet_archive/pet_archive",    
+    "pages/add_pet/add_pet",            
+    "pages/user_favorites/user_favorites", 
+    "pages/user_chat/user_chat",        
+    "pages/user_wallet/user_wallet",    
+    "pages/user_orders/user_orders",    
+    "pages/user_calendar/user_calendar",
+    "pages/merchant_detail/merchant_detail",
+    "pages/confirm_order/confirm_order",
+    "pages/order_success/order_success",
+    "pages/seller_management/seller_management", 
+    "pages/seller_orders/seller_orders",         
+    "pages/seller_mine_detail/seller_mine_detail", 
+    "pages/seller_service_add/seller_service_add", 
+    "pages/seller_earnings/seller_earnings", 
+    "pages/seller_chat/seller_chat",
+    "pages/seller_order_detail/seller_order_detail",
+    "pages/employee_management/employee_management",     
+    "pages/account_switch/account_switch",         
+
+    "pages/chat_detail/chat_detail",
+    "pages/order_detail/order_detail",
+    "pages/rate_order/rate_order",
+    "pages/daily_schedule/daily_schedule",
+    "pages/wallet_recharge/wallet_recharge"
+    ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "宠物寄养平台",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#FF7F50", 
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/tab_home_normal.png",
+        "selectedIconPath": "images/tab_home_selected.png"
+      },
+      {
+        "pagePath": "pages/foster/foster",
+        "text": "寄养",
+        "iconPath": "images/tab_foster_normal.png",
+        "selectedIconPath": "images/tab_foster_selected.png"
+      },
+      {
+        "pagePath": "pages/mine/mine", 
+        "text": "我的",
+        "iconPath": "images/tab_mine_normal.png",
+        "selectedIconPath": "images/tab_mine_selected.png"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "connectSocket": 10000,
+    "uploadFile": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true
+}

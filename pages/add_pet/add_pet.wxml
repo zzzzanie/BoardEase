@@ -1,0 +1,51 @@
+<view class="container">
+  <form bindsubmit="submitPet">
+    <view class="form-section card">
+      <view class="form-item flex-align-center">
+        <text class="label">头像</text>
+        <image class="upload-avatar" src="{{formData.avatar || '/images/default_pet_avatar.png'}}" mode="aspectFill" bindtap="chooseImage"></image>
+        <text class="arrow">></text>
+      </view>
+      <view class="form-item">
+        <text class="label">昵称</text>
+        <input name="name" value="{{formData.name}}" placeholder="请输入宠物昵称" class="input" bindinput="onInput" data-field="name"/>
+      </view>
+      <view class="form-item">
+        <text class="label">种类</text>
+        <input name="species" value="{{formData.species}}" placeholder="请输入宠物品种" class="input" bindinput="onInput" data-field="species"/>
+      </view>
+      <view class="form-item">
+        <text class="label">性别</text>
+        <radio-group name="gender" class="radio-group" bindchange="onRadioChange" data-field="gender">
+          <label class="radio-label">
+            <radio value="male" checked="{{formData.gender === 'male'}}"/> 公
+          </label>
+          <label class="radio-label">
+            <radio value="female" checked="{{formData.gender === 'female'}}"/> 母
+          </label>
+        </radio-group>
+      </view>
+      <view class="form-item">
+        <text class="label">年龄</text>
+        <input name="age" value="{{formData.age}}" placeholder="请输入宠物年龄" class="input" bindinput="onInput" data-field="age"/>
+      </view>
+      <view class="form-item">
+        <text class="label">是否绝育</text>
+        <switch name="isNeutered" checked="{{formData.isNeutered}}" class="switch" bindchange="onSwitchChange" data-field="isNeutered"/>
+      </view>
+      <view class="form-item textarea-item">
+        <text class="label">性格特点</text>
+        <textarea name="character" value="{{formData.character}}" placeholder="描述宠物性格，例如活泼、安静等" class="textarea" bindinput="onInput" data-field="character"></textarea>
+      </view>
+      <view class="form-item textarea-item">
+        <text class="label">健康状况</text>
+        <textarea name="healthStatus" value="{{formData.healthStatus}}" placeholder="描述健康状况，疫苗情况等" class="textarea" bindinput="onInput" data-field="healthStatus"></textarea>
+      </view>
+    </view>
+
+    <button class="action-button-yellow full-width-button" bindtap="submitPet">
+      <image src="/images/icon_edit_white.png" class="button-icon"></image>
+      <text>{{submitButtonText}}</text>
+    </button>
+  </form>
+</view>
