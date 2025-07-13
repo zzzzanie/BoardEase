@@ -1,0 +1,27 @@
+<view class="container">
+  <view class="service-list">
+    <block wx:if="{{services.length > 0}}">
+      <view wx:for="{{services}}" wx:key="id" class="service-item card">
+        <image class="service-cover" src="{{item.coverImg || '/images/default_service_cover.png'}}" mode="aspectFill"></image>
+        <view class="service-info">
+          <text class="service-title">{{item.title}}</text>
+          <text class="service-price">¥{{item.price}}/天</text>
+          <text class="service-status {{item.status === 'active' ? 'status-active' : 'status-inactive'}}">{{item.statusText}}</text>
+        </view>
+        <view class="service-actions">
+          <button class="action-btn edit-btn" bindtap="editService" data-id="{{item.id}}">编辑</button>
+          <button wx:if="{{item.status === 'active'}}" class="action-btn toggle-btn" bindtap="toggleServiceStatus" data-id="{{item.id}}" data-status="inactive">下架</button>
+          <button wx:else class="action-btn toggle-btn" bindtap="toggleServiceStatus" data-id="{{item.id}}" data-status="active">上架</button>
+          <button class="action-btn delete-btn" bindtap="deleteService" data-id="{{item.id}}">删除</button>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="no-data-hint">
+      <text>您还没有发布任何服务，快去发布吧！</text>
+    </view>
+  </view>
+  <view class="action-buttons">
+    <button class="primary-button" bindtap="goToAddService">发布新服务</button>
+    <button class="settings-button" bindtap="goToSettings">商家设置</button>
+  </view>
+</view>

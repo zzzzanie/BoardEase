@@ -1,0 +1,1 @@
+Page({ data:{}, onLoad:function(){ console.log('钱包充值页面加载'); } })

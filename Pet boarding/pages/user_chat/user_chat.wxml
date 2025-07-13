@@ -1,0 +1,18 @@
+<view class="container">
+  <view class="chat-list">
+    <block wx:if="{{chats.length > 0}}">
+      <view wx:for="{{chats}}" wx:key="id" class="chat-item" bindtap="goToChatDetail" data-id="{{item.id}}">
+        <image class="chat-avatar" src="{{item.avatar || '/images/default_avatar.png'}}" mode="aspectFill"></image>
+        <view class="chat-info">
+          <text class="chat-name text-overflow-single">{{item.name}}</text>
+          <text class="last-message text-overflow-single">{{item.lastMessage}}</text>
+        </view>
+        <text class="chat-time">{{item.time}}</text>
+        <view wx:if="{{item.unreadCount > 0}}" class="unread-badge">{{item.unreadCount}}</view>
+      </view>
+    </block>
+    <view wx:else class="no-data-hint">
+      <text>暂无聊天记录</text>
+    </view>
+  </view>
+</view>

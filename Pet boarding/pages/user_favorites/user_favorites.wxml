@@ -1,0 +1,18 @@
+<view class="container">
+  <view class="favorite-list">
+    <block wx:if="{{favorites.length > 0}}">
+      <view wx:for="{{favorites}}" wx:key="id" class="favorite-item card" bindtap="goToServiceDetail" data-id="{{item.id}}">
+        <image class="service-cover" src="{{item.coverImg || '/images/default_service_cover.png'}}" mode="aspectFill"></image>
+        <view class="service-info">
+          <text class="service-title text-overflow-single">{{item.title}}</text>
+          <text class="service-price">¥{{item.price}}/天</text>
+          <text class="shop-name text-overflow-single">{{item.shopName}}</text>
+        </view>
+        <view class="remove-btn" bindtap="removeFavorite" data-id="{{item.id}}" bindtap:stop="true">取消收藏</view>
+      </view>
+    </block>
+    <view wx:else class="no-data-hint">
+      <text>您还没有收藏任何服务哦</text>
+    </view>
+  </view>
+</view>

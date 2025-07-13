@@ -1,0 +1,43 @@
+<view class="container">
+  <view class="calendar-header flex-space-between">
+    <image src="/images/icon_arrow_left.png" class="nav-arrow" bindtap="prevMonth"></image>
+    <text class="current-month">{{currentYear}}年{{currentMonth}}月</text>
+    <image src="/images/icon_arrow_right.png" class="nav-arrow" bindtap="nextMonth"></image>
+  </view>
+
+  <view class="week-days flex-row">
+    <view class="day-name">日</view>
+    <view class="day-name">一</view>
+    <view class="day-name">二</view>
+    <view class="day-name">三</view>
+    <view class="day-name">四</view>
+    <view class="day-name">五</view>
+    <view class="day-name">六</view>
+  </view>
+
+  <view class="calendar-grid">
+    <view wx:for="{{dates}}" wx:key="date" class="date-item {{item.isCurrentMonth ? '' : 'other-month'}} {{item.hasEvent ? 'has-event' : ''}} {{item.date === selectedDate ? 'selected-date' : ''}}" bindtap="selectDate" data-date="{{item.date}}">
+      <text>{{item.day}}</text>
+      <view wx:if="{{item.hasEvent}}" class="event-dot"></view>
+    </view>
+  </view>
+
+  <view class="section-title">当日日程 ({{selectedDate}})</view>
+  <view class="event-list card">
+    <block wx:if="{{selectedDateEvents.length > 0}}">
+      <view wx:for="{{selectedDateEvents}}" wx:key="id" class="event-item">
+        <text class="event-time">{{item.time}}</text>
+        <text class="event-desc">{{item.description}}</text>
+      </view>
+    </block>
+    <view wx:else class="no-data-hint">
+      <text>选择日期查看日程或点击下方按钮添加</text>
+    </view>
+    </view>
+
+  <button class="action-button-yellow full-width-button" bindtap="goToAddSchedule">
+    <image src="/images/icon_add_white.png" class="button-icon"></image>
+    <text>添加日程</text>
+  </button>
+
+</view>

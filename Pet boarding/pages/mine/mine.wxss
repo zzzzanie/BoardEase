@@ -1,0 +1,343 @@
+/* pages/mine/mine.wxss */
+@import "/app.wxss"; /* 确保引入了全局样式 */
+
+.container {
+  padding-bottom: env(safe-area-inset-bottom); /* 适配iPhone X系列底部安全区 */
+}
+
+/* --------------- 宠物主人端样式 --------------- */
+.user-header-section {
+  position: relative;
+  width: 100%;
+  height: 380rpx; /* 根据背景图和内容调整高度 */
+  overflow: hidden;
+  background-color: var(--orange-header-bg); /* 设置一个纯色背景，防止图片加载慢时空白 */
+}
+
+.header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.user-info-overlay {
+  position: relative;
+  z-index: 2; /* 确保在背景图之上 */
+  display: flex;
+  flex-direction: column; /* 头像和下面的昵称等级是垂直排列 */
+  align-items: center; /* 水平居中 */
+  padding-top: 100rpx; /* 调整顶部间距，让内容下沉一些 */
+  color: #fff;
+  width: 100%; /* 确保overlay占据整个宽度 */
+  box-sizing: border-box; /* 包含padding */
+}
+
+.avatar-nickname-btn {
+  background-color: transparent; /* 移除 button 默认背景 */
+  padding: 0;
+  margin: 0;
+  line-height: normal; /* 重置 button 默认行高 */
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #fff; /* 确保文字颜色是白色 */
+}
+.avatar-nickname-btn::after {
+  border: none;
+}
+
+
+.avatar {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 50%;
+  border: 6rpx solid var(--avatar-border-color); /* 白色边框 */
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.1);
+  margin-bottom: 20rpx; /* 头像和昵称之间的距离 */
+}
+
+.user-details {
+  /* 确保这里不会限制宽度 */
+  /* 如果有 width: auto; max-width: 100%; 可以确保其弹性 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* 确保有足够的空间，避免文字被挤压 */
+  width: auto; /* 或 max-content */
+}
+
+.nickname {
+  font-size: 38rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx; /* 昵称和等级之间的距离 */
+  white-space: nowrap; /* 防止昵称换行 */
+}
+
+.level-tag {
+  /* 这里的背景颜色和边框是 level-tag 自身的，而不是文字的 */
+  /* 文字本身的 padding 在 .status-approved-text 和 .status-pending-text 中设置 */
+  display: flex;
+  align-items: center; 
+  /* background-color: rgba(255, 255, 255, 0.2); 
+  border-radius: 20rpx;
+  padding: 8rpx 15rpx; */ /* 这些 padding 可能会导致问题，考虑是否需要，或者直接应用到 text 上 */
+  font-size: 24rpx; /* 这里的字号会被 text 上的类覆盖 */
+  color: #fff; /* 这里的颜色会被 text 上的类覆盖 */
+  /* 移除 level-tag 的 padding，让 status-approved-text/status-pending-text 的 padding 完全控制 */
+  padding: 0; 
+  background-color: transparent; /* 如果 level-tag 不需要背景，设为透明 */
+  border-radius: 0; /* 如果 level-tag 不需要圆角，设为0 */
+}
+
+.badge-icon {
+  width: 28rpx; /* 调整徽章图标大小 */
+  height: 28rpx; /* 调整徽章图标大小 */
+  margin-right: 8rpx; /* 徽章图标和文字的间距 */
+}
+
+/* 宠物档案区域 */
+.section-card {
+  background-color: var(--card-bg-color);
+  border-radius: 15rpx;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.05);
+  margin: -60rpx 30rpx 30rpx 30rpx; /* 向上偏移，覆盖一部分顶部背景 */
+  padding: 30rpx;
+  position: relative; /* 确保 z-index 有效 */
+  z-index: 3;
+}
+
+.pet-archive-section {
+  /* 针对宠物档案的特定样式 */
+}
+
+.section-header {
+  margin-bottom: 25rpx;
+}
+
+.section-title-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.section-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 15rpx;
+}
+
+.section-title-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--text-color-dark);
+}
+
+.add-pet-btn {
+  font-size: 28rpx;
+  color: var(--primary-color);
+}
+
+.pet-list {
+  /* overflow: hidden;  可能需要给列表一个父级来处理 */
+}
+
+.pet-item {
+  display: flex;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid var(--border-color);
+  position: relative;
+}
+
+.pet-item:last-child {
+  border-bottom: none;
+}
+
+.pet-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  margin-right: 25rpx;
+  border: 1rpx solid #eee;
+}
+
+.pet-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden; /* 确保文本截断生效 */
+}
+
+.pet-name-gender {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.pet-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-right: 15rpx;
+}
+
+
+.gender-icon {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 15rpx;
+}
+
+.edit-small-icon {
+  width: 30rpx;
+  height: 30rpx;
+}
+
+.pet-tags {
+  display: flex;
+}
+
+.tag {
+  font-size: 24rpx;
+  padding: 8rpx 18rpx;
+  border-radius: 18rpx;
+  margin-right: 15rpx;
+  color: #fff;
+  white-space: nowrap; /* 防止标签换行 */
+}
+
+.age-tag {
+  background-color: var(--light-blue);
+  color: #3682be; /* 蓝色字体 */
+}
+
+.neutered-tag {
+  background-color: var(--light-red);
+  color: #cb4b16; /* 橙色字体 */
+}
+
+.pet-cat-illustration {
+  width: 100rpx;
+  height: 100rpx;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.7; /* 半透明效果 */
+}
+
+.no-pets-hint {
+  text-align: center;
+  color: var(--text-color-light);
+  font-size: 28rpx;
+  padding: 30rpx 0;
+}
+
+
+/* --------------- 卖家端“我的”页面（展示型）样式 --------------- */
+/* seller-header-section 样式与用户端类似，但内部细节不同 */
+.seller-header-section {
+  position: relative;
+  width: 100%;
+  height: 380rpx; /* 与用户端高度保持一致 */
+  overflow: hidden;
+  background-color: var(--orange-header-bg); /* 设置一个纯色背景，防止图片加载慢时空白 */
+}
+/* user-info-overlay 样式可以复用，但内部元素略有不同 */
+
+.shop-logo-display {
+  border-radius: 15rpx; /* 方形圆角 */
+}
+
+/* 头部编辑按钮（图标形式） */
+.edit-profile-icon-btn {
+  position: absolute; /* 相对于 user-info-overlay 定位 */
+  top: 120rpx; /* 调整位置，与头像水平对齐 */
+  right: 60rpx; /* 离右侧边缘距离 */
+  width: 60rpx; /* 按钮可点击区域 */
+  height: 60rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+/* 我的店铺概览旁边的编辑按钮（图标形式） */
+.edit-section-icon-btn {
+  /* 放在 flex-end，与标题文字平齐 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50rpx; /* 按钮可点击区域 */
+  height: 50rpx;
+  margin-left: 20rpx; /* 与标题文字间隔 */
+}
+
+/* 通用的编辑图标样式 */
+.edit-icon-small {
+  width: 40rpx; /* 图标尺寸 */
+  height: 40rpx; /* 图标尺寸 */
+  opacity: 0.8; /* 稍微透明 */
+}
+
+.status-approved-text {
+  background-color: rgba(40, 167, 69, 0.8); /* 绿色背景 */
+  color: #fff;
+  padding: 8rpx 12rpx; /* 调整左右padding，稍微减小，给文字更多空间 */
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  /* 确保不被压缩 */
+  flex-shrink: 0;
+  white-space: nowrap; /* 确保不换行 */
+}
+.status-pending-text {
+  background-color: rgba(255, 193, 7, 0.8); /* 黄色背景 */
+  color: #fff;
+  padding: 8rpx 12rpx; /* 调整左右padding */
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  /* 确保不被压缩 */
+  flex-shrink: 0;
+  white-space: nowrap; /* 确保不换行 */
+}
+
+/* 卖家信息展示区域 */
+.seller-info-display-section {
+  /* card 样式已经定义 */
+  margin: -60rpx 30rpx 30rpx 30rpx; /* 向上偏移，覆盖一部分顶部背景 */
+  padding: 30rpx;
+  position: relative; /* 确保 z-index 有效 */
+  z-index: 3;
+}
+
+
+.display-info-list {
+  /* list 通用样式 */
+}
+
+.display-info-item {
+  display: flex;
+  padding: 15rpx 0;
+  border-bottom: 1rpx solid var(--border-color);
+  font-size: 30rpx;
+  align-items: center; /* 垂直居中对齐 */
+}
+.display-info-item:last-child {
+  border-bottom: none;
+}
+
+.display-info-item .label {
+  width: 200rpx; /* 标签固定宽度 */
+  color: var(--text-color-normal);
+  flex-shrink: 0;
+}
+.display-info-item .value {
+  flex: 1; /* 值占据剩余空间 */
+  color: var(--text-color-dark);
+  text-align: right; /* 值靠右对齐 */
+}
+
+/* .section-title 已经全局定义 */
+/* .menu-list, .menu-item 等通用菜单样式已经全局定义 */

@@ -1,0 +1,4 @@
+<view class="container flex-center">
+  <text class="section-title">评价订单页面</text>
+  <text class="hint-text">这里将用于用户评价订单</text>
+</view>

@@ -1,0 +1,46 @@
+<view class="container">
+  <form bindsubmit="submitService">
+    <view class="form-section card">
+      <view class="form-item flex-align-center">
+        <text class="label">服务标题</text>
+        <input name="title" value="{{formData.title}}" placeholder="例如：专业家庭寄养服务（小型犬）" class="input" />
+      </view>
+      <view class="form-item textarea-item">
+        <text class="label">服务描述</text>
+        <textarea name="description" value="{{formData.description}}" placeholder="详细描述您的服务内容、特点、注意事项等" class="textarea"></textarea>
+      </view>
+      <view class="form-item">
+        <text class="label">价格 (元/天)</text>
+        <input name="price" value="{{formData.price}}" placeholder="请输入每日价格" class="input" type="digit"/>
+      </view>
+      <view class="form-item">
+        <text class="label">适用宠物类型</text>
+        <picker bindchange="bindPetTypeChange" value="{{formData.petTypeIndex}}" range="{{petTypes}}" range-key="name" class="input picker">
+          <view>{{petTypes[formData.petTypeIndex].name}}</view>
+        </picker>
+        <text class="arrow">></text>
+      </view>
+      <view class="form-item">
+        <text class="label">服务封面图</text>
+        <image class="upload-cover" src="{{formData.coverImg || '/images/upload_placeholder.png'}}" mode="aspectFill" bindtap="chooseCoverImage"></image>
+        <text class="arrow">></text>
+      </view>
+      <view class="form-item textarea-item">
+        <text class="label">服务照片/视频</text>
+        <view class="media-upload-area">
+          <block wx:for="{{formData.mediaFiles}}" wx:key="index">
+            <view class="uploaded-media-item">
+              <image src="{{item}}" mode="aspectFill" class="media-preview" bindtap="previewMedia" data-src="{{item}}"></image>
+              <text class="delete-media" bindtap="deleteMedia" data-index="{{index}}">x</text>
+            </view>
+          </block>
+          <view class="upload-btn" bindtap="chooseMedia">
+            <image src="/images/icon_add.png" class="add-icon"></image>
+          </view>
+        </view>
+        <text class="hint-text">最多上传9张图片或视频</text>
+      </view>
+    </view>
+    <button form-type="submit" class="action-button-yellow">保存并提交</button>
+  </form>
+</view>

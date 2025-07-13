@@ -1,0 +1,166 @@
+<scroll-view scroll-y="true" class="main-scroll" enable-flex="true">
+  <view class="order-card">
+    <view class="merchant-header">
+      <view class="merchant-title-row">
+        <text class="merchant-title">{{merchant.name}}</text>
+        <view class="badge badge-verify">平台已验证</view>
+        <view class="badge badge-insure">已投基础保</view>
+      </view>
+      <view class="merchant-address">商家地址：{{merchant.address}}</view>
+    </view>
+    <view class="order-section">
+      <view class="order-item">
+        服务项目：
+        <view class="service-select">
+          <block wx:for="{{merchant.services}}" wx:key="name">
+            <view class="service-option {{selectedServiceIndex === index ? 'selected' : ''}}" bindtap="onSelectService" data-index="{{index}}">
+              {{item.name}}
+            </view>
+          </block>
+        </view>
+      </view>
+      <view class="order-item">
+        寄养时间：
+        <picker mode="date" value="{{checkInDate}}" start="{{minDate}}" end="{{maxDate}}" bindchange="onCheckInDateChange">
+          <text class="date-value">{{checkInDate}}</text>
+        </picker>
+        至
+        <picker mode="date" value="{{checkOutDate}}" start="{{minDate}}" end="{{maxDate}}" bindchange="onCheckOutDateChange">
+          <text class="date-value">{{checkOutDate}}</text>
+        </picker>
+        <text class="order-days">（{{days}}晚）</text>
+      </view>
+      <view class="order-item">宠物信息：{{petInfoDisplay}}</view>
+      <view class="order-item">
+        <text>您的姓名：</text>
+        <input class="user-input" placeholder="请输入姓名" value="{{userName}}" bindinput="onUserNameInput"/>
+      </view>
+      <view class="order-item">
+        <text>联系方式：</text>
+        <input class="user-input" placeholder="请输入手机号" value="{{userPhone}}" bindinput="onUserPhoneInput" type="number" maxlength="11"/>
+      </view>
+    </view>
+  </view>
+
+  <view class="insurance-card">
+    <view class="insurance-section">
+      <checkbox-group bindchange="onInsuranceChange" class="insurance-checkbox-group">
+        <checkbox value="insurance" checked="{{insuranceChecked}}" class="insurance-checkbox" />
+      </checkbox-group>
+      购买额外保险（￥9.9）
+      <button class="insurance-detail-btn" bindtap="onShowProInsurance">详情</button>
+      <view class="insurance-desc">
+        <text>为寄养期间的宠物提供意外伤害、疾病等保障，理赔更安心。</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 优惠券选择 -->
+  <view class="coupon-card">
+    <view class="coupon-section">
+      <text class="coupon-title">优惠券</text>
+      <view class="coupon-content" bindtap="onShowCouponModal">
+        <text wx:if="{{selectedCoupon}}">{{selectedCoupon.name}} (5%折扣)</text>
+        <text wx:else class="coupon-placeholder">选择优惠券</text>
+        <text class="coupon-arrow">></text>
+      </view>
+      <button wx:if="{{selectedCoupon}}" class="cancel-coupon-btn" bindtap="onCancelCoupon">取消</button>
+    </view>
+  </view>
+
+  <!-- 积分使用 -->
+  <view class="points-card">
+    <view class="points-section">
+      <text class="points-title">积分抵扣</text>
+      <view class="points-content">
+        <text>可用积分：{{userPoints}} (500积分=5元)</text>
+        <checkbox-group bindchange="onTogglePoints" class="points-checkbox-group">
+          <checkbox value="usePoints" checked="{{usePoints}}" class="points-checkbox" />
+        </checkbox-group>
+      </view>
+    </view>
+  </view>
+
+  <view class="remark-card">
+    <view class="remark-section">
+      <textarea placeholder="备注（选填）" bindinput="onRemarkInput" value="{{remark}}" />
+    </view>
+  </view>
+
+  <view class="fee-card">
+    <view class="fee-title">费用明细</view>
+    <view class="fee-section">
+      <view class="fee-item">
+        <text>服务费用</text>
+        <text>￥{{serviceFee}}</text>
+      </view>
+      <view class="fee-item" wx:if="{{longDiscountAmount > 0}}">
+        <text>长期折扣 <text class="fee-tip">(寄养超过15天享受10%折扣)</text></text>
+        <text class="discount-amount">-￥{{longDiscountAmount}}</text>
+      </view>
+      <view class="fee-item">
+        <text>平台服务费 <text class="fee-tip">(服务费用的0.5%)</text></text>
+        <text>￥{{platformFee}}</text>
+      </view>
+      <view class="fee-item" wx:if="{{insuranceChecked}}">
+        <text>寄养保险费</text>
+        <text>￥{{insuranceFee}}</text>
+      </view>
+      <view class="fee-item" wx:if="{{selectedCoupon}}">
+        <text>{{selectedCoupon.name}} <text class="fee-tip">(5%折扣)</text></text>
+        <text class="discount-amount">-￥{{couponDiscountAmount}}</text>
+      </view>
+      <view class="fee-item" wx:if="{{usePoints}}">
+        <text>积分抵扣 <text class="fee-tip">(500积分=5元)</text></text>
+        <text class="discount-amount">-￥{{pointsDiscountAmount}}</text>
+      </view>
+      <view class="fee-total">
+        <text>总计</text>
+        <text>￥{{totalFee}}</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+<view class="bottom-btn">
+  <button bindtap="onSubmitOrder">提交订单</button>
+</view>
+
+<!-- 专业保险弹窗 -->
+<view wx:if="{{showProInsuranceModal}}" class="insurance-modal-mask" bindtap="onCloseProInsuranceModal">
+  <view class="insurance-modal-content" bindtap="stopPropagation">
+    <view class="insurance-modal-header">
+      <text class="insurance-modal-title">专业保险详情</text>
+      <text class="insurance-modal-close" bindtap="onCloseProInsuranceModal">×</text>
+    </view>
+    <view class="insurance-modal-body">
+      <image class="insurance-modal-img" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/pro_insurance.png" mode="widthFix"/>
+    </view>
+  </view>
+</view>
+
+<!-- 优惠券选择弹窗 -->
+<view wx:if="{{showCouponModal}}" class="coupon-modal-mask" bindtap="onCloseCouponModal">
+  <view class="coupon-modal-content" bindtap="stopPropagation">
+    <view class="coupon-modal-header">
+      <text class="coupon-modal-title">选择优惠券</text>
+      <text class="coupon-modal-close" bindtap="onCloseCouponModal">×</text>
+    </view>
+    <view class="coupon-modal-body">
+      <view class="coupon-option" bindtap="onSelectCoupon" data-type="newUser">
+        <view class="coupon-info">
+          <text class="coupon-name">新人折扣</text>
+          <text class="coupon-desc">新用户专享5%折扣</text>
+        </view>
+        <text class="coupon-discount">5%</text>
+      </view>
+      <view class="coupon-option" bindtap="onSelectCoupon" data-type="referral">
+        <view class="coupon-info">
+          <text class="coupon-name">拉新折扣</text>
+          <text class="coupon-desc">推荐好友注册获得5%折扣</text>
+        </view>
+        <text class="coupon-discount">5%</text>
+      </view>
+    </view>
+  </view>
+</view>

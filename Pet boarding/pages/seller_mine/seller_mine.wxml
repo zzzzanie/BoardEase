@@ -1,0 +1,76 @@
+<view class="container">
+  <!-- 店铺信息区域 -->
+  <view class="shop-info" bindtap="goToEditShopInfo">
+    <image class="shop-logo" src="{{shopInfo.logoUrl || '/images/default_shop_logo.png'}}" mode="aspectFill"></image>
+    <view class="shop-detail">
+      <view class="shop-name">{{shopInfo.shopName || '未设置店铺名称'}}</view>
+      <view class="shop-status {{shopInfo.isApproved ? 'approved' : ''}}">
+        {{shopInfo.isApproved ? '已认证' : '未认证'}}
+      </view>
+    </view>
+    <image class="arrow-right" src="/images/icon_arrow_right.png" mode="aspectFit"></image>
+  </view>
+
+  <!-- 订单统计区域 -->
+  <view class="stats-section">
+    <view class="stats-item" bindtap="goToSellerOrders" data-type="all">
+      <text class="stats-num">{{orderCounts.totalOrders}}</text>
+      <text class="stats-label">全部订单</text>
+    </view>
+    <view class="stats-item" bindtap="goToSellerOrders" data-type="new">
+      <text class="stats-num">{{orderCounts.newOrders}}</text>
+      <text class="stats-label">新订单</text>
+    </view>
+    <view class="stats-item" bindtap="goToEarnings">
+      <text class="stats-num">¥{{earnings.totalEarnings}}</text>
+      <text class="stats-label">累计收益</text>
+    </view>
+  </view>
+
+  <!-- 功能列表 -->
+  <view class="function-list">
+    <view class="function-group">
+      <view class="function-item" bindtap="goToServiceManagement">
+        <image class="function-icon" src="/images/icon_service_manage.png" mode="aspectFit"></image>
+        <text class="function-text">服务管理</text>
+        <image class="arrow-right" src="/images/icon_arrow_right.png" mode="aspectFit"></image>
+      </view>
+      <view class="function-item" bindtap="goToAddService">
+        <image class="function-icon" src="/images/icon_publish.png" mode="aspectFit"></image>
+        <text class="function-text">发布新服务</text>
+        <image class="arrow-right" src="/images/icon_arrow_right.png" mode="aspectFit"></image>
+      </view>
+      <view class="function-item" bindtap="goToEmployeeManagement">
+        <image class="function-icon" src="/images/icon_employee.png" mode="aspectFit"></image>
+        <text class="function-text">员工信息管理</text>
+        <image class="arrow-right" src="/images/icon_arrow_right.png" mode="aspectFit"></image>
+      </view>
+    </view>
+
+    <view class="function-group">
+      <view class="function-item" bindtap="goToShopReviews">
+        <image class="function-icon" src="/images/icon_star.png" mode="aspectFit"></image>
+        <text class="function-text">店铺评价</text>
+        <image class="arrow-right" src="/images/icon_arrow_right.png" mode="aspectFit"></image>
+      </view>
+      <view class="function-item" bindtap="goToWithdrawal">
+        <image class="function-icon" src="/images/icon_wallet.png" mode="aspectFit"></image>
+        <text class="function-text">收益提现</text>
+        <image class="arrow-right" src="/images/icon_arrow_right.png" mode="aspectFit"></image>
+      </view>
+    </view>
+
+    <view class="function-group">
+      <view class="function-item" bindtap="goToSellerSettings">
+        <image class="function-icon" src="/images/icon_seller_info.png" mode="aspectFit"></image>
+        <text class="function-text">卖家设置</text>
+        <image class="arrow-right" src="/images/icon_arrow_right.png" mode="aspectFit"></image>
+      </view>
+      <view class="function-item" bindtap="goToSellerHelp">
+        <image class="function-icon" src="/images/icon_service_manage.png" mode="aspectFit"></image>
+        <text class="function-text">帮助与客服</text>
+        <image class="arrow-right" src="/images/icon_arrow_right.png" mode="aspectFit"></image>
+      </view>
+    </view>
+  </view>
+</view> 

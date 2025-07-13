@@ -1,0 +1,118 @@
+<view class="container">
+  <!-- 顶部操作栏 -->
+  <view class="header">
+    <view class="title">员工管理</view>
+    <view class="add-btn" bindtap="showAddEmployeeModal">
+      <image src="/images/icon_add.png" mode="aspectFit" class="add-icon"></image>
+      <text>添加员工</text>
+    </view>
+  </view>
+
+  <!-- 员工列表 -->
+  <view class="employee-list">
+    <block wx:if="{{employees.length > 0}}">
+      <view class="employee-item" wx:for="{{employees}}" wx:key="id">
+        <view class="employee-info" bindtap="showEditEmployeeModal" data-id="{{item.id}}">
+          <image class="avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+          <view class="info-content">
+            <view class="info-header">
+              <text class="name">{{item.name}}</text>
+              <text class="position">{{item.position}}</text>
+              <text class="status {{item.status === '在职' ? 'status-active' : 'status-inactive'}}">{{item.status}}</text>
+            </view>
+            <view class="info-detail">
+              <text class="phone">{{item.phone}}</text>
+              <text class="join-date">入职时间：{{item.joinDate}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="action-btn" bindtap="toggleEmployeeStatus" data-id="{{item.id}}">
+          {{item.status === '在职' ? '设为离职' : '设为在职'}}
+        </view>
+      </view>
+    </block>
+    <view wx:else class="no-data">暂无员工信息</view>
+  </view>
+
+  <!-- 添加员工弹窗 -->
+  <view class="modal" wx:if="{{showAddModal}}">
+    <view class="modal-mask" bindtap="closeModal"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">添加员工</text>
+        <image class="close-icon" src="/images/icon_close.png" mode="aspectFit" bindtap="closeModal"></image>
+      </view>
+      <view class="modal-body">
+        <view class="form-item">
+          <text class="label">姓名</text>
+          <input class="input" value="{{formData.name}}" data-field="name" bindinput="onInput" placeholder="请输入员工姓名"/>
+        </view>
+        <view class="form-item">
+          <text class="label">手机号</text>
+          <input class="input" value="{{formData.phone}}" type="number" data-field="phone" bindinput="onInput" placeholder="请输入手机号"/>
+        </view>
+        <view class="form-item">
+          <text class="label">职位</text>
+          <picker bindchange="bindPositionChange" value="{{index}}" range="{{positions}}">
+            <view class="picker {{formData.position ? '' : 'placeholder'}}">
+              {{formData.position || '请选择职位'}}
+            </view>
+          </picker>
+        </view>
+        <view class="form-item">
+          <text class="label">入职日期</text>
+          <picker mode="date" bindchange="bindDateChange" value="{{formData.joinDate}}">
+            <view class="picker {{formData.joinDate ? '' : 'placeholder'}}">
+              {{formData.joinDate || '请选择入职日期'}}
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button class="btn btn-cancel" bindtap="closeModal">取消</button>
+        <button class="btn btn-confirm" bindtap="addEmployee">确认</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 编辑员工弹窗 -->
+  <view class="modal" wx:if="{{showEditModal}}">
+    <view class="modal-mask" bindtap="closeModal"></view>
+    <view class="modal-content">
+      <view class="modal-header">
+        <text class="modal-title">编辑员工信息</text>
+        <image class="close-icon" src="/images/icon_close.png" mode="aspectFit" bindtap="closeModal"></image>
+      </view>
+      <view class="modal-body">
+        <view class="form-item">
+          <text class="label">姓名</text>
+          <input class="input" value="{{formData.name}}" data-field="name" bindinput="onInput" placeholder="请输入员工姓名"/>
+        </view>
+        <view class="form-item">
+          <text class="label">手机号</text>
+          <input class="input" value="{{formData.phone}}" type="number" data-field="phone" bindinput="onInput" placeholder="请输入手机号"/>
+        </view>
+        <view class="form-item">
+          <text class="label">职位</text>
+          <picker bindchange="bindPositionChange" value="{{index}}" range="{{positions}}">
+            <view class="picker {{formData.position ? '' : 'placeholder'}}">
+              {{formData.position || '请选择职位'}}
+            </view>
+          </picker>
+        </view>
+        <view class="form-item">
+          <text class="label">入职日期</text>
+          <picker mode="date" bindchange="bindDateChange" value="{{formData.joinDate}}">
+            <view class="picker {{formData.joinDate ? '' : 'placeholder'}}">
+              {{formData.joinDate || '请选择入职日期'}}
+            </view>
+          </picker>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <button class="btn btn-cancel" bindtap="closeModal">取消</button>
+        <button class="btn btn-confirm" bindtap="updateEmployee">确认</button>
+      </view>
+    </view>
+  </view>
+</view> 

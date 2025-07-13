@@ -1,0 +1,235 @@
+.container {
+  padding: 30rpx;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+/* 店铺信息区域 */
+.shop-info-section {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  padding: 40rpx 30rpx;
+  border-radius: 15rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.shop-logo {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 10rpx;
+  margin-right: 30rpx;
+  border: 2rpx solid #eee;
+}
+
+.info-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.shop-name {
+  font-size: 38rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.edit-shop-info {
+  font-size: 26rpx;
+  color: #888;
+  margin-bottom: 10rpx;
+}
+
+.shop-status {
+  font-size: 24rpx;
+  padding: 8rpx 15rpx;
+  border-radius: 8rpx;
+  align-self: flex-start; /* 让状态标签靠左 */
+}
+
+.status-approved {
+  background-color: #e6f7ea; /* 浅绿色背景 */
+  color: #28a745; /* 绿色文字 */
+}
+
+.status-pending {
+  background-color: #fff3cd; /* 浅黄色背景 */
+  color: #ffc107; /* 黄色文字 */
+}
+
+/* 区域标题 */
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  margin-top: 40rpx;
+  padding-left: 10rpx;
+}
+
+/* 概览区域 */
+.overview-section {
+  display: flex;
+  justify-content: space-around;
+  background-color: #fff;
+  padding: 30rpx 0;
+  border-radius: 15rpx;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 30rpx;
+  text-align: center;
+}
+
+.overview-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 33%;
+}
+
+.overview-item .count {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 5rpx;
+}
+
+.overview-item .label {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 菜单列表（与宠物主人端类似，可复用） */
+.menu-list {
+  background-color: #fff;
+  border-radius: 15rpx;
+  box-shadow: 0 4rpx 10rpx rgba(0, 0, 0, 0.05);
+  margin-bottom: 30rpx;
+}
+
+.menu-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  font-size: 30rpx;
+  color: #333;
+  border-bottom: 1rpx solid #eee;
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.arrow {
+  color: #ccc;
+  font-size: 28rpx;
+}
+
+/* 店铺信息样式 */
+.shop-info {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+
+.shop-logo {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  margin-right: 20rpx;
+}
+
+.shop-detail {
+  flex: 1;
+}
+
+.shop-name {
+  font-size: 34rpx;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+
+.shop-status {
+  display: inline-block;
+  font-size: 24rpx;
+  color: #999;
+  padding: 4rpx 12rpx;
+  background: #f5f5f5;
+  border-radius: 4rpx;
+}
+
+.shop-status.approved {
+  color: #52c41a;
+  background: #f6ffed;
+}
+
+/* 统计区域样式 */
+.stats-section {
+  display: flex;
+  padding: 30rpx 0;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+
+.stats-item {
+  flex: 1;
+  text-align: center;
+  border-right: 1rpx solid #eee;
+}
+
+.stats-item:last-child {
+  border-right: none;
+}
+
+.stats-num {
+  display: block;
+  font-size: 36rpx;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 8rpx;
+}
+
+.stats-label {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 功能列表样式 */
+.function-list {
+  background: #fff;
+}
+
+.function-group {
+  margin-bottom: 20rpx;
+}
+
+.function-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  background: #fff;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.function-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.function-text {
+  flex: 1;
+  font-size: 30rpx;
+  color: #333;
+}
+
+.arrow-right {
+  width: 32rpx;
+  height: 32rpx;
+}
