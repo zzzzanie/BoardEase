@@ -14,6 +14,7 @@ Page({
       price: 0,
       status: 'available'
     },
+    autoSlot: false,
     slotCache: {},
     statusOptions: [
       { value: 'available', label: '可预约' },
@@ -61,7 +62,10 @@ Page({
           }
       },
       success: res => {
-        this.setData({ serviceInfo: res.result.data }, () => {
+        this.setData({ 
+          serviceInfo: res.result.data,
+          autoSlot: res.result.data?.autoSlot ?? false
+        }, () => {
           // 确保 serviceInfo 更新后，重新加载当前选中的日期数据
           if (this.data.selectedDate) {
             this.selectDate({ currentTarget: { dataset: { date: this.data.selectedDate } } });
@@ -128,6 +132,55 @@ Page({
     this.setData({ dates: dates });
   },
 
+  toggleAutoSlot: async function(e){
+    const isChecked = e.detail.value;
+    const serviceId = this.data.serviceId;
+    const {baseCapacity, basePrice} = this.data.serviceInfo;
+
+    try {
+      const res = await wx.showModal({
+        title: isChecked ? '开启确认' : '关闭确认',
+        content: isChecked ? 
+          '系统将自动开放未来7天的预约。已开放的预约不变，可随时调整当日设置。' : 
+          '关闭后，预约需手动开放，已开放的预约不变。'
+      });
+  
+      if (!res.confirm) {
+        return this.setData({ autoSlot: !isChecked });
+      }
+  
+      wx.showLoading({ title: '设置中...', mask: true });
+      
+      await wx.cloud.callFunction({
+        name: 'services',
+        data: {
+          type: 'updateAutoSlot',
+          data: { 
+            autoSlot: isChecked, 
+            serviceId: serviceId,
+            capacity: baseCapacity,
+            price: basePrice
+          }
+        }
+      });
+      
+      this.setData({ autoSlot: isChecked });
+      wx.showToast({ title: '设置成功', icon: 'success' });
+
+      if (isChecked) { 
+        const [year, month] = this.data.selectedDate.split('-');
+        this.loadMonthSlots(year, month); 
+      }
+  
+    } catch (err) {
+      console.error('操作失败:', err);
+      this.setData({ autoSlot: !isChecked });
+      wx.showToast({ title: '设置失败', icon: 'none' });
+    } finally {
+      wx.hideLoading();
+    }
+  },
+  
   handleCapacityChange: function(e) {
     this.setData({
       'formData.capacity': e.detail.value

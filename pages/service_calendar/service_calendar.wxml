@@ -1,4 +1,10 @@
 <view class="container">
+  
+  <view class="switch-container">
+    <text class="switch-label">自动开放未来 7 天预约</text>
+    <switch class="auto-slot-switch" checked="{{autoSlot}}" bindchange="toggleAutoSlot" color="#FFC240"/>
+  </view>
+  
   <view class="calendar-header flex-space-between">
     <image src="/images/icon_arrow_left.png" class="nav-arrow" bindtap="prevMonth"></image>
     <text class="current-month">{{currentYear}}年{{currentMonth}}月</text>
@@ -42,7 +48,7 @@
 
   <!-- 服务设置区域 -->
   <view wx:if="{{!isPastDate}}">
-    <view class="section-title">预约管理</view>
+    <view class="section-title">当日设置</view>
     <view class="form-section">
       <!-- 容量 -->
       <view class="form-item">
@@ -70,7 +76,7 @@
         <view class="radio-group horizontal">
           <radio-group bindchange="handleStatusChange">
             <label class="radio-label" wx:for="{{statusOptions}}" wx:key="value">
-              <radio value="{{item.value}}" checked="{{formData.status === item.value}}"/>
+              <radio value="{{item.value}}" checked="{{formData.status === item.value}}" color="#FFC240"/>
               <text>{{item.label}}</text>
             </label>
           </radio-group>
