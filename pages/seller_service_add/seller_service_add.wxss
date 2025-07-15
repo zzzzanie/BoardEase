@@ -135,3 +135,11 @@
   font-size: 30rpx;
   margin-left: 4rpx;
 }
+
+/* 底部全宽度按钮的样式，与 action-button-yellow 配合 */
+.full-width-button {
+  width: auto; 
+  margin: 30rpx;
+  background-color: #FFA000;
+  color: #fff;
+}
