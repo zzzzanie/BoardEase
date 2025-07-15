@@ -76,7 +76,7 @@
 
 /* 选中日期的样式 */
 .date-item.selected-date {
-    background-color: #FFC107; /* 黄色背景 */
+    background-color: #FFC240; /* 黄色背景 */
     color: #fff; /* 文字颜色变为白色 */
     border-radius: 50%; /* 变为圆形 */
     width: 70rpx; /* 调整宽度，使其成为一个正圆 */
@@ -149,6 +149,8 @@
   width: auto; 
   margin: 30rpx; 
   margin-bottom: calc(30rpx + env(safe-area-inset-bottom)); 
+  background-color: #FFA000;
+  color: #fff;
 }
 
 
@@ -202,4 +204,25 @@
   font-size: 32rpx;
   color: var(--text-color-dark);
   margin-left: 25rpx;
+}
+
+.switch-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 30rpx;
+  background-color: #f7f7f7;
+  border-bottom: 1rpx solid #eaeaea;
+}
+
+.switch-label {
+  font-size: 34rpx;
+  margin-left: 10rpx;
+  color: #333333;
+  font-weight: 500;
+}
+
+.auto-slot-switch {
+  transform: scale(0.9);
+  transform-origin: right center;
 }
