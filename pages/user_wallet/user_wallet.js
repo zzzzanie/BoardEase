@@ -2,7 +2,11 @@
 Page({
   data: {
     balance: '0.00',
-    transactions: []
+    transactions: [],
+    coupons: [
+      { type: 'newUser', name: '新人折扣', desc: '新用户专享5%折扣', discount: 5 },
+      { type: 'referral', name: '拉新折扣', desc: '推荐好友注册获得5%折扣', discount: 5 }
+    ]
   },
 
   onLoad: function () {
@@ -34,6 +38,13 @@ Page({
   goToWithdrawal: function () {
     wx.navigateTo({
       url: '/pages/wallet_withdrawal/wallet_withdrawal' // 假设有提现页面
+    });
+  },
+
+  onUseCoupon: function(e) {
+    console.log('点击了立即使用', e);
+    wx.switchTab({
+      url: '/pages/foster/foster'
     });
   }
 });

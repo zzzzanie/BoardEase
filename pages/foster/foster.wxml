@@ -1,2 +1,183 @@
-<!--pages/foster/foster.wxml-->
-<text>pages/foster/foster.wxml</text>
+<view class="top-bg"></view>
+<!-- 顶部导航栏 -->
+<view class="nav-bar">
+  <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/icon_arrow_left.png" class="nav-back" bindtap="onBack"/>
+  <text class="nav-title">宠物寄养</text>
+  <view class="nav-icons">
+    <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/icon_search.png" class="nav-icon"/>
+    <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/icon_switch.png" class="nav-icon"/>
+  </view>
+</view>
+
+<view class="main-card">
+  <!-- 区域选择和地址输入 -->
+  <view class="location-row">
+    <picker mode="selector" range="{{regions}}" value="{{regionIndex}}" bindchange="onRegionChange">
+      <view class="region-picker">
+        <text class="region-label">{{regions[regionIndex]}}</text>
+        <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/icon_arrow_right.png" class="arrow-icon"/>
+      </view>
+    </picker>
+    <input class="address-input" value="{{address}}" placeholder="请输入详细地址" bindinput="onAddressInput"/>
+    <view class="switch-loc" bindtap="onSwitchDistrict">
+      <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/icon_switch.png" class="switch-icon"/>
+      <text>切换位置</text>
+    </view>
+  </view>
+  <!-- 日期选择 -->
+  <view class="date-row">
+    <view class="date-col">
+      <text class="date-label">入住</text>
+      <picker mode="date" value="{{checkInDate}}" start="{{minDate}}" end="{{maxDate}}" bindchange="onCheckInDateChange">
+        <text class="date-value">{{checkInDate}}</text>
+      </picker>
+    </view>
+    <view class="date-night">{{days}}晚</view>
+    <view class="date-col">
+      <text class="date-label">接回</text>
+      <picker mode="date" value="{{checkOutDate}}" start="{{minDate}}" end="{{maxDate}}" bindchange="onCheckOutDateChange">
+        <text class="date-value">{{checkOutDate || '请选择'}}</text>
+      </picker>
+    </view>
+  </view>
+  <!-- 日期提示 -->
+  <view class="date-tip" wx:if="{{checkInDate && checkOutDate}}">
+    <text class="tip-text">已选择 {{checkInDate}} 至 {{checkOutDate}}，系统将自动筛选出在此期间可接单的商家</text>
+  </view>
+  <!-- 选择寄养宝贝 -->
+  <view class="choose-pet-row" bindtap="onChoosePet">
+    <image src="{{selectedPet.avatar || 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/default_pet_avatar.png'}}" class="pet-avatar"/>
+    <view class="pet-info-container">
+      <text class="choose-pet-text">{{selectedPet ? selectedPet.nickname : '选择寄养宝贝'}}</text>
+      <text class="pet-info" wx:if="{{selectedPet}}">{{selectedPet.size}} · {{selectedPet.type}}</text>
+      <text class="pet-required" wx:if="{{!selectedPet}}">* 必选</text>
+    </view>
+  </view>
+  <!-- 预算滑动条 -->
+  <view class="budget-row">
+    <text class="budget-label">价格：</text>
+    <text class="budget-min">0</text>
+    <slider min="0" max="300" step="10" value="{{budgetValue}}" show-value bindchange="onBudgetSliderChange"
+      block-size="22" activeColor="#ffb400" backgroundColor="#ffe9a8" class="budget-slider"/>
+    <text class="budget-max">300</text>
+    <text class="budget-value">{{budgetValue}}元以内</text>
+  </view>
+  <!-- 寄养方式条件筛选 -->
+  <view class="foster-type-row">
+    <text class="foster-type-label">筛选：</text>
+    <view class="foster-type-tags">
+      <block wx:for="{{fosterTypeOptions}}" wx:key="type">
+        <view class="foster-type-tag {{selectedFosterTypes.includes(item.value) ? 'selected' : ''}}" 
+              bindtap="onToggleFosterType" data-value="{{item.value}}">
+          <text>{{item.label}}</text>
+        </view>
+      </block>
+    </view>
+  </view>
+  
+  <!-- 已选择的筛选条件 -->
+  <view class="selected-filters-row" wx:if="{{selectedFosterTypes.length > 0}}">
+    <text class="selected-filters-label">已筛选：</text>
+    <view class="selected-filters-tags">
+      <block wx:for="{{selectedFosterTypes}}" wx:key="*this">
+        <view class="selected-filter-tag">
+          <text>{{item === 'highScore' ? '点评高分' : item === 'longDiscount' ? '长期折扣' : item}}</text>
+          <text class="remove-filter" bindtap="onRemoveFilter" data-value="{{item}}">×</text>
+        </view>
+      </block>
+    </view>
+  </view>
+  <button class="search-btn" bindtap="onSearch">查找</button>
+  <view class="service-tags">
+    <view class="service-tag">
+      <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/icon_badge.png" class="tag-icon"/>
+      <text>商家资质认证</text>
+    </view>
+    <view class="service-tag">
+      <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/icon_monitor.png" class="tag-icon"/>
+      <text>实时监控</text>
+    </view>
+    <view class="service-tag" bindtap="onShowBasicInsurance">
+      <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/icon_insurances.png" class="tag-icon"/>
+      <text>意外险服务</text>
+    </view>
+  </view>
+</view>
+
+<!-- 基础保险弹窗 -->
+<view wx:if="{{showBasicInsuranceModal}}" class="pet-picker-mask" bindtap="onCloseBasicInsuranceModal">
+  <view class="pet-picker-content" bindtap="stopPropagation">
+    <view class="pet-picker-header">
+      <text class="pet-picker-title">基础保险详情</text>
+      <text class="pet-picker-close" bindtap="onCloseBasicInsuranceModal">×</text>
+    </view>
+    <view class="insurance-content">
+      <image class="insurance-img" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/basic_insurance.png" mode="widthFix"/>
+    </view>
+  </view>
+</view>
+
+<!-- 商家列表 -->
+<view class="merchant-list">
+  <block wx:for="{{filteredMerchants}}" wx:key="id">
+    <view class="merchant-card {{!selectedPet ? 'disabled' : ''}}" bindtap="onMerchantTap" data-id="{{item.id}}">
+      <image class="merchant-img" src="{{item.img}}" />
+      <view class="merchant-info">
+        <view class="merchant-title-row">
+          <text class="merchant-title">{{item.name}}</text>
+          <view class="badge" wx:if="{{item.certified}}">
+            <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/icon_badge.png" class="badge-icon"/>
+            <text>商家资质认证</text>
+          </view>
+        </view>
+        <view class="merchant-desc-row">
+          <text class="pet-types">可接待：{{item.petTypes}}</text>
+          <text class="foster-type">{{item.fosterType}}</text>
+          <text class="max-pet">最多可接{{item.maxPet}}只</text>
+        </view>
+        <view class="merchant-feature-row">
+          <view wx:if="{{item.highScore}}" class="feature feature-score">
+            <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/icon_star.png" class="feature-icon"/>
+            点评高分
+          </view>
+          <view wx:if="{{item.longDiscount}}" class="feature feature-discount">
+            <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/icon_discount.png" class="feature-icon"/>
+            长期折扣
+          </view>
+        </view>
+        <view class="merchant-desc">{{item.desc}}</view>
+        <view class="merchant-price-row">
+          <text class="merchant-price">￥{{item.price}}-{{item.price2}}/只/晚</text>
+          <text class="merchant-score">⭐{{item.score}}</text>
+          <text class="merchant-distance">{{item.distance}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>
+
+<!-- 宠物选择器弹窗 -->
+<view wx:if="{{showPetPicker}}" class="pet-picker-mask" bindtap="onClosePetPicker">
+  <view class="pet-picker-content" bindtap="stopPropagation">
+    <view class="pet-picker-header">
+      <text class="pet-picker-title">选择寄养宠物</text>
+      <text class="pet-picker-close" bindtap="onClosePetPicker">×</text>
+    </view>
+    <scroll-view class="pet-picker-list" scroll-y="true">
+      <block wx:for="{{pets}}" wx:key="_id">
+        <view class="pet-item" bindtap="onSelectPet" data-id="{{item._id}}">
+          <image src="{{item.avatar || 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/default_pet_avatar.png'}}" class="pet-item-avatar"/>
+          <view class="pet-item-info-wrap">
+            <view class="pet-item-info">
+              <text class="pet-item-name">{{item.nickname}}</text>
+              <text class="pet-item-desc">{{item.size}} · {{item.type}}</text>
+            </view>
+          </view>
+          <view class="pet-item-check" wx:if="{{selectedPet && selectedPet._id === item._id}}">
+            <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/icon_checked.png" class="check-icon"/>
+          </view>
+        </view>
+      </block>
+    </scroll-view>
+  </view>
+</view>

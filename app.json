@@ -14,6 +14,9 @@
     "pages/user_wallet/user_wallet",    
     "pages/user_orders/user_orders",    
     "pages/user_calendar/user_calendar",
+    "pages/merchant_detail/merchant_detail",
+    "pages/confirm_order/confirm_order",
+    "pages/order_success/order_success",
 
     "pages/seller_mine_detail/seller_mine_detail", 
     "pages/seller_service_add/seller_service_add", 

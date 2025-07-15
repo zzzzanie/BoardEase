@@ -3,9 +3,23 @@
     <text class="balance-label">账户余额</text>
     <text class="balance-amount">¥ {{balance}}</text>
     <view class="wallet-buttons flex-space-between">
-      <button class="wallet-btn secondary-button" bindtap="goToRecharge">提现</button>
-      <button class="wallet-btn action-button-yellow" bindtap="goToWithdraw">充值</button>
+      <button class="wallet-btn action-button-yellow" bindtap="goToRecharge">充值</button>
     </view>
+  </view>
+
+  <view class="section-title">优惠券</view>
+  <view class="coupon-list card">
+    <block wx:if="{{coupons.length > 0}}">
+      <view wx:for="{{coupons}}" wx:key="type" class="coupon-item flex-space-between">
+        <view>
+          <text class="coupon-name">{{item.name}}</text>
+          <text class="coupon-desc">{{item.desc}}</text>
+          <text class="coupon-discount">{{item.discount}}%</text>
+        </view>
+        <view class="coupon-use-btn" bindtap="onUseCoupon" data-type="{{item.type}}">立即使用</view>
+      </view>
+    </block>
+    <view wx:else class="no-coupon-hint">暂无可用优惠券</view>
   </view>
 
   <view class="section-title">交易明细</view>

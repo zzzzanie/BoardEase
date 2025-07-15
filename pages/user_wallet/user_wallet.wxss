@@ -91,3 +91,55 @@
   padding: 30rpx;
   font-size: 28rpx;
 }
+
+.coupon-list {
+  margin-bottom: 30rpx;
+  padding: 0 30rpx;
+}
+
+.coupon-item {
+  padding: 25rpx 0;
+  border-bottom: 1rpx solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.coupon-item:last-child {
+  border-bottom: none;
+}
+
+.coupon-name {
+  font-size: 30rpx;
+  color: var(--text-color-dark);
+  display: block;
+}
+
+.coupon-desc {
+  font-size: 26rpx;
+  color: var(--text-color-light);
+  margin-right: 20rpx;
+  display: inline-block;
+}
+
+.coupon-discount {
+  font-size: 28rpx;
+  color: #E67E22;
+  margin-left: 10rpx;
+}
+
+.coupon-use-btn {
+  min-width: 120rpx;
+  text-align: right;
+  color: #fff;
+  background: #ffb300;
+  border-radius: 8rpx;
+  font-size: 30rpx;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40rpx;
+  line-height: 40rpx;
+  box-sizing: border-box;
+}
