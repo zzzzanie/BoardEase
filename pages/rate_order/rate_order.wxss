@@ -1,1 +1,85 @@
-@import "/app.wxss"; .container { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;}
+@import "/app.wxss"; .container {
+  min-height: 100vh;
+  background: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 60rpx;
+}
+
+.rate-card {
+  width: 90vw;
+  max-width: 600rpx;
+  background: #fff;
+  border-radius: 18rpx;
+  box-shadow: 0 4rpx 24rpx rgba(0,0,0,0.06);
+  padding: 40rpx 32rpx 32rpx 32rpx;
+  margin-bottom: 40rpx;
+}
+
+.order-info {
+  font-size: 32rpx;
+  margin-bottom: 36rpx;
+  display: flex;
+  align-items: center;
+}
+.order-label {
+  color: #888;
+  margin-right: 16rpx;
+}
+.order-value {
+  color: #222;
+  font-weight: bold;
+}
+
+.star-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 36rpx;
+}
+.star-label {
+  font-size: 30rpx;
+  color: #888;
+  margin-right: 16rpx;
+}
+.star-rating {
+  display: flex;
+  align-items: center;
+}
+.star {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 8rpx;
+}
+.star-score {
+  font-size: 28rpx;
+  color: #ffb300;
+  margin-left: 18rpx;
+}
+
+.comment-section {
+  margin-bottom: 36rpx;
+}
+.comment-input {
+  width: 100%;
+  min-height: 120rpx;
+  border-radius: 12rpx;
+  border: 1rpx solid #eee;
+  padding: 18rpx;
+  font-size: 30rpx;
+  background: #fafafa;
+  resize: none;
+}
+
+.submit-btn {
+  width: 100%;
+  background: #ffb300;
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 12rpx;
+  padding: 22rpx 0;
+  font-weight: bold;
+  margin-top: 10rpx;
+  border: none;
+}

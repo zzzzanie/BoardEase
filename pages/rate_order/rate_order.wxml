@@ -1,4 +1,21 @@
-<view class="container flex-center">
-  <text class="section-title">评价订单页面</text>
-  <text class="hint-text">这里将用于用户评价订单</text>
+<view class="container">
+  <view class="rate-card card">
+    <view class="order-info">
+      <text class="order-label">服务名称：</text>
+      <text class="order-value">{{order.serviceTitle}}</text>
+    </view>
+    <view class="star-section">
+      <text class="star-label">评分：</text>
+      <view class="star-rating">
+        <block wx:for="{{[1,2,3,4,5]}}" wx:key="*this">
+          <image class="star" src="{{index < rating ? '/images/star_filled.png' : '/images/star_empty.png'}}" mode="aspectFill" bindtap="onStarTap" data-index="{{index}}" />
+        </block>
+      </view>
+      <text class="star-score">{{rating}}分</text>
+    </view>
+    <view class="comment-section">
+      <textarea class="comment-input" placeholder="请输入您的评价（最多200字）..." value="{{comment}}" bindinput="onCommentInput" maxlength="200" />
+    </view>
+    <button class="submit-btn" bindtap="submitRating">提交评价</button>
+  </view>
 </view>

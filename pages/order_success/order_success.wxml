@@ -1,0 +1,26 @@
+<view class="success-bg"></view>
+<view class="success-container">
+  <view class="success-card">
+    <view class="check-circle">
+      <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/success_check.png" class="success-check"/>
+    </view>
+    <view class="success-title">订单已提交</view>
+    <view class="order-id">订单号：{{orderId}}</view>
+
+    <view class="order-info-card">
+      <view class="info-item"><text class="info-label">商家：</text>{{merchantName}}</view>
+      <view class="info-item"><text class="info-label">服务项目：</text>{{serviceName}}</view>
+      <view class="info-item"><text class="info-label">寄养时间：</text>{{checkInDate}} 至 {{checkOutDate}}（{{days}}晚）</view>
+      <view class="info-item"><text class="info-label">宠物信息：</text>{{petInfoDisplay}}</view>
+      <view class="info-item"><text class="info-label">姓名：</text>{{userName}}</view>
+      <view class="info-item"><text class="info-label">联系方式：</text>{{userPhone}}</view>
+      <view class="info-item total">
+        <text class="info-label">总金额：</text>
+        <text class="total-amount">￥{{totalFee}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="bottom-btn">
+    <button bindtap="onBackHome">返回主页</button>
+  </view>
+</view>

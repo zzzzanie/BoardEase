@@ -9,17 +9,20 @@ Page({
   },
 
   loadFavorites: function () {
-    // 实际开发中：调用后端API获取用户收藏列表
     console.log('加载我的收藏');
-    // 模拟数据
-    setTimeout(() => {
-      this.setData({
-        favorites: [
-          { id: 's1', title: '专业家庭寄养服务', price: '80', shopName: '爱宠之家', coverImg: '/images/example_service_1.png' },
-          { id: 's2', title: '猫咪专属豪华寄宿', price: '120', shopName: '喵星人乐园', coverImg: '/images/example_service_2.png' }
-        ]
-      });
-    }, 500);
+    const db = wx.cloud.database();
+    db.collection('merchants').where({
+      name: db.command.in(['萌宠诊所', '汪汪医院'])
+    }).get({
+      success: res => {
+        this.setData({ favorites: res.data });
+      },
+      fail: err => {
+        console.error('获取收藏商户失败', err);
+        wx.showToast({ title: '收藏加载失败', icon: 'none' });
+        this.setData({ favorites: [] });
+      }
+    });
   },
 
   goToServiceDetail: function (e) {

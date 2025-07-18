@@ -1,0 +1,277 @@
+.main-scroll {
+  height: 100vh;
+  box-sizing: border-box;
+  padding-bottom: 240rpx; /* 留出足够空间给底部按钮 */
+}
+
+.order-card, .insurance-card, .remark-card, .fee-card, .coupon-card, .points-card {
+  background: #fff;
+  margin: 24rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 24rpx #f7e6b0;
+  padding: 32rpx 24rpx 24rpx 24rpx;
+}
+.merchant-header { margin-bottom: 18rpx; }
+.merchant-title-row { display: flex; align-items: center; margin-bottom: 8rpx; }
+.merchant-title { font-size: 32rpx; font-weight: bold; margin-right: 16rpx; }
+.badge { font-size: 22rpx; border-radius: 8rpx; padding: 2rpx 10rpx; margin-right: 12rpx; }
+.badge-verify { background: #e6f7ff; color: #1890ff; }
+.badge-insure { background: #fff7e6; color: #ffb400; }
+.merchant-address { color: #888; font-size: 26rpx; }
+
+.order-section {}
+.order-item { font-size: 28rpx; margin-bottom: 18rpx; display: flex; align-items: center; flex-wrap: wrap; }
+.order-days { color: #ffb400; margin-left: 8rpx; }
+.date-value { color: #222; font-size: 28rpx; font-weight: bold; margin: 0 8rpx; }
+.user-input { border: 1rpx solid #eee; border-radius: 12rpx; padding: 8rpx 16rpx; font-size: 28rpx; margin-left: 12rpx; background: #fafafa; flex: 1; }
+
+.service-select { display: flex; }
+.service-option {
+  border: 1rpx solid #ffb400;
+  border-radius: 16rpx;
+  padding: 8rpx 24rpx;
+  margin-right: 16rpx;
+  color: #ffb400;
+  background: #fff;
+  font-size: 28rpx;
+  margin-top: 8rpx;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  cursor: pointer;
+}
+.service-option.selected {
+  background: #ffb400;
+  color: #fff;
+  border-color: #ffb400;
+  box-shadow: 0 2rpx 8rpx #ffe066;
+}
+
+.insurance-section { font-size: 28rpx; }
+.insurance-checkbox-group { display: inline; }
+.insurance-checkbox { margin-right: 8rpx; }
+.insurance-desc { color: #888; font-size: 24rpx; margin-top: 8rpx; margin-left: 48rpx; }
+
+.insurance-detail-btn {
+  background: #007aff;
+  color: white;
+  border: none;
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  margin-left: 16rpx;
+}
+
+/* 优惠券样式 */
+.coupon-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.coupon-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+.coupon-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  margin-left: 20rpx;
+  padding: 12rpx 16rpx;
+  background: #f8f8f8;
+  border-radius: 12rpx;
+  cursor: pointer;
+}
+.coupon-placeholder {
+  color: #999;
+  font-size: 26rpx;
+}
+.coupon-arrow {
+  color: #999;
+  font-size: 24rpx;
+  margin-left: auto;
+}
+.cancel-coupon-btn {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 4rpx 8rpx;
+  border-radius: 6rpx;
+  font-size: 20rpx;
+  margin-left: 16rpx;
+  min-width: 40rpx;
+  text-align: center;
+}
+
+/* 积分样式 */
+.points-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.points-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+}
+.points-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  margin-left: 20rpx;
+}
+.points-content text {
+  font-size: 26rpx;
+  color: #666;
+  margin-right: 16rpx;
+}
+.points-checkbox-group {
+  display: inline;
+}
+.points-checkbox {
+  margin-right: 8rpx;
+}
+
+/* 专业保险弹窗样式 */
+.insurance-modal-mask {
+  position: fixed;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.3);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.insurance-modal-content {
+  background: #fff;
+  border-radius: 18rpx;
+  width: 86vw;
+  max-width: 650rpx;
+  max-height: 80vh;
+  box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.insurance-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 32rpx 18rpx 32rpx;
+  border-bottom: 1rpx solid #eee;
+}
+.insurance-modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+.insurance-modal-close {
+  font-size: 40rpx;
+  color: #bbb;
+  font-weight: bold;
+  cursor: pointer;
+}
+.insurance-modal-body {
+  flex: 1;
+  padding: 20rpx 32rpx 32rpx 32rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.insurance-modal-img {
+  width: 100%;
+  border-radius: 8rpx;
+}
+
+/* 优惠券弹窗样式 */
+.coupon-modal-mask {
+  position: fixed;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.3);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.coupon-modal-content {
+  background: #fff;
+  border-radius: 18rpx;
+  width: 86vw;
+  max-width: 650rpx;
+  max-height: 80vh;
+  box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.coupon-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 28rpx 32rpx 18rpx 32rpx;
+  border-bottom: 1rpx solid #eee;
+}
+.coupon-modal-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+.coupon-modal-close {
+  font-size: 40rpx;
+  color: #bbb;
+  font-weight: bold;
+  cursor: pointer;
+}
+.coupon-modal-body {
+  flex: 1;
+  padding: 20rpx 32rpx 32rpx 32rpx;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.coupon-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+  border: 2rpx solid #eee;
+  border-radius: 12rpx;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.coupon-option:hover {
+  border-color: #ffb400;
+}
+.coupon-info {
+  flex: 1;
+}
+.coupon-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 8rpx;
+}
+.coupon-desc {
+  font-size: 24rpx;
+  color: #666;
+}
+.coupon-discount {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #ff6b6b;
+  background: #ffe6e6;
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+}
+
+.remark-section {}
+textarea { width: 100%; min-height: 80rpx; border: 1rpx solid #eee; border-radius: 16rpx; padding: 12rpx; font-size: 28rpx; background: #fafafa; }
+
+.fee-card { margin-bottom: 0; }
+.fee-title { font-size: 30rpx; color: #ffb400; font-weight: bold; margin-bottom: 18rpx; }
+.fee-section {}
+.fee-item { font-size: 28rpx; margin-bottom: 14rpx; display: flex; justify-content: space-between; }
+.fee-tip { color: #bbb; font-size: 24rpx; margin-left: 8rpx; }
+.fee-total { font-size: 32rpx; color: #ff4d00; font-weight: bold; margin-top: 24rpx; display: flex; justify-content: space-between; }
+
+.bottom-btn { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; padding: 24rpx; z-index: 100; box-shadow: 0 -2rpx 12rpx #ffe066; }
+button { width: 100%; background: #ffb400; color: #fff; font-size: 32rpx; border-radius: 16rpx; }

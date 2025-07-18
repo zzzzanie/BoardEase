@@ -1,0 +1,114 @@
+.success-bg {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: linear-gradient(180deg, #fffbe6 0%, #fff 100%);
+  z-index: -1;
+}
+
+.success-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 200rpx;
+}
+
+.success-card {
+  width: 92vw;
+  max-width: 700rpx;
+  background: #fff;
+  border-radius: 36rpx;
+  box-shadow: 0 8rpx 32rpx #ffe066;
+  margin-top: 80rpx;
+  padding: 48rpx 32rpx 32rpx 32rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.check-circle {
+  width: 160rpx;
+  height: 160rpx;
+  background: #e6f7ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32rpx;
+  box-shadow: 0 4rpx 16rpx #b2f0ff;
+}
+.success-check {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.success-title {
+  font-size: 44rpx;
+  color: #4caf50;
+  font-weight: bold;
+  margin-bottom: 18rpx;
+  margin-top: 8rpx;
+  letter-spacing: 2rpx;
+}
+.order-id {
+  font-size: 28rpx;
+  color: #888;
+  margin-bottom: 32rpx;
+  margin-top: 4rpx;
+  letter-spacing: 1rpx;
+}
+
+.order-info-card {
+  width: 100%;
+  background: #fffef6;
+  border-radius: 24rpx;
+  box-shadow: 0 2rpx 12rpx #fff3cd;
+  padding: 32rpx 24rpx 24rpx 24rpx;
+  margin-bottom: 0;
+  margin-top: 8rpx;
+}
+.info-item {
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 18rpx;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.info-label {
+  color: #888;
+  min-width: 120rpx;
+}
+.total {
+  font-size: 32rpx;
+  color: #ff4d00;
+  font-weight: bold;
+  margin-top: 18rpx;
+}
+.total-amount {
+  color: #ff4d00;
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-left: 12rpx;
+}
+
+.bottom-btn {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  background: #fff;
+  padding: 32rpx 24rpx;
+  box-shadow: 0 -2rpx 12rpx #ffe066;
+  border-bottom-left-radius: 36rpx;
+  border-bottom-right-radius: 36rpx;
+}
+button {
+  width: 100%;
+  background: #ffb400;
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 16rpx;
+  font-weight: bold;
+  letter-spacing: 2rpx;
+}

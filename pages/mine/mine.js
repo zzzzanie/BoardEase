@@ -36,6 +36,10 @@ Page({
   },
 
   onShow: function () {
+    // 确保全局 wechatId 为 chenxm_pet
+    if (!app.globalData.wechatId) {
+      app.globalData.wechatId = 'chenxm_pet';
+    }
     this.checkUserRole();
     if (this.data.isOwner) {
       this.loadPetsData(); 
@@ -77,14 +81,22 @@ Page({
   },
 
   loadPetsData: function() {
-    setTimeout(() => {
-      this.setData({
-        pets: [
-          { id: 'p1', name: '小黄', gender: 'male', age: '1岁以内', isNeutered: false, avatar: '/images/default_pet_avatar.png' },
-          { id: 'p2', name: '大花', gender: 'female', age: '2岁以上', isNeutered: true, avatar: '/images/default_pet_avatar_2.png' }
-        ]
+    const db = wx.cloud.database();
+    const wechatId = app.globalData.wechatId || 'chenxm_pet';
+    wx.showLoading({ title: '加载中...' });
+    db.collection('pet')
+      .where({ wechatId })
+      .get({
+        success: (res) => {
+          this.setData({ pets: res.data });
+          wx.hideLoading();
+        },
+        fail: (err) => {
+          console.error('获取宠物数据失败', err);
+          wx.hideLoading();
+          wx.showToast({ title: '宠物数据加载失败', icon: 'none' });
+        }
       });
-    }, 300);
   },
 
   // 卖家端加载【展示】数据

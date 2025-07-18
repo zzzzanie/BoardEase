@@ -1,8 +1,9 @@
 // pages/user_orders/user_orders.js
 Page({
   data: {
-    currentTab: 'all', // all, pending, active, completed
-    orders: []
+    currentTab: 'all', // all, active, completed
+    orders: [],
+    allOrders: [] // 存储全部订单
   },
 
   onLoad: function (options) {
@@ -11,48 +12,73 @@ Page({
         currentTab: options.type
       });
     }
-    this.loadOrders(this.data.currentTab);
+    this.loadOrders();
   },
 
   changeTab: function (e) {
     const tab = e.currentTarget.dataset.tab;
     if (this.data.currentTab === tab) return;
     this.setData({
-      currentTab: tab,
-      orders: [] // 清空现有订单，重新加载
+      currentTab: tab
     });
-    this.loadOrders(tab);
+    this.filterOrders(tab, this.data.allOrders);
   },
 
-  loadOrders: function (status) {
-    console.log('加载订单，状态:', status);
-    wx.showLoading({ title: '加载中...' });
+  loadOrders: function () {
+    const db = wx.cloud.database();
+    const wechatId = 'chenxm_pet';
+    db.collection('pet').where({ wechatId }).get({
+      success: petRes => {
+        const petIds = petRes.data.map(p => p.petId);
+        if (petIds.length === 0) {
+          this.setData({ orders: [], allOrders: [] });
+          return;
+        }
+        db.collection('orders').where({
+          petId: db.command.in(petIds)
+        }).get({
+          success: orderRes => {
+            console.log('所有订单数据:', orderRes.data); // 调试用，确保每条有 _id
+            const allOrders = orderRes.data
+              .filter(order => order.serviceTitle && order.serviceTitle.trim() !== '')
+              .map(order => {
+                let statusText = order.status;
+                if (order.status === 'processing') statusText = '进行中';
+                else if (order.status === 'unprocessed') statusText = '待确认';
+                else if (order.status === 'completed') statusText = '已完成';
+                return { ...order, statusText };
+              });
+            this.setData({ allOrders });
+            this.filterOrders(this.data.currentTab, allOrders);
+          },
+          fail: err => {
+            wx.showToast({ title: '订单加载失败', icon: 'none' });
+            this.setData({ orders: [], allOrders: [] });
+          }
+        });
+      },
+      fail: err => {
+        wx.showToast({ title: '宠物信息加载失败', icon: 'none' });
+        this.setData({ orders: [], allOrders: [] });
+      }
+    });
+  },
 
-    let mockOrders = [];
-    if (status === 'all') {
-      mockOrders = [
-        { id: 'o1', shopName: '阳光宠物之家', status: 'completed', statusText: '已完成', serviceTitle: '专业家庭寄养服务', serviceCover: '/images/example_service_1.png', duration: 7, totalPrice: '560.00' },
-        { id: 'o2', shopName: '萌宠乐园', status: 'active', statusText: '进行中', serviceTitle: '猫咪专属豪华寄宿', serviceCover: '/images/example_service_2.png', duration: 3, totalPrice: '360.00' },
-        { id: 'o3', shopName: '喵汪天堂', status: 'pending', statusText: '待确认', serviceTitle: '狗狗短期托管', serviceCover: '/images/example_service_3.png', duration: 1, totalPrice: '100.00' }
-      ];
-    } else if (status === 'pending') {
-      mockOrders = [{ id: 'o3', shopName: '喵汪天堂', status: 'pending', statusText: '待确认', serviceTitle: '狗狗短期托管', serviceCover: '/images/example_service_3.png', duration: 1, totalPrice: '100.00' }];
-    } else if (status === 'active') {
-      mockOrders = [{ id: 'o2', shopName: '萌宠乐园', status: 'active', statusText: '进行中', serviceTitle: '猫咪专属豪华寄宿', serviceCover: '/images/example_service_2.png', duration: 3, totalPrice: '360.00' }];
-    } else if (status === 'completed') {
-      mockOrders = [{ id: 'o1', shopName: '阳光宠物之家', status: 'completed', statusText: '已完成', serviceTitle: '专业家庭寄养服务', serviceCover: '/images/example_service_1.png', duration: 7, totalPrice: '560.00' }];
+  filterOrders: function(tab, allOrders) {
+    let filtered = allOrders;
+    if (tab === 'active') {
+      filtered = allOrders.filter(o => o.status === 'processing');
+    } else if (tab === 'completed') {
+      filtered = allOrders.filter(o => o.status === 'completed');
     }
-
-    setTimeout(() => {
-      this.setData({ orders: mockOrders });
-      wx.hideLoading();
-    }, 500);
+    this.setData({ orders: filtered });
   },
 
   goToOrderDetail: function (e) {
-    const orderId = e.currentTarget.dataset.id;
+    const _id = e.currentTarget.dataset.id; // 只用 _id
+    console.log('跳转订单详情，_id:', _id);
     wx.navigateTo({
-      url: `/pages/order_detail/order_detail?id=${orderId}` 
+      url: `/pages/order_detail/order_detail?id=${_id}`
     });
   },
 
@@ -72,10 +98,11 @@ Page({
   },
 
   contactSeller: function (e) {
-    const orderId = e.currentTarget.dataset.id;
-    wx.showToast({ title: '跳转到与卖家聊天', icon: 'none' });
-    // 实际项目中，这里需要获取 sellerId，然后跳转到聊天详情页
-    // wx.navigateTo({ url: `/pages/chat_detail/chat_detail?sellerId=${sellerId}` });
+    const index = e.currentTarget.dataset.index;
+    const sellerId = this.data.orders[index].sellerId;
+    wx.navigateTo({
+      url: `/pages/chat_detail/chat_detail?userId=${sellerId}`
+    });
   },
 
   // 确保 goToRateOrder 函数正确实现跳转

@@ -25,18 +25,18 @@
       </view>
       <view class="pet-list">
         <block wx:if="{{pets.length > 0}}">
-          <view class="pet-item flex-align-center" wx:for="{{pets}}" wx:key="id" bindtap="goToPetDetail" data-pet-id="{{item.id}}">
+          <view class="pet-item flex-align-center" wx:for="{{pets}}" wx:key="petId" bindtap="goToPetDetail" data-pet-id="{{item.petId}}">
             <image class="pet-avatar" src="{{item.avatar || '/images/default_pet_avatar.png'}}" mode="aspectFill"></image>
             <view class="pet-info">
               <view class="pet-name-gender flex-align-center">
-                <text class="pet-name text-overflow-single">{{item.name}}</text>
+                <text class="pet-name text-overflow-single">{{item.nickname}}</text>
                 <image wx:if="{{item.gender === 'male'}}" src="/images/icon_male.png" class="gender-icon"></image>
                 <image wx:if="{{item.gender === 'female'}}" src="/images/icon_female.png" class="gender-icon"></image>
-                <image src="/images/icon_edit_small.png" class="edit-small-icon" bindtap="goToEditPetFromList" data-pet-id="{{item.id}}" bindtap:stop="true"></image>
+                <image src="/images/icon_edit_small.png" class="edit-small-icon" bindtap="goToEditPetFromList" data-pet-id="{{item.petId}}" bindtap:stop="true"></image>
               </view>
               <view class="pet-tags flex-row">
-                <text class="tag age-tag">{{item.age}}以内</text>
-                <text class="tag neutered-tag">{{item.isNeutered ? '已绝育' : '未绝育'}}</text>
+                <!-- <text class="tag age-tag">{{item.age}}以内</text> -->
+                <text class="tag neutered-tag">{{item.neuteringStatus ? '已绝育' : '未绝育'}}</text>
               </view>
             </view>
             <image class="pet-cat-illustration" src="/images/pet_cat_illustration.png"></image>

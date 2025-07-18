@@ -1,48 +1,42 @@
 <view class="container">
   <view class="order-status-card card">
     <text class="status-label">订单状态：</text>
-    <text class="status-text">{{order.statusText}}</text>
-  </view>
-
-  <view class="section-title">服务信息</view>
-  <view class="service-info-card card">
-    <image class="service-cover" src="{{order.serviceCover || '/images/default_service_cover.png'}}" mode="aspectFill"></image>
-    <view class="service-details">
-      <text class="service-title text-overflow-single">{{order.serviceTitle}}</text>
-      <text class="service-shop-name">{{order.shopName}}</text>
-      <text class="service-price">¥{{order.pricePerDay}}/天</text>
-      <text class="service-duration">共 {{order.duration}} 天</text>
-    </view>
+    <text class="status-text">{{order.statusText || order.status}}</text>
   </view>
 
   <view class="section-title">订单详情</view>
   <view class="detail-list card">
     <view class="detail-item">
-      <text class="label">订单编号:</text> <text class="value">{{order.orderNumber}}</text>
+      <text class="label">订单ID:</text> <text class="value">{{order._id}}</text>
     </view>
     <view class="detail-item">
-      <text class="label">下单时间:</text> <text class="value">{{order.orderTime}}</text>
+      <text class="label">店铺名:</text> <text class="value">{{order.shopName}}</text>
     </view>
     <view class="detail-item">
-      <text class="label">服务日期:</text> <text class="value">{{order.serviceStartDate}} 至 {{order.serviceEndDate}}</text>
+      <text class="label">服务名:</text> <text class="value">{{order.serviceTitle}}</text>
     </view>
     <view class="detail-item">
-      <text class="label">寄养宠物:</text> <text class="value">{{order.petName}}</text>
+      <text class="label">宠物名称:</text> <text class="value">{{order.petName}}</text>
     </view>
     <view class="detail-item">
-      <text class="label">联系人:</text> <text class="value">{{order.contactName}}</text>
+      <text class="label">订单天数:</text> <text class="value">{{order.orderTime}}</text>
     </view>
     <view class="detail-item">
-      <text class="label">联系电话:</text> <text class="value">{{order.contactPhone}}</text>
+      <text class="label">支付方式:</text> <text class="value">{{order.payment === 'wechat' ? '微信支付' : (order.payment === 'alipay' ? '支付宝' : order.payment)}}</text>
     </view>
-    <view class="detail-item total-price-item">
-      <text class="label total-price-label">总价:</text> <text class="value total-price-value">¥{{order.totalPrice}}</text>
+    <view class="detail-item">
+      <text class="label">订单备注:</text> <text class="value">{{order.orderNote}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="label">开始时间:</text> <text class="value">{{order.startDateTime}}</text>
+    </view>
+    <view class="detail-item">
+      <text class="label">结束时间:</text> <text class="value">{{order.endDateTime}}</text>
     </view>
   </view>
 
   <view class="order-action-footer">
-    <button wx:if="{{order.status === 'pending'}}" class="action-button secondary-button" bindtap="cancelOrder">取消订单</button>
-    <button wx:if="{{order.status === 'active'}}" class="action-button primary-button" bindtap="contactSeller">联系卖家</button>
-    <button wx:if="{{order.status === 'completed'}}" class="action-button primary-button" bindtap="goToRateOrder">去评价</button>
+    <button wx:if="{{order.status === 'processing'}}" class="action-button secondary-button" bindtap="contactSeller">联系卖家</button>
+    <button wx:if="{{order.status === 'completed'}}" class="action-button secondary-button" bindtap="goToRateOrder">去评价</button>
   </view>
 </view>

@@ -2,7 +2,7 @@
   <view class="service-list">
     <block wx:if="{{services.length > 0}}">
       <view wx:for="{{services}}" wx:key="id" class="service-item card">
-        <image class="service-cover" src="{{item.coverImg || '/images/default_service_cover.png'}}" mode="aspectFill"></image>
+        <image class="service-cover" src="{{item.coverImg || '/images/example_service_1.png'}}" mode="aspectFill"></image>
         <view class="service-info">
           <text class="service-title">{{item.title}}</text>
           <text class="service-price">¥{{item.price}}/天</text>

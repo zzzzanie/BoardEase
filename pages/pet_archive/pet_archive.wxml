@@ -3,13 +3,12 @@
     <image class="pet-detail-avatar" src="{{pet.avatar || '/images/default_pet_avatar.png'}}" mode="aspectFill"></image>
     <view class="pet-basic-info-centered">
       <view class="pet-name-gender flex-align-center">
-        <text class="pet-name">{{pet.name}}</text>
+        <text class="pet-name">{{pet.nickname}}</text>
         <image wx:if="{{pet.gender === 'male'}}" src="/images/icon_male.png" class="gender-icon"></image>
         <image wx:if="{{pet.gender === 'female'}}" src="/images/icon_female.png" class="gender-icon"></image>
       </view>
       <view class="pet-tags flex-row">
-        <text class="tag age-tag">{{pet.age}}以内</text>
-        <text class="tag neutered-tag">{{pet.isNeutered ? '已绝育' : '未绝育'}}</text>
+        <text class="tag neutered-tag">{{pet.neuteringStatus ? '已绝育' : '未绝育'}}</text>
       </view>
     </view>
   </view>
@@ -17,10 +16,10 @@
   <view class="section-card card">
     <text class="section-title-text">基本信息</text>
     <view class="info-item">
-      <text class="label">种类:</text> <text class="value">{{pet.species}}</text>
+      <text class="label">品种:</text> <text class="value">{{pet.breed}}</text>
     </view>
     <view class="info-item">
-      <text class="label">生日:</text> <text class="value">{{pet.birthdate}}</text>
+      <text class="label">生日:</text> <text class="value">{{pet.birthDate}}</text>
     </view>
     <view class="info-item">
       <text class="label">性格:</text> <text class="value">{{pet.character}}</text>

@@ -276,7 +276,7 @@ Page({
   onSitterCardTap: function(e) {
     const providerId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: `/pages/foster/foster?id=${providerId}`
+      url: `/pages/foster/foster?id=${merchantId}`
     });
   },
 
@@ -284,7 +284,7 @@ Page({
   onStoreCardTap: function(e) {
     const providerId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: `/pages/foster/foster?id=${providerId}`
+      url: `/pages/foster/foster?id=${merchantId}`
     });
   },
 

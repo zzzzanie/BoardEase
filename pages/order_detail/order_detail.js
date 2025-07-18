@@ -5,43 +5,64 @@ Page({
   },
 
   onLoad: function (options) {
-    const orderId = options.id;
-    if (orderId) {
-      this.loadOrderDetail(orderId);
+    const _id = options.id; // 只用 _id
+    console.log('详情页收到的 _id:', _id);
+    if (_id) {
+      this.loadOrderDetail(_id);
     } else {
       wx.showToast({ title: '订单ID缺失', icon: 'none' });
       setTimeout(() => { wx.navigateBack(); }, 1500);
     }
   },
 
-  loadOrderDetail: function (orderId) {
-    // 实际：调用后端API获取订单详情
-    console.log('加载订单详情 for ID:', orderId);
+  // 工具函数：格式化日期为 yyyy-MM-dd
+  formatDate: function(dateStr) {
+    if (!dateStr) return '';
+    const date = new Date(dateStr);
+    if (isNaN(date.getTime())) return dateStr;
+    const y = date.getFullYear();
+    const m = (date.getMonth() + 1).toString().padStart(2, '0');
+    const d = date.getDate().toString().padStart(2, '0');
+    return `${y}-${m}-${d}`;
+  },
+
+  loadOrderDetail: function (_id) {
+    console.log('查询订单详情，_id:', _id);
     wx.showLoading({ title: '加载中...' });
-    setTimeout(() => {
-      this.setData({
-        order: {
-          id: orderId,
-          orderNumber: '202506220001',
-          status: 'active', // pending, active, completed, cancelled
-          statusText: '服务进行中',
-          shopName: '阳光宠物之家',
-          serviceTitle: '专业家庭寄养服务 (小型犬)',
-          serviceCover: '/images/example_service_1.png',
-          pricePerDay: '80',
-          duration: 7,
-          totalPrice: '560.00',
-          orderTime: '2025-06-20 10:30',
-          serviceStartDate: '2025-06-22',
-          serviceEndDate: '2025-06-28',
-          petName: '小黄',
-          contactName: '王小明',
-          contactPhone: '13812345678',
-          sellerId: 'seller001' 
+    const db = wx.cloud.database();
+    db.collection('orders').doc(_id).get({
+      success: res => {
+        if (res.data) {
+          // 格式化日期
+          const order = res.data;
+          order.startDateTime = this.formatDate(order.startDateTime);
+          order.endDateTime = this.formatDate(order.endDateTime);
+          this.setData({ order });
+          // 根据petId查pet表获取宠物名称
+          db.collection('pet').where({ petId: order.petId }).get({
+            success: petRes => {
+              const petName = (petRes.data && petRes.data.length > 0) ? petRes.data[0].nickname : '';
+              this.setData({ order: { ...order, petName } });
+              wx.hideLoading();
+            },
+            fail: err => {
+              this.setData({ order: { ...order, petName: '' } });
+              wx.hideLoading();
+            }
+          });
+        } else {
+          wx.showToast({ title: '未找到该订单', icon: 'none' });
+          setTimeout(() => { wx.navigateBack(); }, 1500);
+          wx.hideLoading();
         }
-      });
-      wx.hideLoading();
-    }, 500);
+      },
+      fail: err => {
+        console.error('订单详情加载失败，err:', err);
+        wx.hideLoading();
+        wx.showToast({ title: '订单详情加载失败', icon: 'none' });
+        setTimeout(() => { wx.navigateBack(); }, 1500);
+      }
+    });
   },
 
   cancelOrder: function () {
@@ -51,7 +72,6 @@ Page({
       success: (res) => {
         if (res.confirm) {
           // 实际：调用后端API取消订单
-          console.log('取消订单:', this.data.order.id);
           wx.showToast({ title: '订单已取消', icon: 'success' });
           setTimeout(() => { wx.navigateBack(); }, 1000);
         }
@@ -60,8 +80,7 @@ Page({
   },
 
   contactSeller: function () {
-    // 实际：跳转到与卖家的聊天页面，并带上卖家ID
-    console.log('联系卖家:', this.data.order.sellerId);
+    // 跳转到与卖家的聊天页面，并带上卖家ID
     wx.navigateTo({
       url: `/pages/chat_detail/chat_detail?userId=${this.data.order.sellerId}`
     });
@@ -69,9 +88,8 @@ Page({
 
   goToRateOrder: function () {
     // 实际：跳转到评价页面
-    console.log('去评价订单:', this.data.order.id);
     wx.navigateTo({
-      url: `/pages/rate_order/rate_order?orderId=${this.data.order.id}` 
+      url: `/pages/rate_order/rate_order?orderId=${this.data.order._id}`
     });
   }
 });
