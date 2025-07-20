@@ -1,6 +1,11 @@
 // 宠物寄养小程序首页逻辑
 Page({
   data: {
+    bannerImages: [
+      '/images/example_banner_1.png',
+      '/images/example_banner_2.png',
+      '/images/example_banner_3.png'
+    ],
     // 宠物列表数据
     petList: [], // 宠物列表数据
     petListEmptyMsg: '', // 宠物列表为空时的提示
@@ -26,17 +31,8 @@ Page({
   loadPetList: function() {
     const that = this;
     const app = getApp();
-    let wechatId = '';
-    if (app.globalData.userInfo && app.globalData.userInfo.wechatId) {
-      wechatId = app.globalData.userInfo.wechatId;
-    } else {
-      // 未登录
-      this.setData({
-        petList: [],
-        petListEmptyMsg: '请先登录'
-      });
-      return;
-    }
+    // 现阶段首页宠物列表只读取wechatId为chenxm_pet的用户
+    const wechatId = 'chenxm_pet';
     if (!app.globalData.db) {
       // 数据库未初始化
       this.setData({
