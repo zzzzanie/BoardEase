@@ -59,7 +59,9 @@ Page({
         contactPhone: "13822223333",
         totalPrice: 60
       }
-    ]
+    ],
+    showPriceModal: false,
+    newTotalPrice: '',
   },
 
   onLoad: function (options) {
@@ -121,7 +123,8 @@ Page({
                           status: order.status,
                           statusText: statusMap[order.status] || order.status,
                           orderNo: order._id,
-                          orderTime: that.formatDate(order.startDateTime)
+                          orderTime: that.formatDate(order.startDateTime),
+                          isCustomized: order.isCustomized || false,
                         });
                       },
                       fail: function() {
@@ -207,6 +210,53 @@ Page({
       success: () => {
         wx.showToast({ title: '订单已完成', icon: 'success', duration: 2000 });
         this.fetchOrderDetail(orderId);
+      }
+    });
+  },
+  // 跳转到聊天详情页
+  goToChatDetail: function() {
+    const userWechatId = this.data.userWechatId;
+    if (userWechatId) {
+      wx.navigateTo({
+        url: `/pages/chat_detail/chat_detail?wechatId=${userWechatId}`
+      });
+    } else {
+      wx.showToast({ title: '无法获取用户微信ID', icon: 'none' });
+    }
+  },
+
+  // 显示修改价格弹窗
+  showPriceModal: function() {
+    this.setData({ showPriceModal: true, newTotalPrice: this.data.totalPrice });
+  },
+  // 隐藏弹窗
+  hidePriceModal: function() {
+    this.setData({ showPriceModal: false });
+  },
+  // 输入新价格
+  onPriceInput: function(e) {
+    this.setData({ newTotalPrice: e.detail.value });
+  },
+  // 提交价格修改
+  submitPriceChange: function() {
+    const that = this;
+    const app = getApp();
+    const db = app.globalData.db;
+    const orderId = this.data.orderNo;
+    const newPrice = parseFloat(this.data.newTotalPrice);
+    if (isNaN(newPrice) || newPrice <= 0) {
+      wx.showToast({ title: '请输入有效价格', icon: 'none' });
+      return;
+    }
+    db.collection('orders').doc(orderId).update({
+      data: { totalPrice: newPrice },
+      success: function() {
+        wx.showToast({ title: '价格已更新', icon: 'success' });
+        that.setData({ showPriceModal: false });
+        that.fetchOrderDetail(orderId);
+      },
+      fail: function() {
+        wx.showToast({ title: '价格更新失败', icon: 'none' });
       }
     });
   },

@@ -272,3 +272,15 @@
 ::-webkit-scrollbar {
   display: none;
 } 
+
+.customized-tag {
+  display: inline-block;
+  margin-right: 12rpx;
+  margin-left: 0;
+  padding: 2rpx 10rpx;
+  background: #ff9800;
+  color: #fff;
+  border-radius: 16rpx;
+  font-size: 22rpx;
+  vertical-align: middle;
+} 

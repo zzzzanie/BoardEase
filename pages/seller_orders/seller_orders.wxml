@@ -33,7 +33,7 @@
       data-id="{{item.id}}">
         <!-- 用户信息区 -->
         <view class="user-info">
-          <!-- <image class="user-avatar" src="{{item.userInfo.avatar}}" mode="aspectFill"></image> -->
+          <text wx:if="{{item.isCustomized}}" class="customized-tag">定制化</text>
           <text class="user-nickname">{{item.userInfo.nickname}}</text>
         </view>
         <!-- 宠物信息区 -->
@@ -68,6 +68,7 @@
         <!-- 用户信息区 -->
         <view class="user-info">
           <!-- <image class="user-avatar" src="{{item.userInfo.avatar}}" mode="aspectFill"></image> -->
+          <text wx:if="{{item.isCustomized}}" class="customized-tag">定制化</text>
           <text class="user-nickname">{{item.userInfo.nickname}}</text>
         </view>
         <!-- 宠物信息区 -->
@@ -101,6 +102,7 @@
         <!-- 用户信息区 -->
         <view class="user-info">
           <!-- <image class="user-avatar" src="{{item.userInfo.avatar}}" mode="aspectFill"></image> -->
+          <text wx:if="{{item.isCustomized}}" class="customized-tag">定制化</text>
           <text class="user-nickname">{{item.userInfo.nickname}}</text>
         </view>
         <!-- 宠物信息区 -->

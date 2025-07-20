@@ -3,13 +3,26 @@
     <text>订单状态：</text>
     <text class="status-text">{{statusText}}</text>
   </view>
+  <view wx:if="{{isCustomized}}" class="customized-detail-tag">定制化订单</view>
   <!-- 操作按钮区 -->
-  <view class="order-actions" wx:if="{{status === 'unprocessed'}}">
-    <button class="btn btn-accept" bindtap="onAcceptOrder">接单</button>
-    <button class="btn btn-reject" bindtap="onRejectOrder">拒单</button>
+  <view class="order-actions" wx:if="{{status === 'unprocessed' || status === 'processing'}}">
+    <button class="btn btn-primary" bindtap="onAcceptOrder" wx:if="{{status === 'unprocessed'}}">接单</button>
+    <button class="btn btn-warn" bindtap="onRejectOrder" wx:if="{{status === 'unprocessed'}}">拒单</button>
+    <button class="btn btn-success" bindtap="onCompleteOrder" wx:if="{{status === 'processing'}}">完成订单</button>
+    <button class="btn btn-default" bindtap="goToChatDetail">联系买家</button>
+    <button class="btn btn-default" bindtap="showPriceModal">修改总价</button>
   </view>
-  <view class="order-actions" wx:if="{{status === 'processing'}}">
-    <button class="btn btn-complete" bindtap="onCompleteOrder">完成订单</button>
+
+  <!-- 修改总价弹窗 -->
+  <view wx:if="{{showPriceModal}}" class="modal-mask">
+    <view class="modal-box">
+      <view class="modal-title">修改订单总价</view>
+      <input class="modal-input" type="digit" value="{{newTotalPrice}}" bindinput="onPriceInput" placeholder="请输入新总价" />
+      <view class="modal-actions">
+        <button class="btn btn-primary" bindtap="submitPriceChange">确认</button>
+        <button class="btn btn-default" bindtap="hidePriceModal">取消</button>
+      </view>
+    </view>
   </view>
 
   <view class="service-info">
