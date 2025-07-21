@@ -139,6 +139,7 @@ Page({
               const serviceIds = serviceRes.data.map(s => s.serviceId || s._id);
               const completedOrders = orderRes.data.filter(o => serviceIds.includes(o.serviceId));
               provider.orderCount = completedOrders.length;
+              provider.avgRating = provider.rating || 0;
               finished++;
               if (finished === providers.length) {
                 // 全部统计完毕，排序

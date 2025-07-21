@@ -18,16 +18,7 @@
     </view>
   </view>
 
-  <!-- 轮播图 -->
-  <view class="banner-swiper">
-    <swiper indicator-dots="true" autoplay="true" interval="3000" duration="500">
-      <block wx:for="{{bannerImages}}" wx:key="index">
-        <swiper-item>
-          <image src="{{item}}" class="banner-image" mode="aspectFill"></image>
-        </swiper-item>
-      </block>
-    </swiper>
-  </view>
+
 
   <!-- 主要内容区域 -->
   <view class="main-content">
@@ -63,6 +54,17 @@
         </block>
       </view>
     </view>
+
+  <!-- 添加模块：轮播图 -->
+  <view class="banner-swiper">
+    <swiper indicator-dots="true" autoplay="true" interval="3000" duration="500">
+      <block wx:for="{{bannerImages}}" wx:key="index">
+        <swiper-item>
+          <image src="{{item}}" class="banner-image" mode="aspectFill"></image>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
 
     <!-- 模块二：寄养师 -->
     <view class="module">
