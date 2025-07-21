@@ -1,0 +1,40 @@
+graph TD
+  subgraph Frontend Mini Program
+    A["Pages (WXML/JS/WXSS/JSON)"]
+    B["wx.cloud.callFunction / wx.cloud.database()"]
+  end
+
+  subgraph Cloud Backend
+    C["Cloud Function: services"]
+    D["Cloud Function: orders"]
+    E["Scheduled Trigger"]
+    F1["services"]
+    F2["serviceSlots"]
+    F3["orders"]
+    F4["pet"]
+    F5["users"]
+    F6["merchants"]
+    F7["messages"]
+  end
+
+  A -- calls/accesses --> B
+  B -- invokes --> C
+  B -- invokes --> D
+  B -- direct read/write --> F1
+  B -- direct read/write --> F2
+  B -- direct read/write --> F3
+  B -- direct read/write --> F4
+  B -- direct read/write --> F5
+  B -- direct read/write --> F6
+  B -- direct read/write --> F7
+  C -- read/write --> F1
+  C -- read/write --> F2
+  D -- read/write --> F3
+  E -- triggers --> C
+  F1 -- links --> F2
+  F3 -- links --> F1
+  F3 -- links --> F4
+  F4 -- links --> F5
+  F1 -- links --> F6
+  F7 -- links --> F3
+  F7 -- links --> F5 

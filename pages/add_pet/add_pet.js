@@ -77,7 +77,7 @@ Page({
       let loadedData = {};
       if (id === 'p1') { // 模拟加载小黄的数据
         loadedData = {
-          avatar: '/images/default_pet_avatar.png',
+          avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_pet_avatar.png',
           name: '小黄',
           species: '中华田园犬',
           gender: 'male',
@@ -88,7 +88,7 @@ Page({
         };
       } else if (id === 'p2') { // 模拟加载大花的数据
         loadedData = {
-          avatar: '/images/default_pet_avatar_2.png',
+          avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_pet_avatar_2.png',
           name: '大花',
           species: '布偶猫',
           gender: 'female',

@@ -4,9 +4,7 @@ const formatDate = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.get
 const oneYearLater = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
 
 // 初始化云开发环境
-wx.cloud.init({
-  env: 'cloudbase-5gkjpend4a9022ba'
-});
+wx.cloud.init();
 
 Page({
   data: {
@@ -36,7 +34,8 @@ Page({
     couponDiscountAmount: 0,
     userPoints: 500, // 默认500积分
     usePoints: false,
-    pointsDiscountAmount: 0
+    pointsDiscountAmount: 0,
+    rewardAmount: '',
   },
 
   onLoad(options) {
@@ -61,7 +60,7 @@ Page({
     let selectedServiceIndex = Number(options.serviceIndex) || 0;
     const selectedService = merchant.services ? merchant.services[selectedServiceIndex] : {};
 
-    // 获取 foster 页面的宠物信息（假设 foster/pet_archive 选择后用 Storage 传递）
+    // 获取 foster 页面的宠物信息
     let petInfo = wx.getStorageSync('selectedPet') || null;
     let petInfoDisplay = petInfo
       ? `${petInfo.nickname}，${petInfo.type}，${petInfo.gender}`
@@ -167,7 +166,16 @@ Page({
 
   // 用户手机号输入
   onUserPhoneInput(e) {
-    this.setData({ userPhone: e.detail.value });
+    // 只允许输入11位纯数字
+    let value = e.detail.value.replace(/[^\d]/g, '').slice(0, 11);
+    this.setData({ userPhone: value });
+  },
+
+  // 奖励金额输入
+  onRewardInput(e) {
+    // 只允许正整数
+    let value = e.detail.value.replace(/[^\d]/g, '');
+    this.setData({ rewardAmount: value });
   },
 
   // 显示专业保险详情
@@ -302,26 +310,40 @@ Page({
       wx.showToast({ title: '请填写姓名和联系方式', icon: 'none' });
       return;
     }
+    // 校验手机号为11位纯数字
+    if (!/^\d{11}$/.test(this.data.userPhone)) {
+      wx.showToast({ title: '请输入11位有效手机号', icon: 'none' });
+      return;
+    }
 
     // 计算订单时长
     const start = new Date(this.data.checkInDate);
     const end = new Date(this.data.checkOutDate);
     const orderTime = Math.max(1, Math.round((end - start) / (1000 * 60 * 60 * 24)));
+
+    // 生成随机订单号
+    const orderId = 'O' + Date.now() + Math.floor(Math.random() * 10000);
+
     // 组织要上传到云数据库的订单信息
     const orderData1 = {
-      // 这里 _id 由云数据库自动生成，不用手动设置
-      discount: 0, // 假设无折扣
+      orderId,
+      merchantId: this.data.merchant.merchantId || this.data.merchant.id || '',
+      discount: this.data.selectedCoupon ? 0.95 : 1,
       endDateTime: this.data.checkOutDate,
       orderNote: this.data.remark,
       orderTime: orderTime,
-      payment: 'wechat', // 初始状态未支付
-      //petId: this.data.petInfo.petId,
-      serviceId:this.data.selectedService.serviceId,
+      payment: 'wechat',//初始状态未支付
+      petId: (this.data.petInfo && (this.data.petInfo.petId || this.data.petInfo._id)) || '',
+      serviceId: this.data.selectedService.serviceId,
       startDateTime: this.data.checkInDate,
       status: 'processing',
       subTotal: parseFloat(this.data.serviceFee) + parseFloat(this.data.platformFee),
-      totalPrice: parseFloat(this.data.totalFee)
+      totalPrice: parseFloat(this.data.totalFee),
+      wechatId: (this.data.petInfo && this.data.petInfo.wechatId) || ''
     };
+    if (this.data.rewardAmount) {
+      orderData1.orderTip = this.data.rewardAmount;
+    }
 
     const selectedServiceIndex = this.data.selectedServiceIndex;
     const orderData2 = {
@@ -341,6 +363,40 @@ Page({
       data: orderData1,
       success: res => {
         console.log('订单插入成功', res);
+        // 更新 serviceSlots 表
+        const serviceId = this.data.selectedService.serviceId; // 假设 selectedService 中有 serviceId
+        const db = wx.cloud.database();
+        db.collection('serviceSlots').where({
+            serviceId: serviceId,
+            startDateTime: this.data.checkInDate,
+            endDataTime: this.data.checkOutDate
+        }).get({
+            success: res => {
+                if (res.data.length > 0) {
+                    const slot = res.data[0];
+                    const newBookedCount = slot.bookedCount + 1;
+                    let updateData = {
+                        bookedCount: newBookedCount
+                    };
+                    if (newBookedCount === slot.capacity) {
+                        updateData.status = 'unavailable';
+                    }
+                    db.collection('serviceSlots').doc(slot._id).update({
+                        data: updateData,
+                        success: () => {
+                            console.log('serviceSlots 表更新成功');
+                        },
+                        fail: err => {
+                            console.error('serviceSlots 表更新失败', err);
+                        }
+                    });
+                }
+            },
+            fail: err => {
+                console.error('查找 serviceSlots 记录失败', err);
+            }
+        });
+
         wx.setStorageSync('lastOrder', orderData2);
         wx.navigateTo({
           url: '/pages/order_success/order_success'

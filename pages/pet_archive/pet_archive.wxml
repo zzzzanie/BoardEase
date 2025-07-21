@@ -1,11 +1,11 @@
 <view class="container">
   <view class="pet-detail-card card">
-    <image class="pet-detail-avatar" src="{{pet.avatar || '/images/default_pet_avatar.png'}}" mode="aspectFill"></image>
+    <image class="pet-detail-avatar" src="{{pet.avatar || 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_pet_avatar.png'}}" mode="aspectFill"></image>
     <view class="pet-basic-info-centered">
       <view class="pet-name-gender flex-align-center">
         <text class="pet-name">{{pet.nickname}}</text>
-        <image wx:if="{{pet.gender === 'male'}}" src="/images/icon_male.png" class="gender-icon"></image>
-        <image wx:if="{{pet.gender === 'female'}}" src="/images/icon_female.png" class="gender-icon"></image>
+        <image wx:if="{{pet.gender === 'male'}}" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_male.png" class="gender-icon"></image>
+        <image wx:if="{{pet.gender === 'female'}}" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_female.png" class="gender-icon"></image>
       </view>
       <view class="pet-tags flex-row">
         <text class="tag neutered-tag">{{pet.neuteringStatus ? '已绝育' : '未绝育'}}</text>
@@ -40,7 +40,7 @@
   </view>
 
   <button class="yellow-edit-button" bindtap="goToEditPet">
-    <image src="/images/icon_edit_dark.png" class="button-icon"></image>
+    <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_edit_dark.png" class="button-icon"></image>
     <text>编辑</text>
   </button>
 </view>

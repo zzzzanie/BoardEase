@@ -19,11 +19,6 @@ Page({
       merchant = wx.getStorageSync('selectedMerchant') || {};
     }
     
-    // 对不可接单日期进行排序
-    if (merchant.unavailableDates && merchant.unavailableDates.length > 0) {
-      merchant.unavailableDates.sort((a, b) => new Date(a) - new Date(b));
-    }
-    
     // 使用商家数据中的评价，如果没有则使用默认评价
     const reviews = merchant.reviews || [
       { id: 1, user: '小明', score: 4.8, content: '环境很干净，老板很有爱心，寄养期间每天都有照片和视频，非常放心！' },
@@ -36,7 +31,50 @@ Page({
       merchant,
       reviews
     });
+    
+    // 从云数据库获取最新的服务信息
+    this.getServicesFromCloud(merchant.merchantId);
   },
+
+  // 从云数据库获取服务信息
+  getServicesFromCloud(merchantId) {
+    if (!merchantId) return;
+    
+    wx.showLoading({ title: '加载服务信息...' });
+    
+    const db = wx.cloud.database();
+    db.collection('services').where({
+      merchantId: merchantId
+    }).get({
+      success: res => {
+        console.log('服务数据加载成功:', res.data);
+        const services = res.data.map(service => ({
+          name: service.name,
+          price: service.basePrice,
+          desc: service.description
+        }));
+        
+        // 更新商家数据中的服务信息
+        const merchant = this.data.merchant;
+        merchant.services = services;
+        
+        this.setData({
+          merchant
+        });
+        
+        wx.hideLoading();
+      },
+      fail: err => {
+        console.error('获取服务数据失败', err);
+        wx.hideLoading();
+        wx.showToast({
+          title: '服务信息加载失败',
+          icon: 'none'
+        });
+      }
+    });
+  },
+
 
   // 选择服务项目
   onSelectService(e) {
@@ -87,6 +125,14 @@ Page({
     
     wx.navigateTo({
       url: `/pages/confirm_order/confirm_order?merchant=${encodeURIComponent(JSON.stringify(merchant))}&serviceIndex=${selectedServiceIndex}&checkInDate=${checkInDate}&checkOutDate=${checkOutDate}`
+    });
+  },
+
+  // 联系商家按钮
+  onContactMerchant() {
+    // 直接跳转到与寄养老板聊天详情页
+    wx.navigateTo({
+      url: '/pages/chat_detail/chat_detail?id=c1_seller_pet_owner_chat&type=seller'
     });
   }
 });

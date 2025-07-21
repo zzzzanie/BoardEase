@@ -30,7 +30,7 @@ Page({
       { 
         id: 'c3_owner_seller_chat_o1', 
         name: '王小明', 
-        avatar: '/images/default_avatar.png', 
+        avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png', 
         lastMessage: '那就好，谢谢您的照顾', // 更新为与chat_detail.js中的最后一条用户消息一致
         time: '10:00', 
         unreadCount: 2, 
@@ -42,7 +42,7 @@ Page({
       { 
         id: 'c4_owner_seller_chat_o2', 
         name: '李阿姨', 
-        avatar: '/images/default_avatar.png', 
+        avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png', 
         lastMessage: '寄养费用支付了，麻烦您查收', // 更新为与chat_detail.js中的消息一致
         time: '昨天', 
         unreadCount: 0, 

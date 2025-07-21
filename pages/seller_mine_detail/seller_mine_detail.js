@@ -43,28 +43,28 @@ Page({
     setTimeout(() => {
       this.setData({
         personalInfo: {
-          avatar: '/images/example_seller_avatar_1.png',
+          avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_seller_avatar_1.png',
           name: '张店长',
           phone: '13888888888'
         },
         shopInfo: {
-          logo: '/images/example_shop_logo.png',
+          logo: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_shop_logo.png',
           shopName: '萌宠之家寄养服务',
           description: '提供专业的家庭式寄养服务，让您的爱宠享受家的温暖。',
           address: '某市某区某街道某小区101号',
           openingHours: '9:00 - 18:00',
           isApproved: true,
-          businessLicenseUrl: '/images/example_license.png', // 模拟数据
+          businessLicenseUrl: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_license.png', // 模拟数据
           environmentImages: [ // 模拟数据
-            '/images/example_pet_gallery_1.png',
-            '/images/example_pet_gallery_2.png',
-            '/images/example_pet_gallery_3.png'
+            'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_pet_gallery_1.png',
+            'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_pet_gallery_2.png',
+            'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_pet_gallery_3.png'
           ]
         },
         qualifications: {
           certificateImages: [ // 模拟数据
-            '/images/example_cert_1.png',
-            '/images/example_cert_2.png'
+            'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_cert_1.png',
+            'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_cert_2.png'
           ]
         }
       });

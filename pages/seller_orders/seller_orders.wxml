@@ -56,7 +56,7 @@
         </view>
       </view>
       <view wx:if="{{unprocessedOrders.length === 0}}" class="empty-state">
-        <image class="empty-image" src="/images/empty.png" mode="aspectFit"></image>
+        <image class="empty-image" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/empty.png" mode="aspectFit"></image>
         <text class="empty-text">暂无待处理订单</text>
       </view>
     </block>
@@ -90,7 +90,7 @@
         </view>
       </view>
       <view wx:if="{{processingOrders.length === 0}}" class="empty-state">
-        <image class="empty-image" src="/images/empty.png" mode="aspectFit"></image>
+        <image class="empty-image" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/empty.png" mode="aspectFit"></image>
         <text class="empty-text">暂无进行中订单</text>
       </view>
     </block>
@@ -124,7 +124,7 @@
         </view>
       </view>
       <view wx:if="{{completedOrders.length === 0}}" class="empty-state">
-        <image class="empty-image" src="/images/empty.png" mode="aspectFit"></image>
+        <image class="empty-image" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/empty.png" mode="aspectFit"></image>
         <text class="empty-text">暂无已完成订单</text>
       </view>
     </block>

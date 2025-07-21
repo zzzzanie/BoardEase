@@ -26,7 +26,7 @@ Page({
       {
         id: 'e001',
         name: '张三',
-        avatar: '/images/default_avatar.png',
+        avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png',
         phone: '13800138001',
         position: '店长',
         joinDate: '2023-01-15',
@@ -35,7 +35,7 @@ Page({
       {
         id: 'e002',
         name: '李四',
-        avatar: '/images/default_avatar.png',
+        avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png',
         phone: '13800138002',
         position: '寄养师',
         joinDate: '2023-03-01',
@@ -44,7 +44,7 @@ Page({
       {
         id: 'e003',
         name: '王五',
-        avatar: '/images/default_avatar.png',
+        avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png',
         phone: '13800138003',
         position: '美容师',
         joinDate: '2023-06-15',
@@ -140,7 +140,7 @@ Page({
     // 模拟添加员工
     const newEmployee = {
       id: `e${Date.now()}`,
-      avatar: '/images/default_avatar.png',
+      avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png',
       ...formData
     };
 

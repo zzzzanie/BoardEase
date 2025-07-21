@@ -6,9 +6,9 @@
   </view>
   
   <view class="calendar-header flex-space-between">
-    <image src="/images/icon_arrow_left.png" class="nav-arrow" bindtap="prevMonth"></image>
+    <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_arrow_left.png" class="nav-arrow" bindtap="prevMonth"></image>
     <text class="current-month">{{currentYear}}年{{currentMonth}}月</text>
-    <image src="/images/icon_arrow_right.png" class="nav-arrow" bindtap="nextMonth"></image>
+    <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_arrow_right.png" class="nav-arrow" bindtap="nextMonth"></image>
   </view>
 
   <view class="week-days flex-row">

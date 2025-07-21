@@ -3,7 +3,7 @@
     <view class="form-section card">
       <view class="form-item flex-align-center">
         <text class="label">头像</text>
-        <image class="upload-avatar" src="{{formData.avatar || '/images/default_pet_avatar.png'}}" mode="aspectFill" bindtap="chooseImage"></image>
+        <image class="upload-avatar" src="{{formData.avatar || 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_pet_avatar.png'}}" mode="aspectFill" bindtap="chooseImage"></image>
         <text class="arrow">></text>
       </view>
       <view class="form-item">
@@ -44,7 +44,7 @@
     </view>
 
     <button class="action-button-yellow full-width-button" bindtap="submitPet">
-      <image src="/images/icon_edit_white.png" class="button-icon"></image>
+      <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_edit_dark.png" class="button-icon"></image>
       <text>{{submitButtonText}}</text>
     </button>
   </form>

@@ -8,7 +8,7 @@
             data-type="{{item.type}}" 
             data-pet-name="{{item.petName}}" 
             data-order-id="{{item.orderId}}"> 
-        <image class="chat-avatar" src="{{item.avatar || '/images/default_avatar.png'}}" mode="aspectFill"></image>
+        <image class="chat-avatar" src="{{item.avatar || 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png'}}" mode="aspectFill"></image>
         <view class="chat-info">
           <view class="chat-header">
             <text class="chat-name text-overflow-single">{{item.name}}</text>

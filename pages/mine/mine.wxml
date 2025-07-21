@@ -1,13 +1,13 @@
 <view class="container">
   <block wx:if="{{isOwner}}">
     <view class="user-header-section">
-      <image class="header-bg" src="/images/mine_header_bg.png" mode="widthFix"></image>
+      <image class="header-bg" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/mine_header_bg.png" mode="widthFix"></image>
       <view class="user-info-overlay">
         <button class="avatar-nickname-btn" open-type="getUserProfile" bindtap="getUserProfileAndData">
-          <image class="avatar" src="{{userInfo.avatarUrl || '/images/default_avatar.png'}}" mode="aspectFill"></image>
+          <image class="avatar" src="{{userInfo.avatarUrl || 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png'}}" mode="aspectFill"></image>
           <view class="user-details">
             <text class="nickname">{{userInfo.nickName || '点击登录获取昵称'}}</text> <view class="level-tag">
-              <image src="/images/icon_badge.png" class="badge-icon"></image>
+              <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_badge.png" class="badge-icon"></image>
               <text>{{userInfo.userLevel || '3级铲屎官'}}</text>
             </view>
           </view>
@@ -18,7 +18,7 @@
     <view class="section-card pet-archive-section">
       <view class="section-header flex-space-between">
         <view class="section-title-wrap flex-align-center">
-          <image src="/images/icon_pet_paw.png" class="section-icon"></image>
+          <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_pet_paw.png" class="section-icon"></image>
           <text class="section-title-text">我的宠物档案</text>
         </view>
         <text class="add-pet-btn" bindtap="goToAddPet">添加宠物</text>
@@ -26,20 +26,20 @@
       <view class="pet-list">
         <block wx:if="{{pets.length > 0}}">
           <view class="pet-item flex-align-center" wx:for="{{pets}}" wx:key="petId" bindtap="goToPetDetail" data-pet-id="{{item.petId}}">
-            <image class="pet-avatar" src="{{item.avatar || '/images/default_pet_avatar.png'}}" mode="aspectFill"></image>
+            <image class="pet-avatar" src="{{item.avatar || 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_pet_avatar.png'}}" mode="aspectFill"></image>
             <view class="pet-info">
               <view class="pet-name-gender flex-align-center">
                 <text class="pet-name text-overflow-single">{{item.nickname}}</text>
-                <image wx:if="{{item.gender === 'male'}}" src="/images/icon_male.png" class="gender-icon"></image>
-                <image wx:if="{{item.gender === 'female'}}" src="/images/icon_female.png" class="gender-icon"></image>
-                <image src="/images/icon_edit_small.png" class="edit-small-icon" bindtap="goToEditPetFromList" data-pet-id="{{item.petId}}" bindtap:stop="true"></image>
+                <image wx:if="{{item.gender === 'male'}}" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_male.png" class="gender-icon"></image>
+                <image wx:if="{{item.gender === 'female'}}" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_female.png" class="gender-icon"></image>
+                <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_edit_small.png" class="edit-small-icon" bindtap="goToEditPetFromList" data-pet-id="{{item.petId}}" bindtap:stop="true"></image>
               </view>
               <view class="pet-tags flex-row">
                 <!-- <text class="tag age-tag">{{item.age}}以内</text> -->
                 <text class="tag neutered-tag">{{item.neuteringStatus ? '已绝育' : '未绝育'}}</text>
               </view>
             </view>
-            <image class="pet-cat-illustration" src="/images/pet_cat_illustration.png"></image>
+            <image class="pet-cat-illustration" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/pet_cat_illustration.png"></image>
           </view>
         </block>
         <view wx:else class="no-pets-hint">
@@ -50,32 +50,32 @@
 
     <view class="menu-list">
       <view class="menu-item" bindtap="goToUserFavorites">
-        <image src="/images/icon_star.png" class="icon"></image>
+        <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_star.png" class="icon"></image>
         <text class="text">我的收藏</text>
         <text class="arrow">></text>
       </view>
       <view class="menu-item" bindtap="goToUserChat">
-        <image src="/images/icon_chat.png" class="icon"></image>
+        <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_chat.png" class="icon"></image>
         <text class="text">我的聊天</text>
         <text class="arrow">></text>
       </view>
       <view class="menu-item" bindtap="goToUserWallet">
-        <image src="/images/icon_wallet.png" class="icon"></image>
+        <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_wallet.png" class="icon"></image>
         <text class="text">我的钱包</text>
         <text class="arrow">></text>
       </view>
       <view class="menu-item" bindtap="goToUserOrders">
-        <image src="/images/icon_order.png" class="icon"></image>
+        <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_order.png" class="icon"></image>
         <text class="text">我的订单</text>
         <text class="arrow">></text>
       </view>
       <view class="menu-item" bindtap="goToUserCalendar">
-        <image src="/images/icon_calendar.png" class="icon"></image>
+        <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_calendar.png" class="icon"></image>
         <text class="text">日历</text>
         <text class="arrow">></text>
       </view>
       <view class="menu-item" bindtap="goToAccountSwitch">
-        <image src="/images/icon_logout.png" class="icon"></image>
+        <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_logout.png" class="icon"></image>
         <text class="text">退出登录/切换账号</text>
         <text class="arrow">></text>
       </view>
@@ -85,9 +85,9 @@
 
   <block wx:else>
     <view class="seller-header-section">
-      <image class="header-bg" src="/images/seller_header_bg.png" mode="widthFix"></image>
+      <image class="header-bg" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/seller_header_bg.png" mode="widthFix"></image>
       <view class="user-info-overlay">
-        <image class="avatar shop-logo-display" src="{{sellerDisplayInfo.logoUrl || '/images/default_shop_logo.png'}}" mode="aspectFill"></image>
+        <image class="avatar shop-logo-display" src="{{sellerDisplayInfo.logoUrl || 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_shop_logo.png'}}" mode="aspectFill"></image>
         <view class="user-details">
           <text class="nickname">{{sellerDisplayInfo.shopName || '未设置店铺名称'}}</text>
           <view class="level-tag">
@@ -96,7 +96,7 @@
           </view>
         </view>
         <view class="edit-profile-icon-btn" bindtap="goToEditSellerInfo">
-          <image src="/images/icon_edit_small.png" class="edit-icon-small"></image>
+          <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_edit_small.png" class="edit-icon-small"></image>
         </view>
       </view>
     </view>
@@ -104,11 +104,11 @@
     <view class="section-card seller-info-display-section">
       <view class="section-header flex-space-between">
         <view class="section-title-wrap flex-align-center">
-          <image src="/images/icon_seller_info.png" class="section-icon"></image>
+          <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_seller_info.png" class="section-icon"></image>
           <text class="section-title-text">我的店铺概览</text>
         </view>
         <view class="edit-section-icon-btn" bindtap="goToEditSellerInfo">
-          <image src="/images/icon_edit_small.png" class="edit-icon-small"></image>
+          <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_edit_small.png" class="edit-icon-small"></image>
         </view>
       </view>
       <view class="display-info-list">
@@ -137,22 +137,22 @@
 
     <view class="menu-list">
       <view class="menu-item" bindtap="goToSellerEarnings">
-        <image src="/images/icon_earnings.png" class="icon"></image>
+        <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_earnings.png" class="icon"></image>
         <text class="text">收益提现</text>
         <text class="arrow">></text>
       </view>
       <view class="menu-item" bindtap="goToChatManagement">
-        <image src="/images/icon_chat.png" class="icon"></image>
+        <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_chat.png" class="icon"></image>
         <text class="text">聊天管理</text>
         <text class="arrow">></text>
       </view>
       <view class="menu-item" bindtap="goToEmployeeManagement">
-        <image src="/images/icon_employee.png" class="icon"></image>
+        <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_employee.png" class="icon"></image>
         <text class="text">员工信息管理</text>
         <text class="arrow">></text>
       </view>
       <view class="menu-item" bindtap="goToAccountSwitch">
-        <image src="/images/icon_logout.png" class="icon"></image>
+        <image src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_logout.png" class="icon"></image>
         <text class="text">退出登录/切换账号</text>
         <text class="arrow">></text>
       </view>

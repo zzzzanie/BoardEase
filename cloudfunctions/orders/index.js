@@ -1,6 +1,6 @@
 // 云开发 Node.js 脚本
 const cloud = require('wx-server-sdk')
-cloud.init({ env: 'cloudbase-5gkjpend4a9022ba' }) // 替换为你的环境ID
+cloud.init({ env: 'cloudbase-5gkjpend4a9022ba' }) 
 
 const db = cloud.database()
 const _ = db.command

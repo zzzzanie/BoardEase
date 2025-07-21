@@ -8,6 +8,7 @@
       <view class="badge badge-verify">平台已验证</view>
       <view class="badge badge-insure" bindtap="onShowBasicInsurance">已投基础保</view>
       <text class="score">⭐{{merchant.score}}</text>
+      <view class="contact-merchant-btn" bindtap="onContactMerchant">联系商家</view>
     </view>
     <view class="merchant-address">地址：{{merchant.address}}</view>
   </view>
@@ -16,9 +17,9 @@
   <view class="cert-section">
     <view class="cert-title">资格展示</view>
     <view class="cert-list">
-              <image class="cert-img" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/example_cert_1.png" data-url="/images/example_cert_1.png" bindtap="onPreviewCert" />
-        <image class="cert-img" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/example_cert_2.png" data-url="/images/example_cert_2.png" bindtap="onPreviewCert" />
-        <image class="cert-img" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/example_license.png" data-url="/images/example_license.png" bindtap="onPreviewCert" />
+              <image class="cert-img" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/example_cert_1.png" data-url="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_cert_1.png" bindtap="onPreviewCert" />
+        <image class="cert-img" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/example_cert_2.png" data-url="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_cert_2.png" bindtap="onPreviewCert" />
+        <image class="cert-img" src="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/example_license.png" data-url="https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_license.png" bindtap="onPreviewCert" />
     </view>
   </view>
 

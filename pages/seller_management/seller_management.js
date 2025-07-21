@@ -20,9 +20,9 @@ Page({
     setTimeout(() => {
       this.setData({
         services: [
-          { id: 's1', title: '专业家庭寄养服务 (小型犬)', price: '80', status: 'active', statusText: '上架中', coverImg: '/images/example_service_1.png' },
-          { id: 's2', title: '猫咪专属豪华寄宿', price: '120', status: 'inactive', statusText: '已下架', coverImg: '/images/example_service_2.png' },
-          { id: 's3', title: '狗狗短期托管 (大型犬)', price: '100', status: 'active', statusText: '上架中', coverImg: '/images/example_service_3.png' }
+          { id: 's1', title: '专业家庭寄养服务 (小型犬)', price: '80', status: 'active', statusText: '上架中', coverImg: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_service_1.png' },
+          { id: 's2', title: '猫咪专属豪华寄宿', price: '120', status: 'inactive', statusText: '已下架', coverImg: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_service_2.png' },
+          { id: 's3', title: '狗狗短期托管 (大型犬)', price: '100', status: 'active', statusText: '上架中', coverImg: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_service_3.png' }
         ]
       });
       wx.hideLoading();

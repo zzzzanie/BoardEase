@@ -9,7 +9,9 @@ Page({
     petInfoDisplay: '',
     userName: '',
     userPhone: '',
-    totalFee: 0
+    totalFee: 0,
+    orderNote: '',
+    orderTip: ''
   },
 
   onLoad(options) {
@@ -29,7 +31,9 @@ Page({
       petInfoDisplay: order.petInfoDisplay || '',
       userName: order.userName || '',
       userPhone: order.userPhone || '',
-      totalFee: order.totalFee || 0
+      totalFee: order.totalFee || 0,
+      orderNote: order.orderNote || '',
+      orderTip: order.orderTip || ''
     });
   },
 

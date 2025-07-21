@@ -148,3 +148,20 @@ button { width: 100%; background: #ffb400; color: #fff; font-size: 32rpx; border
   border-radius: 8rpx;
   margin: 20rpx 0;
 }
+
+.contact-merchant-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 18rpx;
+  padding: 0 12rpx;
+  height: 36rpx;
+  font-size: 22rpx;
+  background: #ffb400;
+  color: #fff;
+  border: none;
+  border-radius: 22rpx;
+  box-shadow: 0 2rpx 8rpx #ffe066;
+  min-width: unset;
+  width: auto;
+}

@@ -73,7 +73,7 @@ Page({
           icon: 'none'
         });
         this.setData({
-          'userInfo.avatarUrl': '/images/default_avatar.png',
+          'userInfo.avatarUrl': 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png',
           'userInfo.nickName': '微信用户' 
         });
       }
@@ -107,7 +107,7 @@ Page({
     setTimeout(() => {
       this.setData({
         sellerDisplayInfo: {
-          logoUrl: '/images/example_shop_logo.png',
+          logoUrl: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_shop_logo.png',
           shopName: '萌宠之家寄养服务',
           contactName: '张店长',
           phone: '13812345678',

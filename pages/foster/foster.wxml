@@ -171,6 +171,7 @@
             <view class="pet-item-info">
               <text class="pet-item-name">{{item.nickname}}</text>
               <text class="pet-item-desc">{{item.size}} · {{item.type}}</text>
+              <text class="pet-item-age" style="color:#888;font-size:22rpx;margin-top:2rpx;">{{item.ageText}}</text>
             </view>
           </view>
           <view class="pet-item-check" wx:if="{{selectedPet && selectedPet._id === item._id}}">

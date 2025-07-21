@@ -33,8 +33,8 @@ Page({
     console.log('加载宠物主人聊天列表');
     // 宠物主人视角: Chats with sellers
     let mockChats = [
-      { id: 'c1_seller_pet_owner_chat', name: '宠物店老板张三', avatar: '/images/example_seller_avatar_1.png', lastMessage: '好的，期待您的光临。', time: '14:30', unreadCount: 1, type: 'seller' },
-      { id: 'c2_seller_pet_owner_chat', name: '李四寄养师', avatar: '/images/example_seller_avatar_2.png', lastMessage: '您的狗狗已安全送达。', time: '昨天', unreadCount: 0, type: 'seller' }
+      { id: 'c1_seller_pet_owner_chat', name: '宠物店老板张三', avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_seller_avatar_1.png', lastMessage: '好的，期待您的光临。', time: '14:30', unreadCount: 1, type: 'seller' },
+      { id: 'c2_seller_pet_owner_chat', name: '李四寄养师', avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_seller_avatar_2.png', lastMessage: '您的狗狗已安全送达。', time: '昨天', unreadCount: 0, type: 'seller' }
     ];
     
     wx.showLoading({ title: '加载中...' });

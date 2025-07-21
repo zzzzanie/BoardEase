@@ -2,9 +2,9 @@
 Page({
   data: {
     bannerImages: [
-      '/images/example_banner_1.png',
-      '/images/example_banner_2.png',
-      '/images/example_banner_3.png'
+      'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_banner_1.png',
+      'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_banner_2.png',
+      'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_banner_3.png'
     ],
     // 宠物列表数据
     petList: [], // 宠物列表数据
@@ -176,35 +176,35 @@ Page({
         {
           id: 1,
           name: '张阿姨',
-          avatar: '/images/sitter1.jpg',
+          avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/sitter1.jpg',
           avgRating: 4.8,
           orderCount: 156
         },
         {
           id: 2,
           name: '李师傅',
-          avatar: '/images/sitter2.jpg',
+          avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/sitter2.jpg',
           avgRating: 4.7,
           orderCount: 142
         },
         {
           id: 3,
           name: '王姐姐',
-          avatar: '/images/sitter3.jpg',
+          avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/sitter3.jpg',
           avgRating: 4.6,
           orderCount: 128
         },
         {
           id: 4,
           name: '刘叔叔',
-          avatar: '/images/sitter4.jpg',
+          avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/sitter4.jpg',
           avgRating: 4.5,
           orderCount: 115
         },
         {
           id: 5,
           name: '陈阿姨',
-          avatar: '/images/default_avatar.png',
+          avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png',
           avgRating: 4.4,
           orderCount: 98
         }
@@ -213,7 +213,7 @@ Page({
         {
           id: 1,
           shopName: '爱宠诊所',
-          logo: '/images/clinic1.jpg',
+          logo: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/clinic1.jpg',
           avgRating: 4.8,
           orderCount: 89,
           address: '科兴科学园'
@@ -221,7 +221,7 @@ Page({
         {
           id: 2,
           shopName: '萌宠医院',
-          logo: '/images/clinic2.jpg',
+          logo: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/clinic2.jpg',
           avgRating: 4.7,
           orderCount: 76,
           address: '南山科技园'
@@ -229,7 +229,7 @@ Page({
         {
           id: 3,
           shopName: '宠物之家',
-          logo: '/images/default_shop_logo.png',
+          logo: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_shop_logo.png',
           avgRating: 4.6,
           orderCount: 65,
           address: '福田中心区'
@@ -237,7 +237,7 @@ Page({
         {
           id: 4,
           shopName: '喵汪乐园',
-          logo: '/images/default_shop_logo.png',
+          logo: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_shop_logo.png',
           avgRating: 4.5,
           orderCount: 58,
           address: '宝安中心区'
@@ -245,7 +245,7 @@ Page({
         {
           id: 5,
           shopName: '宠物驿站',
-          logo: '/images/default_shop_logo.png',
+          logo: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_shop_logo.png',
           avgRating: 4.4,
           orderCount: 52,
           address: '龙岗中心区'

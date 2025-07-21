@@ -18,6 +18,12 @@
         <text class="info-label">总金额：</text>
         <text class="total-amount">￥{{totalFee}}</text>
       </view>
+      <view class="info-item" wx:if="{{orderNote}}">
+        <text class="info-label">您的特殊需求：</text>{{orderNote}}
+      </view>
+      <view class="info-item" wx:if="{{orderTip}}">
+        <text class="info-label">打赏金额：</text>{{orderTip}} 元
+      </view>
     </view>
   </view>
   <view class="bottom-btn">

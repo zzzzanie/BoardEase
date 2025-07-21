@@ -2,7 +2,7 @@
   <view class="favorite-list">
     <block wx:if="{{favorites.length > 0}}">
       <view wx:for="{{favorites}}" wx:key="id" class="favorite-item card" bindtap="goToServiceDetail" data-id="{{item.id}}">
-        <image class="service-cover" src="{{item.coverImg || '/images/example_service_1.png'}}" mode="aspectFill"></image>
+        <image class="service-cover" src="{{item.logo || 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_service_1.png'}}" mode="aspectFill"></image>
         <view class="service-info">
           <text class="service-title text-overflow-single">{{item.title}}</text>
           <text class="shop-name text-overflow-single">{{item.name}}</text>

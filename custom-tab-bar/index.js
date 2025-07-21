@@ -6,40 +6,40 @@ Component({
       {
         pagePath: "/pages/index/index",
         text: "首页",
-        iconPath: "/images/tab_home_normal.png",
-        selectedIconPath: "/images/tab_home_selected.png"
+        iconPath: "https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/tab_home_normal.png",
+        selectedIconPath: "https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/tab_home_selected.png"
       },
       {
         pagePath: "/pages/foster/foster",
         text: "寄养",
-        iconPath: "/images/tab_foster_normal.png",
-        selectedIconPath: "/images/tab_foster_selected.png"
+        iconPath: "https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/tab_foster_normal.png",
+        selectedIconPath: "https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/tab_foster_selected.png"
       },
       {
         pagePath: "/pages/mine/mine",
         text: "我的",
-        iconPath: "/images/tab_mine_normal.png",
-        selectedIconPath: "/images/tab_mine_selected.png"
+        iconPath: "https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/tab_mine_normal.png",
+        selectedIconPath: "https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/tab_mine_selected.png"
       }
     ],
     sellerList: [
       {
         pagePath: "/pages/seller_orders/seller_orders",
         text: "订单管理",
-        iconPath: "/images/icon_order.png",
-        selectedIconPath: "/images/icon_seller_order.png"
+        iconPath: "https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_order.png",
+        selectedIconPath: "https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_seller_order.png"
       },
       {
         pagePath: "/pages/service_management/service_management",
         text: "服务管理",
-        iconPath: "/images/icon_service_manage.png",
-        selectedIconPath: "/images/icon_service_manage.png"
+        iconPath: "https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_service_manage.png",
+        selectedIconPath: "https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/icon_service_manage.png"
       },
       {
         pagePath: "/pages/mine/mine",
         text: "我的",
-        iconPath: "/images/tab_mine_normal.png",
-        selectedIconPath: "/images/tab_mine_selected.png"
+        iconPath: "https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/tab_mine_normal.png",
+        selectedIconPath: "https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/tab_mine_selected.png"
       }
     ]
   },

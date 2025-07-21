@@ -4,9 +4,7 @@ const formatDate = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.get
 const oneYearLater = new Date(today.getFullYear() + 1, today.getMonth(), today.getDate());
 
 // 初始化云开发环境
-wx.cloud.init({
-  env: 'cloudbase-5gkjpend4a9022ba'
-});
+wx.cloud.init();
 
 Page({
   data: {
@@ -20,7 +18,7 @@ Page({
     checkInDate: formatDate(today),
     checkOutDate: '', // 初始为空
     days: 0, // 初始为0
-    // 预算 - 修改为默认最高值
+    // 预算 - 默认最高值300
     budgetValue: 300,
     // 寄养方式及特征
     fosterTypeOptions: [
@@ -48,6 +46,7 @@ Page({
     this.getMerchantsFromCloud();
     this.updateDays();
     this.loadPets();
+    // 不自动filterMerchants
   },
 
   // 从云数据库中获取商家数据
@@ -111,6 +110,7 @@ Page({
         score: '4.5',
         highScore: true,
         longDiscount: false,
+        merchantId:mer_7f364cab872c,
         unavailableDates: [],
         services: [
           { name: '基础寄养', price: 60, desc: '标准寄养服务，包含基础护理' },
@@ -138,15 +138,55 @@ Page({
     this.setData({ days });
   },
 
+  // 工具函数：根据出生日期计算年龄（几年几个月）
+  calcPetAgeText(birthDate) {
+    if (!birthDate) return '';
+    try {
+      const now = new Date();
+      const birth = new Date(birthDate);
+      let years = now.getFullYear() - birth.getFullYear();
+      let months = now.getMonth() - birth.getMonth();
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+      // 处理天数，若本月还没到生日，月份-1
+      if (now.getDate() < birth.getDate()) {
+        months--;
+        if (months < 0) {
+          years--;
+          months += 12;
+        }
+      }
+      let text = '';
+      if (years > 0) text += years + '岁';
+      if (months > 0) text += months + '个月';
+      if (!text) text = '未满1个月';
+      return text;
+    } catch (e) {
+      return '';
+    }
+  },
+
   // 加载宠物数据
   loadPets() {
     wx.showLoading({ title: '加载宠物信息...' });
-    
     wx.cloud.database().collection('pet').get({
       success: (res) => {
         console.log('宠物数据加载成功:', res.data);
+        // 只保留wechatId为chenxm_pet的宠物，并计算年龄
+        const filteredPets = (res.data || []).filter(pet => pet.wechatId === 'chenxm_pet').map(pet => ({
+          ...pet,
+          ageText: this.calcPetAgeText(pet.birthDate)
+        }));
         this.setData({
-          pets: res.data || []
+          pets: filteredPets
+        }, () => {
+          // 自动选中CXM第一个宠物
+          if (filteredPets.length > 0) {
+            this.setData({ selectedPet: filteredPets[0] });
+            wx.setStorageSync('selectedPet', filteredPets[0]);
+          }
         });
         wx.hideLoading();
       },
@@ -157,7 +197,6 @@ Page({
           title: '宠物信息加载失败',
           icon: 'none'
         });
-        
         // 如果加载失败，使用模拟数据
         this.setMockPets();
       }
@@ -169,29 +208,44 @@ Page({
     const mockPets = [
       {
         _id: 'pet1',
-        nickname: '小白',
+        nickname: '咪咪',
         size: '小型',
-        type: '猫',
-        avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/default_pet_avatar.png'
+        type: '美短',
+        avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/default_pet_avatar.png',
+        wechatId: 'chenxm_pet',
+        birthDate: '2024-07-04'
       },
       {
         _id: 'pet2',
-        nickname: '旺财',
-        size: '中型',
-        type: '狗',
-        avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/default_pet_avatar_2.png'
+        nickname: '小白',
+        size: '小型',
+        type: '英短',
+        avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/default_pet_avatar_2.png',
+        wechatId: 'chenxm_pet',
+        birthDate: '2020-03-15'
       },
       {
         _id: 'pet3',
-        nickname: '咪咪',
+        nickname: '球球',
         size: '小型',
-        type: '猫',
-        avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/default_pet_avatar.png'
+        type: '比熊',
+        avatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/default_pet_avatar.png',
+        wechatId: 'other_pet2',
+        birthDate: '2022-02-28'
       }
     ];
-    
+    // 只保留wechatId为chenxm_pet的宠物
+    const filteredPets = mockPets.filter(pet => pet.wechatId === 'chenxm_pet').map(pet => ({
+      ...pet,
+      ageText: this.calcPetAgeText(pet.birthDate)
+    }));
     this.setData({
-      pets: mockPets
+      pets: filteredPets
+    }, () => {
+      if (filteredPets.length > 0) {
+        this.setData({ selectedPet: filteredPets[0] });
+        wx.setStorageSync('selectedPet', filteredPets[0]);
+      }
     });
   },
 
@@ -225,7 +279,8 @@ Page({
   // 区域选择
   onRegionChange(e) {
     this.setData({ regionIndex: e.detail.value });
-    this.filterMerchants();
+    // 不自动filterMerchants
+    // this.filterMerchants();
   },
 
   // 切换位置（可选，弹出区域选择）
@@ -234,7 +289,8 @@ Page({
       itemList: this.data.regions,
       success: (res) => {
         this.setData({ regionIndex: res.tapIndex });
-        this.filterMerchants();
+        // 不自动filterMerchants
+        //this.filterMerchants();
       }
     });
   },
@@ -255,7 +311,8 @@ Page({
     
     this.setData({ checkInDate }, () => {
       this.updateDays();
-      this.filterMerchants();
+      // 不自动filterMerchants
+      //this.filterMerchants();
     });
   },
   // 接回日期
@@ -274,14 +331,14 @@ Page({
     
     this.setData({ checkOutDate }, () => {
       this.updateDays();
-      this.filterMerchants();
+      // 不自动filterMerchants
     });
   },
 
   // 预算滑动条
   onBudgetSliderChange(e) {
     this.setData({ budgetValue: Number(e.detail.value) });
-    this.filterMerchants();
+    // 不自动filterMerchants
   },
 
   // 寄养方式条件筛选（多选，点击切换）
@@ -306,7 +363,7 @@ Page({
     
     this.setData({ selectedFosterTypes: selected }, () => {
       console.log('setData完成，当前选中状态:', this.data.selectedFosterTypes); // 调试信息
-      this.filterMerchants(); // 更新选中状态后立即重新筛选
+      // 不自动filterMerchants
     });
   },
 
@@ -318,7 +375,7 @@ Page({
     if (idx > -1) {
       selected.splice(idx, 1);
       this.setData({ selectedFosterTypes: selected }, () => {
-        this.filterMerchants();
+        // 不自动filterMerchants
       });
     }
   },
@@ -359,6 +416,7 @@ Page({
       // 将选中的宠物信息存储到Storage中，供后续页面使用
       wx.setStorageSync('selectedPet', selectedPet);
     }
+    // 不自动filterMerchants
   },
 
   // 显示基础保险详情
@@ -418,7 +476,7 @@ Page({
         // 根据宠物类型过滤商家
         if (isCat) {
           // 如果选的是猫，排除全犬种的商家
-          if (petTypesStr.includes('全犬种')) {
+          if (petTypesStr.includes('仅限犬类')) {
             return false;
           }
         } else if (isDog) {
@@ -436,6 +494,50 @@ Page({
           return false;
         }
       }
+
+    const db = wx.cloud.database();
+    db.collection('merchants').get({
+        success: res => {
+            let merchants = res.data || [];
+            let filteredMerchants = [];
+
+            // 筛选出在用户选择的时间段内 status 为 available 的记录
+            db.collection('serviceSlots').where({
+                startDateTime: db.command.lte(checkOutDate),
+                endDataTime: db.command.gte(checkInDate),
+                status: 'available'
+            }).get({
+                success: slotRes => {
+                    const availableServiceIds = slotRes.data.map(slot => slot.serviceId);
+
+                    merchants.forEach(merchant => {
+                        if (
+                            (selectedRegion === '不限' || merchant.district === selectedRegion) &&
+                            merchant.price <= budgetValue &&
+                            selectedFosterTypes.every(type => merchant.fosterTypeArr.includes(type)) &&
+                            !this.isDateUnavailable(merchant, checkInDate, checkOutDate)
+                        ) {
+                            const availableServices = merchant.services.filter(service => availableServiceIds.includes(service.serviceId));
+                            if (availableServices.length > 0) {
+                                merchant.services = availableServices;
+                                filteredMerchants.push(merchant);
+                            }
+                        }
+                    });
+
+                    this.setData({
+                        filteredMerchants
+                    });
+                },
+                fail: err => {
+                    console.error('筛选 serviceSlots 记录失败', err);
+                }
+            });
+        },
+        fail: err => {
+            console.error('获取商家数据失败', err);
+        }
+    });
       
       // 寄养方式和特征
       if (selectedFosterTypes.length > 0) {

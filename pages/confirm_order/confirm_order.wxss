@@ -94,11 +94,12 @@
   background: #ff6b6b;
   color: white;
   border: none;
-  padding: 4rpx 8rpx;
+  padding: 4rpx 20rpx 4rpx 20rpx;
   border-radius: 6rpx;
   font-size: 20rpx;
   margin-left: 16rpx;
-  min-width: 40rpx;
+  min-width: unset;
+  width: auto;
   text-align: center;
 }
 
@@ -275,3 +276,24 @@ textarea { width: 100%; min-height: 80rpx; border: 1rpx solid #eee; border-radiu
 
 .bottom-btn { position: fixed; bottom: 0; left: 0; width: 100%; background: #fff; padding: 24rpx; z-index: 100; box-shadow: 0 -2rpx 12rpx #ffe066; }
 button { width: 100%; background: #ffb400; color: #fff; font-size: 32rpx; border-radius: 16rpx; }
+
+.reward-card {
+  background: #fff;
+  margin: 24rpx;
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 24rpx #f7e6b0;
+  padding: 32rpx 24rpx 24rpx 24rpx;
+}
+.reward-section {}
+.reward-title { font-size: 28rpx; font-weight: bold; margin-bottom: 8rpx; }
+.reward-input {
+  width: 100%;
+  border: 1rpx solid #eee;
+  border-radius: 12rpx;
+  padding: 8rpx 16rpx;
+  font-size: 28rpx;
+  margin-top: 8rpx;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+.reward-tip { color: #888; font-size: 22rpx; margin-top: 6rpx; }

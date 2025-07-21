@@ -33,19 +33,19 @@ Page({
     // 根据当前用户角色设置头像
     if (userRole === 'owner') {
       this.setData({
-        myAvatar: '/images/default_avatar.png', // 宠物主人自己的头像
-        otherUserAvatar: '/images/example_seller_avatar_1.png' // 对方（卖家）的头像
+        myAvatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png', // 宠物主人自己的头像
+        otherUserAvatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_seller_avatar_1.png' // 对方（卖家）的头像
       });
     } else if (userRole === 'seller') {
       this.setData({
-        myAvatar: '/images/example_seller_avatar_1.png', // 卖家自己的头像
-        otherUserAvatar: '/images/default_avatar.png' // 对方（宠物主人）的头像
+        myAvatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/example_seller_avatar_1.png', // 卖家自己的头像
+        otherUserAvatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png' // 对方（宠物主人）的头像
       });
     } else {
         // 默认情况或未登录
         this.setData({
-            myAvatar: '/images/default_avatar.png',
-            otherUserAvatar: '/images/default_avatar.png'
+            myAvatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png',
+            otherUserAvatar: 'https://636c-cloudbase-5gkjpend4a9022ba-1366660379.tcb.qcloud.la/images/default_avatar.png'
         });
     }
 
