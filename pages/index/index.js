@@ -90,7 +90,7 @@ Page({
     }
   },
 
-  // 从providers集合加载寄养师和商家数据（只按已完成订单量排序）
+  // 从merchants集合加载寄养师和商家数据（orderCount模拟排序）
   loadTopProviders: function() {
     const that = this;
     const app = getApp();
@@ -100,16 +100,26 @@ Page({
     }
     const db = app.globalData.db;
     // 获取寄养师
-    db.collection('providers').where({ isHomeBased: true }).get({
+    db.collection('merchants').where({ isHomeBased: true }).get({
       success: function(res) {
+        // 按orderCount降序取前5
+        const sorted = res.data.sort((a, b) => (b.orderCount || 0) - (a.orderCount || 0));
+        that.setData({ topSitters: sorted.slice(0, 5) });
+        /* // 原有真实订单量统计排序逻辑
         that.countCompletedOrdersForProviders(res.data, 'topSitters');
+        */
       },
       fail: function() { that.loadMockData(); }
     });
     // 获取商家
-    db.collection('providers').where({ isHomeBased: false }).get({
+    db.collection('merchants').where({ isHomeBased: false }).get({
       success: function(res) {
+        // 按orderCount降序取前5
+        const sorted = res.data.sort((a, b) => (b.orderCount || 0) - (a.orderCount || 0));
+        that.setData({ topStores: sorted.slice(0, 5) });
+        /* // 原有真实订单量统计排序逻辑
         that.countCompletedOrdersForProviders(res.data, 'topStores');
+        */
       },
       fail: function() { that.loadMockData(); }
     });
@@ -134,12 +144,12 @@ Page({
         success: function(orderRes) {
           // 只统计该provider的订单
           // 需要先查services表，找到该provider的所有serviceId
-          db.collection('services').where({ providerId: provider.providerId }).get({
+          db.collection('services').where({ providerId: provider._id }).get({
             success: function(serviceRes) {
               const serviceIds = serviceRes.data.map(s => s.serviceId || s._id);
               const completedOrders = orderRes.data.filter(o => serviceIds.includes(o.serviceId));
               provider.orderCount = completedOrders.length;
-              provider.avgRating = provider.rating || 0;
+              provider.avgRating = provider.score ? parseFloat(provider.score) : 0;
               finished++;
               if (finished === providers.length) {
                 // 全部统计完毕，排序
@@ -273,7 +283,7 @@ Page({
   onSitterCardTap: function(e) {
     const providerId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: `/pages/foster/foster?id=${merchantId}`
+      url: `/pages/merchant_detail/merchant_detail?id=${providerId}`
     });
   },
 
@@ -281,7 +291,7 @@ Page({
   onStoreCardTap: function(e) {
     const providerId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: `/pages/foster/foster?id=${merchantId}`
+      url: `/pages/merchant_detail/merchant_detail?id=${providerId}`
     });
   },
 

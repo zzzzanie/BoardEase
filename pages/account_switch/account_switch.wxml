@@ -1,12 +1,14 @@
-<view class="container flex-column flex-center">
-  <view class="card account-options">
-    <view class="option-item" bindtap="switchAccount">
-      <text>切换账号</text>
-      <text class="arrow">></text>
-    </view>
-    <view class="option-item" bindtap="logout">
-      <text>退出登录</text>
-      <text class="arrow">></text>
+<view class="container">
+  <view class="account-card">
+    <view class="account-options">
+      <view class="option-item" bindtap="switchAccount">
+        <text>切换账号</text>
+        <text class="arrow">></text>
+      </view>
+      <view class="option-item" bindtap="logout">
+        <text>退出登录</text>
+        <text class="arrow">></text>
+      </view>
     </view>
   </view>
 </view>

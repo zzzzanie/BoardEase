@@ -31,7 +31,7 @@ Page({
     
     const db = app.globalData.db;
     // 先查找该商家所有服务
-    db.collection('services').where({ providerId: '200002' }).get({
+    db.collection('services').where({ id: '1' }).get({
       success: function(serviceRes) {
         const serviceIds = serviceRes.data.map(s => s.serviceId || s._id);
         if (serviceIds.length === 0) {
@@ -40,13 +40,13 @@ Page({
         }
         // 再查找这些服务的所有订单
         db.collection('orders').where({ serviceId: db.command.in(serviceIds) }).get({
-          success: function(res) {
-            const orders = res.data;
-            that.enrichOrders(orders);
-          },
-          fail: function(err) {
-            wx.showToast({ title: '订单加载失败', icon: 'none' });
-            console.error('订单获取失败', err);
+      success: function(res) {
+        const orders = res.data;
+        that.enrichOrders(orders);
+      },
+      fail: function(err) {
+        wx.showToast({ title: '订单加载失败', icon: 'none' });
+        console.error('订单获取失败', err);
           }
         });
       },

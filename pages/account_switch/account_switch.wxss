@@ -2,28 +2,49 @@
 
 .container {
   min-height: 100vh;
-  background-color: var(--bg-color-grey);
+  background: #f5c050;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 34rpx 40rpx 34rpx;
+}
+
+.account-card {
+  background: rgb(248, 232, 163);
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 24rpx rgba(255,102,0,0.08);
+  padding: 64rpx 40rpx 40rpx 40rpx;
+  width: 90%;
+  max-width: 700rpx;
+  margin-top: 50%;
 }
 
 .account-options {
-  width: 90%;
-  padding: 0; /* 内部菜单项自己控制padding */
+  width: 100%;
+  padding: 0;
+  margin-top: 24rpx;
 }
 
 .option-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30rpx;
-  font-size: 30rpx;
-  color: var(--text-color-dark);
-  border-bottom: 1rpx solid var(--border-color);
+  padding: 44rpx 0;
+  font-size: 38rpx;
+  color: #333;
+  border-radius: 24rpx;
+  margin-bottom: 18rpx;
+  border-bottom: 1rpx solid #eee;
+  transition: background 0.2s;
 }
-
 .option-item:last-child {
   border-bottom: none;
 }
+.option-item:active {
+  background: #fff3e0;
+}
 
 .arrow {
-  color: var(--text-color-light);
+  color: #ff9800;
+  font-size: 40rpx;
 }

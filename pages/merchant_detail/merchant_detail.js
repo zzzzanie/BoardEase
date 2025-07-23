@@ -8,32 +8,46 @@ Page({
   },
 
   onLoad(options) {
-    // 从参数中获取商家数据
-    let merchant = {};
-    if (options.merchant) {
-      merchant = JSON.parse(decodeURIComponent(options.merchant));
+    // 优先用id参数从merchants集合查找商家详情
+    if (options.id) {
+      const db = wx.cloud.database();
+      wx.showLoading({ title: '加载商家信息...' });
+      db.collection('merchants').doc(options.id).get({
+        success: res => {
+          const merchant = res.data || {};
+          const reviews = merchant.reviews || [
+            { id: 1, user: '小明', score: 4.8, content: '环境很干净，老板很有爱心，寄养期间每天都有照片和视频，非常放心！' },
+            { id: 2, user: 'Lucy', score: 5.0, content: '服务很周到，狗狗回来后很健康，推荐！' },
+            { id: 3, user: '阿猫', score: 4.6, content: '猫咪寄养体验很好，独立房间很安静，推荐给猫奴们。' },
+            { id: 4, user: '王先生', score: 4.9, content: '寄养期间有任何问题都会及时沟通，服务态度一流。' }
+          ];
+          this.setData({ merchant, reviews });
+          this.getServicesFromCloud(merchant._id);
+          wx.hideLoading();
+        },
+        fail: err => {
+          wx.hideLoading();
+          wx.showToast({ title: '商家信息加载失败', icon: 'none' });
+        }
+      });
+    } else {
+      // 兼容老逻辑
+      let merchant = {};
+      if (options.merchant) {
+        merchant = JSON.parse(decodeURIComponent(options.merchant));
+      }
+      if (!merchant || Object.keys(merchant).length === 0) {
+        merchant = wx.getStorageSync('selectedMerchant') || {};
+      }
+      const reviews = merchant.reviews || [
+        { id: 1, user: '小明', score: 4.8, content: '环境很干净，老板很有爱心，寄养期间每天都有照片和视频，非常放心！' },
+        { id: 2, user: 'Lucy', score: 5.0, content: '服务很周到，狗狗回来后很健康，推荐！' },
+        { id: 3, user: '阿猫', score: 4.6, content: '猫咪寄养体验很好，独立房间很安静，推荐给猫奴们。' },
+        { id: 4, user: '王先生', score: 4.9, content: '寄养期间有任何问题都会及时沟通，服务态度一流。' }
+      ];
+      this.setData({ merchant, reviews });
+      this.getServicesFromCloud(merchant.merchantId);
     }
-    
-    // 如果没有传递商家数据，尝试从Storage获取
-    if (!merchant || Object.keys(merchant).length === 0) {
-      merchant = wx.getStorageSync('selectedMerchant') || {};
-    }
-    
-    // 使用商家数据中的评价，如果没有则使用默认评价
-    const reviews = merchant.reviews || [
-      { id: 1, user: '小明', score: 4.8, content: '环境很干净，老板很有爱心，寄养期间每天都有照片和视频，非常放心！' },
-      { id: 2, user: 'Lucy', score: 5.0, content: '服务很周到，狗狗回来后很健康，推荐！' },
-      { id: 3, user: '阿猫', score: 4.6, content: '猫咪寄养体验很好，独立房间很安静，推荐给猫奴们。' },
-      { id: 4, user: '王先生', score: 4.9, content: '寄养期间有任何问题都会及时沟通，服务态度一流。' }
-    ];
-
-    this.setData({
-      merchant,
-      reviews
-    });
-    
-    // 从云数据库获取最新的服务信息
-    this.getServicesFromCloud(merchant.merchantId);
   },
 
   // 从云数据库获取服务信息

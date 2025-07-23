@@ -1,26 +1,41 @@
 .container {
-  padding: 16px;
-  background-color: #fff;
+  padding: 32rpx 32rpx;
+  background-color: #f8f8f8;
+  min-height: 100vh;
+}
+
+.order-card {
+  background: #fff;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 24rpx rgba(255,102,0,0.08);
+  padding: 32rpx 24rpx;
+  margin-bottom: 32rpx;
 }
 
 .order-status {
-  font-size: 20px;
+  font-size: 28rpx;
   text-align: center;
-  margin-bottom: 15px;
+  margin-bottom: 24rpx;
+  letter-spacing: 2rpx;
+  color: #ff6600;
+  font-weight: 600;
 }
 
 .status-text {
   color: #ff6600;
   font-weight: bold;
+  font-size: 32rpx;
+  margin-left: 8rpx;
 }
 
 .service-info .title,
 .order-details .title {
-  font-size: 18px;
+  font-size: 28rpx;
   font-weight: bold;
-  margin-bottom: 20px;
-  border-left: 4px solid #ff6600;
-  padding-left: 8px;
+  margin-bottom: 20rpx;
+  border-left: 6rpx solid #ff6600;
+  padding-left: 16rpx;
+  color: #333;
 }
 
 .service-item {
@@ -31,36 +46,42 @@
 }
 
 .service-img {
-  width: 80px;
-  height: 80px;
-  margin-right: 12px;
-  border-radius: 4px;
+  width: 100rpx;
+  height: 100rpx;
+  margin-right: 20rpx;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
 }
 
 .service-desc .service-name {
-  font-size: 16px;
+  font-size: 24rpx;
   font-weight: bold;
-  margin-bottom: 6px;
+  margin-bottom: 6rpx;
   display: block;
+  color: #222;
 }
 
 .service-desc .service-shop {
-  font-size: 14px;
+  font-size: 20rpx;
   color: #999;
-  margin-bottom: 4px;
+  margin-bottom: 4rpx;
   display: block;
 }
 
 .service-desc .service-price {
-  font-size: 14px;
+  font-size: 20rpx;
+  color: #ff6600;
 }
 
 .detail-item {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-size:18px;
+  margin-top: 16rpx;
+  margin-bottom: 16rpx;
+  font-size: 2yrpx;
+  background: #fafafa;
+  border-radius: 12rpx;
+  padding: 16rpx 20rpx;
 }
 
 .label {
@@ -69,23 +90,65 @@
   margin-right: 2px;
 }
 
+.total-price {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-top: 24rpx;
+  margin-bottom: 24rpx;
+}
 .total-price .price {
-  font-size: 30px;
-
+  font-size: 40rpx;
+  color: #ff6600;
   font-weight: bold;
+  margin-left: 8rpx;
 }
 
 .customized-detail-tag {
   display: flex;
   justify-content: center;
-  margin: 16rpx 0;
-  padding: 16rpx 18rpx;
-  background: #ff9800;
+  align-items: center;
+  margin: 24rpx 0 16rpx 0;
+  padding: 12rpx 32rpx;
+  background: linear-gradient(90deg, #ff9800 0%, #ff9900 100%);
   color: #fff;
-  border-radius: 20rpx;
-  font-size:34rpx;
-  
+  border-radius: 32rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  letter-spacing: 2rpx;
+  box-shadow: 0 2rpx 8rpx rgba(255,102,0,0.08);
 }
+
+.btn {
+  min-width: 160rpx;
+  padding: 16rpx 0;
+  border-radius: 24rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  margin: 0 12rpx 16rpx 0;
+  box-shadow: 0 2rpx 8rpx rgba(255,102,0,0.08);
+}
+.btn-primary {
+  background: linear-gradient(90deg, #ff9800 0%, #ff6600 100%);
+  color: #fff;
+  border: none;
+}
+.btn-warn {
+  background: #fff3e0;
+  color: #ff9800;
+  border: 2rpx solid #ff9800;
+}
+.btn-success {
+  background: #e0ffe6;
+  color: #00b26a;
+  border: 2rpx solid #00b26a;
+}
+.btn-default {
+  background: #f5f5f5;
+  color: #666;
+  border: 2rpx solid #eee;
+}
+
 .modal-mask {
   position: fixed;
   left: 0; top: 0; right: 0; bottom: 0;
@@ -97,29 +160,29 @@
 }
 .modal-box {
   background: #fff;
-  border-radius: 16rpx;
-  padding: 40rpx 32rpx 24rpx 32rpx;
-  min-width: 480rpx;
+  border-radius: 24rpx;
+  padding: 48rpx 40rpx 32rpx 40rpx;
+  min-width: 520rpx;
   box-shadow: 0 8rpx 32rpx rgba(0,0,0,0.12);
   display: flex;
   flex-direction: column;
   align-items: stretch;
 }
 .modal-title {
-  font-size: 32rpx;
+  font-size: 36rpx;
   font-weight: bold;
-  margin-bottom: 32rpx;
+  margin-bottom: 36rpx;
   text-align: center;
 }
 .modal-input {
-  border: 1rpx solid #eee;
-  border-radius: 8rpx;
-  padding: 16rpx;
-  font-size: 28rpx;
-  margin-bottom: 32rpx;
+  border: 2rpx solid #eee;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 30rpx;
+  margin-bottom: 36rpx;
 }
 .modal-actions {
   display: flex;
   justify-content: space-between;
-  gap: 24rpx;
+  gap: 32rpx;
 }
