@@ -104,10 +104,9 @@ Page({
       success: function(res) {
         // 按orderCount降序取前5
         const sorted = res.data.sort((a, b) => (b.orderCount || 0) - (a.orderCount || 0));
+        // 直接用score字段
+        sorted.forEach(item => { item.displayScore = item.score ? parseFloat(item.score) : 0; });
         that.setData({ topSitters: sorted.slice(0, 5) });
-        /* // 原有真实订单量统计排序逻辑
-        that.countCompletedOrdersForProviders(res.data, 'topSitters');
-        */
       },
       fail: function() { that.loadMockData(); }
     });
@@ -116,10 +115,9 @@ Page({
       success: function(res) {
         // 按orderCount降序取前5
         const sorted = res.data.sort((a, b) => (b.orderCount || 0) - (a.orderCount || 0));
+        // 直接用score字段
+        sorted.forEach(item => { item.displayScore = item.score ? parseFloat(item.score) : 0; });
         that.setData({ topStores: sorted.slice(0, 5) });
-        /* // 原有真实订单量统计排序逻辑
-        that.countCompletedOrdersForProviders(res.data, 'topStores');
-        */
       },
       fail: function() { that.loadMockData(); }
     });

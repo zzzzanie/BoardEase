@@ -121,11 +121,11 @@
               <view class="stars">
                 <icon type="success" size="12" color="#FF6600" wx:for="{{5}}" wx:key="*this"></icon>
               </view>
-              <text class="rating-score">{{item.avgRating || 0}}</text>
+              <text class="rating-score">{{item.displayScore || 0}}</text>
             </view>
             <view class="store-tags">
-              <text class="popularity-tag" style="position: relative; left: 302rpx; top: -72rpx; width: 112rpx; display: block; box-sizing: border-box; height: 58rpx">{{item.orderCount || 0}}单</text>
-              <text class="distance" style="width: 437rpx; display: block; box-sizing: border-box; position: relative; left: -91rpx; top: 15rpx">{{item.address || '未知地址'}}</text>
+              <text class="popularity-tag" style="position: relative; left: 302rpx; top: -72rpx; width: 180rpx; display: block; box-sizing: border-box;">{{item.orderCount || 0}}单</text>
+              <text class="distance">{{item.address || '未知地址'}}</text>
             </view>
           </view>
         </view>
